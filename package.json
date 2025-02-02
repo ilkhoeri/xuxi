@@ -1,18 +1,18 @@
 {
-  "name": "ilkhoeri",
+  "name": "cretex",
   "version": "1.0.0",
-  "description": "personal github pages",
+  "description": "cretex github docs pages",
   "private": true,
   "scripts": {
     "dev": "npm run build:content && next dev --turbopack",
-    "build": "npm run build:content && next build",
+    "build": "next build",
     "build:content": "contentlayer2 build",
     "start": "next start",
     "lint": "next lint"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ilkhoeri/ilkhoeri.github.io.git"
+    "url": "git+https://github.com/ilkhoeri/cretex"
   },
   "keywords": [
     "pages"
@@ -20,7 +20,7 @@
   "author": "ilkhoeri",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ilkhoeri/ilkhoeri.github.io/issues"
+    "url": "https://github.com/ilkhoeri/cretex/issues"
   },
   "homepage": "https://ilkhoeri.github.io",
   "dependencies": {
