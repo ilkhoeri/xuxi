@@ -1,0 +1,123 @@
+---
+title: cvx
+date: 2025-02-02
+---
+
+# **clean**
+
+The `clean` function removes all falsy values (`false`, `undefined`, `null`, `NaN`, `0`, `""`) from an object while preserving specified exceptions (e.g., 0 or false if required). It operates recursively on nested objects and arrays to ensure a fully sanitized output.
+
+## Syntax
+
+```ts
+function clean<T extends ocxKey>(obj: T, exclude?: unknown[]): T;
+```
+
+- `obj`: The object to clean.
+- `exclude`: An optional array of values to preserve even if they are falsy. Default is [].
+
+### How `clean()` Works
+
+1. **Removes Falsy Values:** <br/>
+   Eliminates null, undefined, NaN, false, "" (empty strings), unless specified otherwise in exclude.
+
+2. **Supports Deep Cleaning:** <br />
+   Recursively removes falsy values from nested objects and arrays.
+
+3. **Exclusion List:** <br />
+   Allows certain values (e.g., 0 or false) to be retained by passing an exclude array.
+
+## Example Usage
+
+### Removing Falsy Values from an Object
+
+```ts
+const cleanedObject = {
+  name: "Bob",
+  age: null,
+  active: false,
+  score: 0,
+  address: ""
+};
+
+console.log(clean(cleanedObject));
+// { name: "Bob" }
+
+console.log(clean(cleanedObject, [0]));
+// { name: "Bob", score: 0 }
+```
+
+### Removing Falsy Values from Arrays
+
+```ts
+const arr = { items: [0, false, "hello", null, undefined, "world"] };
+console.log(clean(arr));
+// { items: [ 'hello', 'world' ] }
+```
+
+### Preserving Certain Falsy Values
+
+```ts
+const cleanedWithPreserved = clean(
+  { enabled: false, retries: 0, debug: null },
+  [false, 0] // Preserve false and 0
+);
+
+console.log(cleanedWithPreserved);
+// { enabled: false, retries: 0 }
+```
+
+### Cleaning Nested Objects
+
+```ts
+const cleanedNested = clean({
+  user: {
+    name: "Alice",
+    details: {
+      age: null,
+      city: "",
+      subscribed: false
+    }
+  }
+});
+
+console.log(cleanedNested);
+// { user: { name: "Alice" } }
+```
+
+### Cleaning Arrays
+
+```ts
+const cleanedArray = clean({
+  items: [0, false, "", 42, null, "hello"],
+  extra: []
+});
+
+console.log(cleanedArray);
+// { items: [42, "hello"] }
+```
+
+### Excluding Specific Values
+
+```ts
+const obj = {
+  name: "",
+  age: 0,
+  active: false,
+  device: "android",
+  address: {},
+  role: null
+};
+console.log(clean(obj, [false]));
+// { active: false, device: 'android' }
+```
+
+---
+
+## Advantages
+
+✅ **Reduces unnecessary data** by removing `null`, `undefined`, and other falsy values.
+✅ **Deeply cleans objects and arrays**, ensuring a well-structured and meaningful dataset.
+✅ **Customizable exclusions**, allowing control over which falsy values should remain.
+✅ **Enhances API responses** by removing redundant properties.
+✅ **Improves performance** by reducing object size, leading to optimized data transmission.

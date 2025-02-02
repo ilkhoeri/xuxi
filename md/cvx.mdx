@@ -1,0 +1,122 @@
+---
+title: cvx
+date: 2025-02-02
+---
+
+# **cvx**
+
+The `cvx` function is a utility for managing string class variants in a structured manner.
+It allows combining classes based on a predefined variant configuration, with the option to include default values ​​(`defaultVariants`) and customization based on user input.
+
+## Syntax
+
+```ts
+function cvx<T extends cvxKeys>(
+  keys: cvxRecord<T>
+): (result?: cvxResult<T>) => string;
+```
+
+```ts
+cvx({
+  assign: "", // optional
+  variants: {}, // required
+  defaultVariants: {} // optional
+});
+```
+
+## How `cvx` works:
+
+1. **Merge Variants:** <br />
+   The variants provided by the user via `variant` are merged with the default variants (`defaultVariants`), if any.
+
+2. **Determine Class:** <br />
+   For each key in `variants`, the function maps the corresponding value from the merged `variant`.
+
+3. **Generate String:** <br />
+   The class values ​​are merged into a single space-separated string.
+   If `assign` is given, this string is prefixed with the value of `assign`.
+
+## Example Usage
+
+```tsx
+import { cvx, type cvxProps } from "cretex";
+
+const classes = cvx({
+  // assign values that is definitely returned
+  assign: "bg-muted rounded-sm px-2 border flex items-center justify-center",
+  variants: {
+    variant: {
+      light: "font-light",
+      bold: "font-bold",
+      semibold: "font-semibold"
+    },
+    effect: {
+      italic: "font-italic"
+    },
+    color: {
+      blue: "text-blue-600",
+      green: "text-green-700",
+      red: "text-red-500",
+      purple: "text-purple-500"
+    },
+    size: {
+      sm: "h-4",
+      md: "h-6",
+      lg: "h-10",
+      xl: "h-14"
+    }
+  },
+  // determine the variance value by default
+  defaultVariants: {
+    variant: "bold",
+    color: "blue",
+    size: "lg"
+  }
+});
+```
+
+```tsx
+type VariantsType = cvxProps<typeof classes>;
+// Output:
+// type VariantsType = {
+//     variant?: "bold" | "light" | "semibold" | undefined;
+//     effect?: "italic" | undefined;
+//     color?: "blue" | "green" | "red" | "purple" | undefined;
+//     size?: "sm" | "md" | "lg" | "xl" | undefined;
+// };
+```
+
+```tsx
+type Color = NonNullable<cvxProps<typeof classes>["color"]>;
+// Output:
+// type Color = "blue" | "green" | "red" | "purple";
+```
+
+## Advantages
+
+✅ **Flexibility:** <br />
+Supports a wide range of variant combinations.
+✅ **Consistency:** <br />
+Simplifies class management with a clearly defined structure.
+✅ **Efficiency:** <br />
+Minimizes duplication of class logic in code.
+
+## IntelliSense
+
+If you are using the vscode editor, enable autocomplete for the [`tailwindcss`](https://tailwindcss.com/docs/editor-setup#intelli-sense-for-vs-code) class using the following command:
+
+1. Install the [`Tailwind CSS IntelliSense`](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) Visual Studio Code extension
+2. Add to your [`settings.json`](https://code.visualstudio.com/docs/getstarted/settings):
+
+```json
+"tailwindCSS.experimental.classRegex": [
+  ["cvx\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+  ["cvx\\(([^)]*)\\)", "(?:'|\"|`)([^'\"`]*)(?:'|\"|`)"],
+  ["assign:\\s*['\"`]([^'\"`]*?)['\"`]", "(?:'|\"|`)([^'\"`\\]]*|\\[[^\\]]+\\])(?:'|\"|`)"],
+  ["assign:\\s*['\"`]([^'\"`]*?)['\"`]", "(?:^|\\s+)([\\w-:\\[\\].()#\\/%]+)(?=\\s+|$)"],
+  ["variants:\\s*\\{([^}]*?)\\}", "(?:'|\"|`)([^'\"`\\]]*|\\[[^\\]]+\\])(?:'|\"|`)"],
+  ["variants:\\s*\\{[^}]*?['\"`\\w]+:\\s*['\"`]([^'\"`]*)['\"`]", "(?:^|\\s+)([\\w-:\\[\\].()#\\/%]+)(?=\\s+|$)"],
+],
+```
+
+[`cva`](https://cva.style/docs) uses the first argument as a constant that will be distributed throughout the variance, in cvx this argument is moved to the `assign` parameter. cvx does not or has not passed the `class` and `className` parameters.
