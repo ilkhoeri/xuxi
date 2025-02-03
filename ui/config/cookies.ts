@@ -10,7 +10,7 @@ export function setCookies(name: CookiesName, value: string, days = 30) {
   document.cookie = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
 }
 
-export function cookies<T extends string>(name: CookiesName, initial: T) {
+export function useCookies<T extends string>(name: CookiesName, initial: T) {
   const [cookieValue, setCookieValue] = useState(initial as string);
 
   useEffect(() => {
@@ -23,4 +23,12 @@ export function cookies<T extends string>(name: CookiesName, initial: T) {
   }, []);
 
   return cookieValue;
+}
+
+export function useCookiesValues() {
+  const dir = useCookies("__dir", "ltr");
+  const theme = useCookies("__theme", "system");
+  const isOpenAside = useCookies("__is_open_aside", "true");
+
+  return { dir, theme, isOpenAside };
 }

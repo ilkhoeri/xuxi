@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { setCookies, cookies } from "./cookies";
+import { setCookies } from "./cookies";
 import { Cookies } from "./types";
 import { useDirection, type Direction } from "@/hooks/use-direction";
 

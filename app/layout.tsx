@@ -1,10 +1,11 @@
+"use client";
 import { bodyConfig } from "./fonts";
 import { NavHead } from "@/ui/navhead";
 import { NavFoot } from "@/ui/navfoot";
 import { NavProvider } from "@/ui/nav-ctx";
 import { ThemeProvider } from "@/ui/config/themes";
 import { AppProvider } from "@/ui/config/app-context";
-import { cookies } from "@/ui/config/cookies";
+import { useCookiesValues } from "@/ui/config/cookies";
 import { META_THEME_COLORS, SEO_VERIFICATION, siteConfig, iconsConfig, linksConfig } from "./site/config";
 
 import type { Metadata } from "next";
@@ -109,24 +110,10 @@ export const viewport = {
   ]
 };
 
-// export const dynamic = "force-dynamic";
-
-function cookiesValues() {
-  const dir = cookies("__dir", "ltr");
-  const theme = cookies("__theme", "system");
-  const isOpenAside = cookies("__is_open_aside", "true");
-
-  return { dir, theme, isOpenAside };
-}
-
-export default async function RootLayout({
-  children
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <AppProvider {...cookiesValues()}>
-      <html lang="en" dir={cookiesValues().dir} suppressHydrationWarning>
+    <AppProvider {...useCookiesValues()}>
+      <html lang="en" dir={useCookiesValues().dir} suppressHydrationWarning>
         <head>
           <link rel="icon" sizes="any" type="image/x-icon" href="/favicon.ico" />
           <link rel="shortcut icon" href="/favicon.ico" />
