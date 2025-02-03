@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 import { generateRoutes, ROUTES } from "./routes";
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
+  // reactStrictMode: true,
   // experimental: {
   //   // appDir: true,
   // },
