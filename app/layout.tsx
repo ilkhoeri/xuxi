@@ -5,12 +5,12 @@ import { NavFoot } from "@/ui/navfoot";
 import { NavProvider } from "@/ui/nav-ctx";
 import { ThemeProvider } from "@/ui/config/themes";
 import { AppProvider } from "@/ui/config/app-context";
+import { Cookies } from "@/ui/config/types";
 import { META_THEME_COLORS, SEO_VERIFICATION, siteConfig, iconsConfig, linksConfig } from "./site/config";
 
 import type { Metadata } from "next";
 
 import "./styles/globals.css";
-import { Cookies } from "@/ui/config/types";
 
 export function metadata(): Metadata {
   return {
