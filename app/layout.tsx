@@ -1,11 +1,9 @@
-"use client";
 import { bodyConfig } from "./fonts";
 import { NavHead } from "@/ui/navhead";
 import { NavFoot } from "@/ui/navfoot";
 import { NavProvider } from "@/ui/nav-ctx";
 import { ThemeProvider } from "@/ui/config/themes";
 import { AppProvider } from "@/ui/config/app-context";
-import { useCookiesValues } from "@/ui/config/cookies";
 import { META_THEME_COLORS, SEO_VERIFICATION, siteConfig, iconsConfig, linksConfig } from "./site/config";
 
 import type { Metadata } from "next";
@@ -112,22 +110,20 @@ export const viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <AppProvider {...useCookiesValues()}>
-      <html lang="en" dir={useCookiesValues().dir} suppressHydrationWarning>
-        <head>
-          <link rel="icon" sizes="any" type="image/x-icon" href="/favicon.ico" />
-          <link rel="shortcut icon" href="/favicon.ico" />
-        </head>
-        <body {...bodyConfig()}>
-          <ThemeProvider>
-            <NavProvider>
-              <NavHead />
-              {children}
-              <NavFoot />
-            </NavProvider>
-          </ThemeProvider>
-        </body>
-      </html>
+    <AppProvider>
+      <head>
+        <link rel="icon" sizes="any" type="image/x-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </head>
+      <body {...bodyConfig()}>
+        <ThemeProvider>
+          <NavProvider>
+            <NavHead />
+            {children}
+            <NavFoot />
+          </NavProvider>
+        </ThemeProvider>
+      </body>
     </AppProvider>
   );
 }
