@@ -1,15 +1,16 @@
 import { bodyConfig } from "./fonts";
+import { cookies } from "next/headers";
 import { NavHead } from "@/ui/navhead";
 import { NavFoot } from "@/ui/navfoot";
 import { NavProvider } from "@/ui/nav-ctx";
 import { ThemeProvider } from "@/ui/config/themes";
-import { cookiesValues } from "@/ui/config/cookies";
 import { AppProvider } from "@/ui/config/app-context";
 import { META_THEME_COLORS, SEO_VERIFICATION, siteConfig, iconsConfig, linksConfig } from "./site/config";
 
 import type { Metadata } from "next";
 
 import "./styles/globals.css";
+import { Cookies } from "@/ui/config/types";
 
 export function metadata(): Metadata {
   return {
@@ -108,6 +109,15 @@ export const viewport = {
     { media: "(prefers-color-scheme: dark)", color: META_THEME_COLORS.dark }
   ]
 };
+
+async function cookiesValues() {
+  const cookieStore = await cookies();
+  const dir = cookieStore.get(Cookies.dir)?.value;
+  const theme = cookieStore.get(Cookies.theme)?.value;
+  const isOpenAside = cookieStore.get(Cookies.isOpenAside)?.value;
+
+  return { dir, theme, isOpenAside };
+}
 
 export default async function RootLayout({
   children

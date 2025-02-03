@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { setCookies } from "./cookies";
+// import { setCookies } from "./cookies";
 import { Cookies } from "./types";
 import { useDirection, type Direction } from "@/hooks/use-direction";
 
@@ -18,7 +18,8 @@ interface AppProviderProps extends IntrinsicAppProvider {
 interface CtxProps {
   openAside: `${Booleanish}`;
   setOpenAside: (v: `${Booleanish}`) => void;
-  setCookies(name: `${Cookies}` | (string & {}), value: string): Promise<void>;
+  // setCookies(name: `${Cookies}` | (string & {}), value: string): Promise<void>;
+  setCookies: (name: `${Cookies}` | (string & {}), value: string, days?: number) => void;
   toggleDirection: () => void;
   setDirection: (dir: Direction) => void;
   // initial type
@@ -46,6 +47,14 @@ function useAppFuntions(_app: useAppProps) {
 
 export function AppProvider({ children, ...props }: AppProviderProps) {
   const { theme, ...app } = useAppFuntions({ ...props });
+
+
+const setCookies = (name: string, value: string, days = 30) => {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
+};
+
   const value = { setCookies, theme: theme as Theme, ...app };
   return <ctx.Provider {...{ value }}>{children}</ctx.Provider>;
 }
