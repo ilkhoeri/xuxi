@@ -20,8 +20,7 @@ const nextConfig: NextConfig = {
       "/coc": { page: "/coc" },
       "/others": { page: "/others" },
       "/about": { page: "/about" },
-      "/about/app": { page: "/about/app" },
-      "/_not-found": { page: "/_not-found" }
+      "/about/app": { page: "/about/app" }
     };
   }
 };
