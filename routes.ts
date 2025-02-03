@@ -68,3 +68,16 @@ export const ROUTES = {
   },
   footRoutes: [] as InnerRoutes[]
 };
+
+type RouteMap = Record<string, { page: string }>;
+
+export const generateRoutes = (routes: SingleRoute[]): RouteMap => {
+  return routes.reduce<RouteMap>((acc, { href, data }) => {
+    acc[href || ""] = { page: href || "" };
+    if (data) {
+      // @ts-ignore
+      Object.assign(acc, generateRoutes(data));
+    }
+    return acc;
+  }, {});
+};
