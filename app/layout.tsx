@@ -8,7 +8,7 @@ import { META_THEME_COLORS, SEO_VERIFICATION, siteConfig, iconsConfig, linksConf
 
 import type { Metadata } from "next";
 
-import "./styles/globals.css";
+import "./globals.css";
 
 export function metadata(): Metadata {
   return {
