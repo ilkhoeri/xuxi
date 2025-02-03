@@ -8,7 +8,7 @@ import { useMeasureScrollbar } from "@/hooks/use-measure-scrollbar";
 import { useClickOutside } from "@/hooks/use-click-outside";
 import { useElementRect } from "@/hooks/use-element-info";
 import { getVarsPositions, useUpdatedPositions } from "@/hooks/use-open-state";
-import { XIcon } from "@/components/icons";
+import { XIcon } from "@/ui/icons";
 import { cn as merge } from "@/lib/utils";
 
 export enum SheetsVariant {

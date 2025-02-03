@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Svg } from "@/components/icons/ctx";
+import { Svg } from "@/ui/icons/ctx";
 import { cvx, rem, type cvxProps } from "cretex";
 import { UnstyledButton, type UnstyledButtonProps } from "./button";
 import { cn } from "@/lib/utils";

@@ -2,8 +2,8 @@ import Link from "next/link";
 import { ThemeToggle } from "./config/themes";
 import { NavLinkItem } from "./navlink";
 import { ROUTES } from "@/routes";
-import { BrandOeriIcon, LogoIcon } from "@/components/icons";
-import { Polymorphic } from "@/components/polymorphic-slot";
+import { BrandOeriIcon, LogoIcon } from "@/ui/icons";
+import { Polymorphic } from "@/ui/polymorphic-slot";
 import { cvx } from "cretex";
 import { cn } from "@/lib/utils";
 

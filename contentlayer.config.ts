@@ -7,7 +7,7 @@ import rehypeStringify from "rehype-stringify";
 import { visit } from "unist-util-visit";
 import { codeImport } from "remark-code-import";
 import { getHighlighter } from "@shikijs/compat";
-import { rehypeCommand } from "@/components/rehype/rehype-command";
+import { rehypeCommand } from "@/ui/rehype/rehype-command";
 
 import moonlightTheme from "@/app/styles/moonlight.json" with { type: "json" };
 

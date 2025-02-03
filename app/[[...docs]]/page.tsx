@@ -1,9 +1,9 @@
 import { allDocs, Docs } from "contentlayer/generated";
 import { notFound } from "next/navigation";
-import { DashboardTableOfContents } from "@/components/toc/toc";
-import { getTableOfContents } from "@/components/toc/config";
-import { Mdx } from "@/components/mdx-component";
-import { NavLeft } from "@/components/navleft";
+import { DashboardTableOfContents } from "@/ui/toc/toc";
+import { getTableOfContents } from "@/ui/toc/config";
+import { Mdx } from "@/ui/mdx-component";
+import { NavLeft } from "@/ui/navleft";
 
 interface SlugParams {
   params: Promise<{ docs: string[] }>;

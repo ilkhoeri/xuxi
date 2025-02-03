@@ -1,10 +1,10 @@
 import { bodyConfig } from "./fonts";
-import { NavHead } from "@/components/navhead";
-import { NavFoot } from "@/components/navfoot";
-import { NavProvider } from "@/components/nav-ctx";
-import { ThemeProvider } from "@/components/config/themes";
-import { cookiesValues } from "@/components/config/cookies";
-import { AppProvider } from "@/components/config/app-context";
+import { NavHead } from "@/ui/navhead";
+import { NavFoot } from "@/ui/navfoot";
+import { NavProvider } from "@/ui/nav-ctx";
+import { ThemeProvider } from "@/ui/config/themes";
+import { cookiesValues } from "@/ui/config/cookies";
+import { AppProvider } from "@/ui/config/app-context";
 import { META_THEME_COLORS, SEO_VERIFICATION, siteConfig, iconsConfig, linksConfig } from "./site/config";
 
 import type { Metadata } from "next";

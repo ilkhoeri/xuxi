@@ -4,7 +4,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { Anchor, type AnchorProps } from "./anchor";
-import type { IconType, DetailedSvgProps } from "@/components/icons/ctx";
+import type { IconType, DetailedSvgProps } from "@/ui/icons/ctx";
 
 type NavLinkTrees = "link" | "active" | "icon" | "img" | "title" | "mark";
 export type NavLinkClass = {

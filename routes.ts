@@ -1,4 +1,4 @@
-import { CommandIcon, BrandDiscordFillIcon, BrandGithubFillIcon, HeartIcon } from "@/components/icons";
+import { CommandIcon, BrandDiscordFillIcon, BrandGithubFillIcon, HeartIcon } from "@/ui/icons";
 
 export type InnerRoutes = { title: string; href: string };
 export type SingleRoute = { title: string; href?: string; data: InnerRoutes[] };

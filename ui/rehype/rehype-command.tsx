@@ -1,13 +1,13 @@
 "use client";
 import * as React from "react";
 import { NpmCommands } from "./types";
-import { Tabs } from "@/components/tabs";
-import { Button } from "@/components/button";
+import { Tabs } from "@/ui/tabs";
+import { Button } from "@/ui/button";
 import { Event, trackEvent } from "./event";
 import { useConfig } from "./config";
 import { cn } from "@/lib/utils";
-import { HasCopyIcon } from "@/components/icons";
-import { ScrollArea } from "@/components/scroll-area";
+import { HasCopyIcon } from "@/ui/icons";
+import { ScrollArea } from "@/ui/scroll-area";
 import { visit } from "unist-util-visit";
 import { UnistNode, UnistTree } from "./types";
 import { Tooltip } from "../tooltip";

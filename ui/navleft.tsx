@@ -2,11 +2,11 @@
 
 import React from "react";
 import { useNavContext } from "./nav-ctx";
-import { NavLinkItem } from "@/components/navlink";
+import { NavLinkItem } from "@/ui/navlink";
 import { ButtonAside, LinkHome } from "./navhead";
 import { cvx } from "cretex";
-import { ScrollArea } from "@/components/scroll-area";
-import { Sheets, SheetsContent, SheetsTrigger } from "@/components/sheets";
+import { ScrollArea } from "@/ui/scroll-area";
+import { Sheets, SheetsContent, SheetsTrigger } from "@/ui/sheets";
 import { displayName } from "@/lib/text-parser";
 import { cn as merge } from "@/lib/utils";
 import { useApp } from "./config/app-context";

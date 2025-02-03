@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useHotkeys } from "@/hooks/use-hotkeys";
 import { useApp } from "./app-context";
 import { UnstyledButton } from "../button";
-import { MonitorSmartphoneIcon, MoonStarIcon, SunIcon } from "@/components/icons";
+import { MonitorSmartphoneIcon, MoonStarIcon, SunIcon } from "@/ui/icons";
 import { useTheme, ThemeProvider as NextThemesProvider, type ThemeProviderProps } from "next-themes";
 
 export const theming = [

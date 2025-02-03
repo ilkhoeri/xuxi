@@ -5,8 +5,8 @@ import { tocopy } from "../lib/utils";
 import { cn } from "@/lib/utils";
 import { useClipboard } from "@/hooks/use-clipboard";
 import { useWindowScroll } from "@/hooks/use-window-scroll";
-import { UnstyledButton } from "@/components/button";
-import { CheckIcon, CopyIcon, ChevronDownSquareIcon } from "@/components/icons";
+import { UnstyledButton } from "@/ui/button";
+import { CheckIcon, CopyIcon, ChevronDownSquareIcon } from "@/ui/icons";
 
 export const CopyButton = React.forwardRef<
   React.ComponentRef<typeof UnstyledButton>,
