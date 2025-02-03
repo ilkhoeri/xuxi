@@ -1,20 +1,15 @@
 import { PluginAPI, type Config } from "tailwindcss/types/config";
 import plugin from "tailwindcss/plugin";
 
-// types files path
-// node_modules/tailwindcss/types/index.d.ts
-// node_modules/tailwindcss/types/config.d.ts
-
 export default {
   prefix: "",
   darkMode: ["class"],
   content: [
     "./app/**/*.{js,jsx,ts,tsx,md,mdx}",
-    "./source/**/*.{js,jsx,ts,tsx,md,mdx}",
-    "./resource/**/*.{js,jsx,ts,tsx,md,mdx}",
+    "./ui/**/*.{js,jsx,ts,tsx,md,mdx}",
+    "./d/**/*.{js,jsx,ts,tsx,md,mdx}",
     "./components/**/*.{js,jsx,ts,tsx,md,mdx}",
     "./pages/**/*.{js,jsx,ts,tsx,md,mdx}",
-    "./src/**/*.{js,jsx,ts,tsx,md,mdx}"
   ],
   theme: {
     container: {

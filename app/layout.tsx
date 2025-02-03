@@ -6,9 +6,9 @@ import { ThemeProvider } from "@/ui/config/themes";
 import { AppProvider } from "@/ui/config/app-context";
 import { META_THEME_COLORS, SEO_VERIFICATION, siteConfig, iconsConfig, linksConfig } from "./site/config";
 
+import "./globals.css";
 import type { Metadata } from "next";
 
-import "./globals.css";
 
 export function metadata(): Metadata {
   return {
