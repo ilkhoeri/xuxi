@@ -10,7 +10,7 @@ interface SlugParams {
 }
 
 export async function generateStaticParams() {
-  return allDocs.map(doc => ({ app: [doc._raw.flattenedPath] }));
+  return allDocs.map(doc => ({ docs: [doc._raw.flattenedPath] }));
 }
 
 async function getPathFromParams({ params }: SlugParams) {
