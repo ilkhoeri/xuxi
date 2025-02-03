@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-// import { setCookies } from "./cookies";
+import { setCookies, cookies } from "./cookies";
 import { Cookies } from "./types";
 import { useDirection, type Direction } from "@/hooks/use-direction";
 
@@ -47,13 +47,6 @@ function useAppFuntions(_app: useAppProps) {
 
 export function AppProvider({ children, ...props }: AppProviderProps) {
   const { theme, ...app } = useAppFuntions({ ...props });
-
-
-const setCookies = (name: string, value: string, days = 30) => {
-  const date = new Date();
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-  document.cookie = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
-};
 
   const value = { setCookies, theme: theme as Theme, ...app };
   return <ctx.Provider {...{ value }}>{children}</ctx.Provider>;

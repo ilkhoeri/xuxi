@@ -1,11 +1,10 @@
 import { bodyConfig } from "./fonts";
-import { cookies } from "next/headers";
 import { NavHead } from "@/ui/navhead";
 import { NavFoot } from "@/ui/navfoot";
 import { NavProvider } from "@/ui/nav-ctx";
 import { ThemeProvider } from "@/ui/config/themes";
 import { AppProvider } from "@/ui/config/app-context";
-import { Cookies } from "@/ui/config/types";
+import { cookies } from "@/ui/config/cookies";
 import { META_THEME_COLORS, SEO_VERIFICATION, siteConfig, iconsConfig, linksConfig } from "./site/config";
 
 import type { Metadata } from "next";
@@ -112,11 +111,10 @@ export const viewport = {
 
 // export const dynamic = "force-dynamic";
 
-async function cookiesValues() {
-  const cookieStore = await cookies();
-  const dir = cookieStore.get(Cookies.dir)?.value;
-  const theme = cookieStore.get(Cookies.theme)?.value;
-  const isOpenAside = cookieStore.get(Cookies.isOpenAside)?.value;
+function cookiesValues() {
+  const dir = cookies("__dir", "ltr");
+  const theme = cookies("__theme", "system");
+  const isOpenAside = cookies("__is_open_aside", "true");
 
   return { dir, theme, isOpenAside };
 }
@@ -127,8 +125,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AppProvider {...await cookiesValues()}>
-      <html lang="en" dir={(await cookiesValues()).dir} suppressHydrationWarning>
+    <AppProvider {...cookiesValues()}>
+      <html lang="en" dir={cookiesValues().dir} suppressHydrationWarning>
         <head>
           <link rel="icon" sizes="any" type="image/x-icon" href="/favicon.ico" />
           <link rel="shortcut icon" href="/favicon.ico" />

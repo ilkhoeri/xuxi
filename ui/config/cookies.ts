@@ -1,24 +1,26 @@
-// "use server";
-import { cookies } from "next/headers";
+"use cilent";
 import { Cookies } from "./types";
+import { useEffect, useState } from "react";
 
-export async function setCookies(name: string, value: string) {
-  (await cookies()).set({
-    name,
-    value,
-    secure: true,
-    httpOnly: true,
-    path: "/",
-    sameSite: "strict",
-    maxAge: 60 * 60 * 24 * 365 // Cookie values ​​are valid for one year
-  });
+type CookiesName = `${Cookies}` | (string & {});
+
+export function setCookies(name: CookiesName, value: string, days = 30) {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
 }
 
-export async function cookiesValues() {
-  const cookieStore = await cookies();
-  const dir = cookieStore.get(Cookies.dir)?.value;
-  const theme = cookieStore.get(Cookies.theme)?.value;
-  const isOpenAside = cookieStore.get(Cookies.isOpenAside)?.value;
+export function cookies<T extends string>(name: CookiesName, initial: T) {
+  const [cookieValue, setCookieValue] = useState(initial as string);
 
-  return { dir, theme, isOpenAside };
+  useEffect(() => {
+    const cookies = document.cookie
+      .split("; ")
+      .find(row => row.startsWith(`${name}=`))
+      ?.split("=")[1];
+
+    if (cookies) setCookieValue(decodeURIComponent(cookies));
+  }, []);
+
+  return cookieValue;
 }
