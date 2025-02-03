@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
       "/clean": { page: "/clean" },
       "/links": { page: "/links" },
       "/license": { page: "/license" },
+      "/changelog": { page: "/changelog" },
       "/coc": { page: "/coc" },
       "/others": { page: "/others" },
       "/about": { page: "/about" },

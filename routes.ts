@@ -22,6 +22,7 @@ export const ROUTES = {
         { title: "clean", href: "/clean" },
         { title: "links", href: "/links" },
         { title: "license", href: "/license" },
+        { title: "changelog", href: "/changelog" },
         { title: "Code of Conduct", href: "/coc" },
         { title: "others", href: "/others" }
       ]
