@@ -1,0 +1,100 @@
+---
+title: Exported
+date: 2025-02-02
+---
+
+# **Exported**
+
+## Using Named and Default Exports Together
+
+Our library provides both **named exports** and a **default export** to give you flexibility when importing and using its features. However, when using both export styles together in a project, there are important considerations due to differences in how module systems handle these exports, especially if you're working with different module formats like **ES Modules (ESM)** and **CommonJS (CJS)**.
+
+## **For ES Modules Users**
+
+If you're using an ESM-based environment (e.g., modern browsers, `node` with `"type": "module"`, or build tools like Vite, Webpack, or Rollup with ESM configuration), you can import the library as follows:
+
+1. **Using the default export**:
+
+   ```typescript
+   import x from "cretex";
+
+   // Access functions, types, or properties through the default export
+   x.cnx();
+   x.cvx();
+   x.ocx();
+   ```
+
+2. **Using named exports**:
+
+   ```typescript
+   import { cnx, cvx, ocx } from "cretex";
+
+   // Use specific functions or properties directly
+   cnx();
+   cvx();
+   ocx();
+   ```
+
+3. **Combining default and named imports**:
+
+   ```typescript
+   import x, { cnx } from "cretex";
+
+   x.cnx(); // Access via default export
+   cnx(); // Access directly as a named export
+   ```
+
+## **For CommonJS Users**
+
+If you're working in a CommonJS environment (e.g., Node.js with `"type": "commonjs"`), the behavior of default exports changes slightly:
+
+1. **Default export is wrapped in a `default` property**:
+
+   ```javascript
+   const x = require("cretex").default;
+
+   // Access functions, types, or properties through the default export
+   x.cnx();
+   x.cvx();
+   x.ocx();
+   ```
+
+2. **Using named exports (requires destructuring)**:
+
+   ```javascript
+   const { cnx, cvx, ocx } = require("cretex");
+
+   cnx();
+   cvx();
+   ocx();
+   ```
+
+**Why This Behavior?**
+
+This behavior arises because CommonJS and ES Modules have different mechanisms for handling default exports:
+
+- In ES Modules, the `default` export is directly accessible.
+- In CommonJS, `default` exports are wrapped in an object (`module.exports`), requiring access via `.default`.
+
+## **How We Recommend Using This Library**
+
+To minimize confusion and ensure compatibility:
+
+- Prefer using **named exports** for better clarity and tree-shaking in ESM.
+- Use the **default export** when you need a single namespace object to organize all features of the library.
+
+## **Targeting ES2020**
+
+This library is compiled with **`target: es2020`**, meaning it utilizes modern JavaScript features. Ensure that your environment or build tools support ES2020 syntax or transpile the code if necessary.
+
+---
+
+**Example Table of Imports**
+
+| **Use Case**                | **ESM Import Syntax**                     | **CJS Import Syntax**                                                              |
+| --------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------- |
+| Default Export              | `import x from 'cretex';`                 | `const x = require('cretex').default;`                                             |
+| Named Exports               | `import { cnx, cvx, ocx } from 'cretex';` | `const { cnx, cvx, ocx } = require('cretex');`                                     |
+| Combining Default and Named | `import x, { cnx } from 'cretex';`        | `const x = require('cretex').default;` <br /> `const { cnx } = require('cretex');` |
+
+By understanding these nuances, you can confidently use this library in any environment.

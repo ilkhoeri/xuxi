@@ -1,28 +1,258 @@
 import { PluginAPI, type Config } from "tailwindcss/types/config";
 import plugin from "tailwindcss/plugin";
 
+// types files path
+// node_modules/tailwindcss/types/index.d.ts
+// node_modules/tailwindcss/types/config.d.ts
+
 export default {
+  prefix: "",
+  darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./md/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}"
+    "./app/**/*.{js,jsx,ts,tsx,md,mdx}",
+    "./source/**/*.{js,jsx,ts,tsx,md,mdx}",
+    "./resource/**/*.{js,jsx,ts,tsx,md,mdx}",
+    "./components/**/*.{js,jsx,ts,tsx,md,mdx}",
+    "./pages/**/*.{js,jsx,ts,tsx,md,mdx}",
+    "./src/**/*.{js,jsx,ts,tsx,md,mdx}"
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        xs: "460px",
+        "2xl": "1400px",
+        "3xl": "1600px"
+      }
+    },
     extend: {
+      screens: {
+        xs: "460px",
+        "2xl": "1400px",
+        "3xl": "1600px"
+      },
+      spacing: {
+        26: "104px"
+      },
+      letterSpacing: {
+        px: "-.0625rem",
+        "0.5": "-.03125rem"
+      },
+      maxWidth: {
+        var: "var(--max-w, var(--max-w1, var(--max-w2, var(--max-w3))))"
+      },
+      borderRadius: {
+        "4xl": "2rem",
+        "3xl": "calc(var(--radius) + .5rem)",
+        "2xl": "calc(var(--radius) + .25rem)",
+        xl: "calc(var(--radius) + .125rem)",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - .125rem)",
+        sm: "calc(var(--radius) - .25rem)"
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)"
+        code: "hsl(var(--code))",
+        border: "hsl(var(--border))",
+        color: {
+          DEFAULT: "hsl(var(--color))",
+          muted: "hsl(var(--color-muted))"
+        },
+        background: {
+          DEFAULT: "hsl(var(--background))",
+          theme: "hsl(var(--background-theme))",
+          box: "hsl(var(--background-box))",
+          nav: "hsl(var(--background-nav))",
+          muted: "hsl(var(--background-muted))",
+          "code-header": "hsl(var(--background-code-header))",
+          "code-body": "hsl(var(--background-code-body))"
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+          emphasis: "hsl(var(--destructive-emphasis))"
+        },
+        constructive: {
+          DEFAULT: "hsl(var(--constructive))",
+          foreground: "hsl(var(--constructive-foreground))",
+          emphasis: "hsl(var(--constructive-emphasis))"
+        },
+        conservative: {
+          DEFAULT: "hsl(var(--conservative))",
+          foreground: "hsl(var(--conservative-foreground))",
+          emphasis: "hsl(var(--conservative-emphasis))"
+        },
+        primitive: {
+          DEFAULT: "hsl(var(--primitive))",
+          foreground: "hsl(var(--primitive-foreground))",
+          emphasis: "hsl(var(--primitive-emphasis))"
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+          emphasis: "hsl(var(--muted-emphasis))"
+        },
+        mention: {
+          DEFAULT: "hsl(var(--mention))",
+          foreground: "hsl(var(--mention-foreground))",
+          emphasis: "hsl(var(--mention-emphasis))"
+        }
+      },
+      backgroundImage: {
+        "danger-area": "repeating-linear-gradient(var(--danger-bg-image))"
+      },
+      keyframes: {
+        "cursor-bar": { "50%": { borderRightColor: "transparent" } },
+        "cursor-blink": {
+          "20%": { transform: "scaleY(1)" },
+          "50%": { transform: "scaleY(0)" },
+          "80%": { transform: "scaleY(1)" }
+        },
+        "fade-in": {
+          from: {
+            opacity: "var(--tw-enter-opacity, initial)",
+            scale: "var(--tw-enter-scale, initial)"
+          }
+        },
+        "fade-out": {
+          to: {
+            opacity: "var(--tw-exit-opacity, initial)",
+            scale: "var(--tw-exit-scale, initial)"
+          }
+        },
+        "collapse-open": {
+          from: { height: "0", opacity: "0" },
+          to: { height: "var(--measure-available-h)" }
+        },
+        "collapse-closed": {
+          from: { height: "var(--measure-available-h)" },
+          "85%": { opacity: "0" },
+          to: { height: "0", visibility: "hidden" }
+        },
+        "bounce-in": {
+          "0%": { opacity: "0", scale: "1.3" },
+          "50%": { opacity: "0.8", scale: "0.7" },
+          "80%": { opacity: "9", scale: "0.8" },
+          "100%": { opacity: "1", scale: "1" }
+        },
+        "bounce-out": {
+          "0%": { opacity: "0", scale: "0.3" },
+          "50%": { opacity: "0.8", scale: "1.2" },
+          "80%": { opacity: "9", scale: "0.8" },
+          "100%": { opacity: "1", scale: "1" }
+        },
+        "wave-in": { "50%": { transform: "scale(0.85)" } },
+        "wave-out": { "50%": { transform: "scale(1.2)" } },
+        "opacity-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" }
+        },
+        "opacity-out": {
+          from: { opacity: "1" },
+          to: { opacity: "0" }
+        },
+        "pulse-1": {
+          "0%,16.667%,to": { opacity: "1" },
+          "33.333%,83.333%": { opacity: "0" }
+        },
+        "pulse-2": {
+          "0%,to": { opacity: "0" },
+          "33.333%,50%": { opacity: "1" },
+          "16.667%,66.667%": { opacity: "0" }
+        },
+        "pulse-3": {
+          "0%,50%,to": { opacity: "0" },
+          "66.667%,83.333%": { opacity: "1" }
+        },
+        "pulse-4": {
+          "0%, 16.667%, 100%": { opacity: "1" },
+          "33%, 83.333%": { opacity: "0" }
+        },
+        "pulse-5": {
+          "0%, 16.667%, 66.667%, 100%": { opacity: "0" },
+          "33.333%, 50%": { opacity: "1" }
+        },
+        "pulse-6": {
+          "0%, 50%, 100%": { opacity: "0" },
+          "66.667%, 83.333%": { opacity: "1" }
+        }
+      },
+      animation: {
+        "cursor-bar": "cursor-bar 0.5s step-end infinite alternate, cursor-blink 0.5s infinite",
+        "collapse-open": "collapse-open 0.2s linear forwards",
+        "collapse-closed": "collapse-closed 0.2s linear forwards",
+        "fade-in": "fade-in ease-in forwards",
+        "fade-out": "fade-out ease-out forwards",
+        "bounce-in": "bounce-in 0.5s linear forwards 0.3s",
+        "bounce-out": "bounce-out 0.5s linear forwards 0.3s",
+        "wave-in": "wave-in 0.4s ease forwards",
+        "wave-out": "wave-out 0.4s ease forwards",
+        enter: "enter ease forwards",
+        exit: "exit ease forwards",
+        "pulse-1": "pulse-1 8s infinite",
+        "pulse-2": "pulse-2 8s infinite",
+        "pulse-3": "pulse-3 8s infinite",
+        "pulse-4": "pulse-4 8s infinite",
+        "pulse-5": "pulse-5 8s infinite",
+        "pulse-6": "pulse-6 8s infinite"
+      },
+      transitionProperty: {
+        spacing: "margin, padding"
+      },
+      transitionDuration: {
+        "500": "500ms",
+        "1000": "1000ms"
+      },
+      transitionTimingFunction: {
+        ease: "ease",
+        "in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
+        "out-expo": "cubic-bezier(0.19, 1, 0.22, 1)"
+      },
+      fontFamily: {
+        "anek-telugu": ["var(--ff-anek-telugu)"],
+        amiri: ["var(--ff-amiri)"],
+        inter: ["var(--ff-inter)"],
+        kanit: ["var(--ff-kanit)"],
+        barlow: ["var(--ff-barlow)"],
+        koulen: ["var(--ff-koulen)"],
+        montserrat: ["var(--ff-montserrat)"],
+        poppins: ["var(--ff-poppins)"],
+        "roboto-mono": ["var(--ff-roboto-mono)"],
+        "special-elit": ["var(--ff-special-elit)"],
+        "geist-sans": ["var(--ff-geist-sans)"],
+        "geist-mono": ["var(--ff-geist-mono)"]
+      },
+      zIndex: {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6",
+        "7": "7",
+        "8": "8",
+        "9": "9",
+        "10": "10",
+        "11": "11",
+        "19": "19",
+        "20": "20",
+        "21": "21",
+        "29": "29",
+        "30": "30",
+        "99": "99",
+        "999": "999",
+        "9999": "9999",
+        "99999": "99999"
       }
     }
   },
   plugins: [
+    require("tailwindcss-animate"),
     plugin(({ addBase, addUtilities }: PluginAPI) => {
       addBase({});
       addUtilities({
         ".scrollbar": {
-          scrollbarColor:
-            "var(--scroll-color, #adb3bd) var(--scroll-bg, #0000)",
+          scrollbarColor: "var(--scroll-color, #adb3bd) var(--scroll-bg, #0000)",
           scrollbarWidth: "var(--scroll-w, thin)",
           scrollbarGutter: "auto"
         },
@@ -43,8 +273,7 @@ export default {
             },
             "&:hover": {
               "&::-webkit-scrollbar-thumb": {
-                background:
-                  "var(--scroll-color-hover, var(--scroll-color, #0000))"
+                background: "var(--scroll-color-hover, var(--scroll-color, #0000))"
               }
             }
           }
@@ -87,8 +316,7 @@ export default {
           }
         },
         ".timeline": {
-          "--offset":
-            "calc(var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2)",
+          "--offset": "calc(var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2)",
           "&:where([data-align=left])": {
             // paddingInlineStart: "var(--pl ,var(--offset))",
             "& [data-tl=bullet]": {
@@ -111,8 +339,7 @@ export default {
             // paddingInlineEnd: "var(--pr ,var(--offset))",
             "& [data-tl=bullet]": {
               left: "auto",
-              right:
-                "calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1)"
+              right: "calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1)"
             },
             "& [data-tl=body]": {
               paddingRight: "var(--offset)"
@@ -128,8 +355,7 @@ export default {
           }
         },
         ".timeline-item": {
-          "--tli-line":
-            "var(--tli-line-width, var(--tl-line-width)) var(--tli-has-line-active-style, var(--tl-line-style)) var(--tli-line-clr, var(--tl-line-clr))",
+          "--tli-line": "var(--tli-line-width, var(--tl-line-width)) var(--tli-has-line-active-style, var(--tl-line-style)) var(--tli-line-clr, var(--tl-line-clr))",
           "&::before": {
             content: '""',
             position: "absolute",
@@ -151,8 +377,7 @@ export default {
             "--tli-has-line-active-style": "var(--tli-line-style)",
             "--tli-has-bullet-active-style": "solid",
             "&::before": {
-              borderColor:
-                "var(--active-line, var(--tli-active-line, var(--tl-line-clr)))"
+              borderColor: "var(--active-line, var(--tli-active-line, var(--tl-line-clr)))"
             }
           }
         },
@@ -168,13 +393,11 @@ export default {
           outline:
             "var(--tli-line-width, var(--tl-line-width)) var(--tli-has-bullet-active-style, var(--tl-bullet-style)) var(--tli-line-clr, var(--tl-bullet-ring, var(--tl-line-clr)))",
           "&[data-active]": {
-            outlineColor:
-              "var(--active-ring, var(--bullet-active-ring, var(--tl-line-clr)))"
+            outlineColor: "var(--active-ring, var(--bullet-active-ring, var(--tl-line-clr)))"
           },
           "&[data-bullet]": {
             "&[data-active]": {
-              backgroundColor:
-                "var(--active-bg, var(--tli-active-bg, var(--tl-line-clr)))",
+              backgroundColor: "var(--active-bg, var(--tli-active-bg, var(--tl-line-clr)))",
               "& *": {
                 color: "var(--active-clr, var(--tli-active-clr))"
               }
@@ -185,8 +408,7 @@ export default {
             }
           },
           "&[data-notice]": {
-            "--inset-tr":
-              "calc(var(--tli-line-width, var(--tl-line-width)) * -0.75)",
+            "--inset-tr": "calc(var(--tli-line-width, var(--tl-line-width)) * -0.75)",
             "&::after": {
               content: '""',
               zIndex: "0",

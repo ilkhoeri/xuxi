@@ -15,7 +15,7 @@ Useful for dynamically managing string classes in JavaScript or TypeScript appli
 function cnx(...inputs: cnxValues[]): string;
 ```
 
-## How `cnx` works:
+## How cnx works:
 
 1. **Initialization:** <br />
    An empty array (classes) is used to store valid strings.
@@ -66,27 +66,13 @@ cnx("hello", true && "foo", false && "bar");
 cnx(["foo"], ["", 0, false, "bar"], [["baz", [["hello"], "there"]]]);
 // Output: "foo bar baz hello there"
 
-cnx(
-  "foo",
-  [1 && "bar", { baz: false, bat: null }, ["hello", ["world"]]],
-  "cya"
-);
+cnx("foo", [1 && "bar", { baz: false, bat: null }, ["hello", ["world"]]], "cya");
 // Output: "foo bar hello world cya"
 
-cnx(
-  "foo",
-  { primary: true, disabled: false },
-  ["extra", null, undefined],
-  () => "dynamic"
-);
+cnx("foo", { primary: true, disabled: false }, ["extra", null, undefined], () => "dynamic");
 // Output: "foo primary extra dynamic"
 
-cnx([
-  { color: "red", fontSize: "16px" },
-  () => ({ backgroundColor: "blue" }),
-  undefined,
-  [{ margin: "10px" }, () => ({ padding: "5px" })]
-]);
+cnx([{ color: "red", fontSize: "16px" }, () => ({ backgroundColor: "blue" }), undefined, [{ margin: "10px" }, () => ({ padding: "5px" })]]);
 // Output: "color fontSize backgroundColor margin padding"
 ```
 
@@ -99,9 +85,9 @@ cnx(Boolean, Object, undefined, null, "", 0, NaN);
 
 ## Advantages
 
-✅ Makes it easier to manage dynamic CSS classes.
-✅ Logic wrangling of class merging in code.
-✅ Useful in frameworks like React, Vue, or Svelte for changing class conditions.
+- Makes it easier to manage dynamic CSS classes.
+- Logic wrangling of class merging in code.
+- Useful in frameworks like React, Vue, or Svelte for changing class conditions.
 
 ---
 

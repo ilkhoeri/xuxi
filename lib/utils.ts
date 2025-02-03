@@ -17,3 +17,10 @@ export function formatDate(input: string | number): string {
 export function absoluteUrl(path: string) {
   return `${process.env.NEXT_PUBLIC_APP_URL}${path}`;
 }
+
+export function tocopy(text: string) {
+  const regex = /^```.*\n|\n```\s*$/gm;
+  text = text.replace(regex, "");
+
+  return text;
+}

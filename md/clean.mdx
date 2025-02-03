@@ -16,7 +16,7 @@ function clean<T extends ocxKey>(obj: T, exclude?: unknown[]): T;
 - `obj`: The object to clean.
 - `exclude`: An optional array of values to preserve even if they are falsy. Default is [].
 
-### How `clean()` Works
+### How clean Works
 
 1. **Removes Falsy Values:** <br/>
    Eliminates null, undefined, NaN, false, "" (empty strings), unless specified otherwise in exclude.
@@ -116,8 +116,8 @@ console.log(clean(obj, [false]));
 
 ## Advantages
 
-✅ **Reduces unnecessary data** by removing `null`, `undefined`, and other falsy values.
-✅ **Deeply cleans objects and arrays**, ensuring a well-structured and meaningful dataset.
-✅ **Customizable exclusions**, allowing control over which falsy values should remain.
-✅ **Enhances API responses** by removing redundant properties.
-✅ **Improves performance** by reducing object size, leading to optimized data transmission.
+- **Reduces unnecessary data** by removing `null`, `undefined`, and other falsy values.
+- **Deeply cleans objects and arrays**, ensuring a well-structured and meaningful dataset.
+- **Customizable exclusions**, allowing control over which falsy values should remain.
+- **Enhances API responses** by removing redundant properties.
+- **Improves performance** by reducing object size, leading to optimized data transmission.

@@ -11,9 +11,7 @@ It allows combining classes based on a predefined variant configuration, with th
 ## Syntax
 
 ```ts
-function cvx<T extends cvxKeys>(
-  keys: cvxRecord<T>
-): (result?: cvxResult<T>) => string;
+function cvx<T extends cvxKeys>(keys: cvxRecord<T>): (result?: cvxResult<T>) => string;
 ```
 
 ```ts
@@ -24,7 +22,7 @@ cvx({
 });
 ```
 
-## How `cvx` works:
+## How cvx works:
 
 1. **Merge Variants:** <br />
    The variants provided by the user via `variant` are merged with the default variants (`defaultVariants`), if any.
@@ -94,12 +92,12 @@ type Color = NonNullable<cvxProps<typeof classes>["color"]>;
 
 ## Advantages
 
-✅ **Flexibility:** <br />
-Supports a wide range of variant combinations.
-✅ **Consistency:** <br />
-Simplifies class management with a clearly defined structure.
-✅ **Efficiency:** <br />
-Minimizes duplication of class logic in code.
+- **Flexibility:** <br />
+  Supports a wide range of variant combinations.
+- **Consistency:** <br />
+  Simplifies class management with a clearly defined structure.
+- **Efficiency:** <br />
+  Minimizes duplication of class logic in code.
 
 ## IntelliSense
 

@@ -1,85 +1,7 @@
 ---
 title: Home
-date: 2025-02-02
+date: 2025-02-03
 ---
-
-<details>
-<summary><h1>Table of Contents</h1></summary>
-
-- [**Introduction**](#introduction)
-  - [Installation](#installation)
-    - [Requirements](#requirements)
-- [**cnx**](#cnx)
-  - [Syntax](#syntax)
-  - [How `cnx` works:](#how-cnx-works)
-  - [Example Usage](#example-usage)
-    - [Basic Merging](#basic-merging)
-    - [Complex Merging](#complex-merging)
-    - [Ignored Falsy](#ignored-falsy)
-  - [Advantages](#advantages)
-  - [Merge class tailwind-merge](#merge-class-tailwind-merge)
-  - [IntelliSense](#intellisense)
-- [**cvx**](#cvx)
-  - [Syntax](#syntax-1)
-  - [How `cvx` works:](#how-cvx-works)
-  - [Example Usage](#example-usage-1)
-  - [Advantages](#advantages-1)
-  - [IntelliSense](#intellisense-1)
-- [**ocx**](#ocx)
-  - [Syntax](#syntax-2)
-  - [How `ocx` works:](#how-ocx-works)
-  - [Example Usage](#example-usage-2)
-    - [Merging Objects](#merging-objects)
-  - [Real-World Examples](#real-world-examples)
-    - [Dynamic API Response Combination](#dynamic-api-response-combination)
-    - [Complex API Response Combination with additional data](#complex-api-response-combination-with-additional-data)
-    - [Complex Merging of Nested and Dynamic Data](#complex-merging-of-nested-and-dynamic-data)
-    - [Complex API Serialization Example](#complex-api-serialization-example)
-  - [Handling `Symbol` Keys in `ocx`](#handling-symbol-keys-in-ocx)
-    - [Why Use `Symbol`?](#why-use-symbol)
-    - [Example Usage with `Symbol`](#example-usage-with-symbol)
-      - [1. `Symbol` as Object Keys](#1-symbol-as-object-keys)
-      - [2. Merging Objects with `Symbol`](#2-merging-objects-with-symbol)
-      - [3. Deep Merging with `Symbol`](#3-deep-merging-with-symbol)
-      - [4. `Symbol` in Nested Objects](#4-symbol-in-nested-objects)
-      - [5. `Symbol` in Node.js (`util.inspect.custom`)](#5-symbol-in-nodejs-utilinspectcustom)
-  - [Advantages](#advantages-2)
-- [**cleanFalsy**](#cleanfalsy)
-  - [Syntax](#syntax-3)
-    - [How `cleanFalsy()` Works](#how-cleanfalsy-works)
-  - [Example Usage](#example-usage-3)
-    - [Removing Falsy Values from an Object](#removing-falsy-values-from-an-object)
-    - [Removing Falsy Values from Arrays](#removing-falsy-values-from-arrays)
-    - [Preserving Certain Falsy Values](#preserving-certain-falsy-values)
-    - [Cleaning Nested Objects](#cleaning-nested-objects)
-    - [Cleaning Arrays](#cleaning-arrays)
-    - [Excluding Specific Values](#excluding-specific-values)
-  - [Advantages](#advantages-3)
-- [**rem - em**](#rem---em)
-  - [Syntax](#syntax-4)
-    - [Parameters](#parameters)
-    - [Details:](#details)
-  - [Example Usage](#example-usage-4)
-- [**px**](#px)
-  - [Syntax](#syntax-5)
-    - [Parameters](#parameters-1)
-  - [Example Usage](#example-usage-5)
-- [**createConverter**](#createconverter)
-  - [Syntax](#syntax-6)
-    - [Parameters](#parameters-2)
-  - [Example Usage](#example-usage-6)
-  - [Advantages and Optimizations](#advantages-and-optimizations)
-- [**Exported**](#exported)
-  - [Using Named and Default Exports Together](#using-named-and-default-exports-together)
-  - [**For ES Modules Users**](#for-es-modules-users)
-  - [**For CommonJS Users**](#for-commonjs-users)
-  - [**How We Recommend Using This Library**](#how-we-recommend-using-this-library)
-  - [**Targeting ES2020**](#targeting-es2020)
-- [**Links**](#links)
-- [**License**](#license)
-- [**Others**](#others)
-
-</details>
 
 # **Introduction**
 
@@ -116,28 +38,8 @@ You can find `cretex` in:
   }
   ```
 
-using [npm](https://www.npmjs.com/package/cretex)
-
 ```bash
 npm install cretex
-```
-
-using [bun](https://bun.sh/docs/cli/add)
-
-```bash
-bun add cretex
-```
-
-using [pnpm](https://pnpm.io/cli/add)
-
-```bash
-pnpm add cretex
-```
-
-using [yarn](https://classic.yarnpkg.com/en/package/cretex)
-
-```bash
-yarn add cretex
 ```
 
 using [cdn](https://www.jsdelivr.com/package/npm/cretex)
