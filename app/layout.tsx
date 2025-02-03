@@ -110,6 +110,8 @@ export const viewport = {
   ]
 };
 
+export const dynamic = "force-dynamic";
+
 async function cookiesValues() {
   const cookieStore = await cookies();
   const dir = cookieStore.get(Cookies.dir)?.value;
