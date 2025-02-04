@@ -44,8 +44,8 @@ export function DashboardTableOfContents({ toc, sub = 6 }: TocProps) {
 
   const mounted = useMounted();
 
-  const paths = pathname.split("/").slice(2).filter(Boolean);
-  const editPageLink = paths.length > 1 ? `https://github.com/ilkhoeri/oeri/edit/master/resource/docs_raw/${paths}.mdx` : "";
+  const paths = pathname.split("/").filter(Boolean);
+  const editPageLink = paths.length ? `https://github.com/ilkhoeri/cretex/edit/docs/md/${paths.join("/")}.mdx` : "";
 
   if (!toc?.items?.length) return null;
 
@@ -58,7 +58,6 @@ export function DashboardTableOfContents({ toc, sub = 6 }: TocProps) {
               On This Page
             </h4>
           </hgroup>
-
           <Tree tree={toc} sub={sub} activeItem={activeHeading} />
         </nav>
       )}

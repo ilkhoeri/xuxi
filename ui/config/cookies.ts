@@ -1,8 +1,8 @@
 "use cilent";
 import { Cookies } from "./types";
-import { useEffect, useState } from "react";
+import * as React from "react";
 
-type CookiesName = `${Cookies}` | (string & {});
+export type CookiesName = `${Cookies}` | (string & {});
 
 export function setCookies(name: CookiesName, value: string, days = 30) {
   const date = new Date();
@@ -11,18 +11,31 @@ export function setCookies(name: CookiesName, value: string, days = 30) {
 }
 
 export function useCookies<T extends string>(name: CookiesName, initial: T) {
-  const [cookieValue, setCookieValue] = useState(initial as string);
-
-  useEffect(() => {
+  const getCookie = React.useCallback(() => {
     const cookies = document.cookie
       .split("; ")
       .find(row => row.startsWith(`${name}=`))
       ?.split("=")[1];
+    return cookies ? decodeURIComponent(cookies) : initial;
+  }, [name, initial]);
 
-    if (cookies) setCookieValue(decodeURIComponent(cookies));
-  }, []);
+  const [cookieValue, setCookieValue] = React.useState(getCookie);
 
-  return cookieValue;
+  React.useEffect(() => {
+    setCookieValue(getCookie());
+  }, [getCookie]);
+
+  const setCookie = React.useCallback(
+    (value: string, days = 365) => {
+      const expires = new Date();
+      expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+      document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/`;
+      setCookieValue(value);
+    },
+    [name]
+  );
+
+  return [cookieValue, setCookie] as const;
 }
 
 export function useCookiesValues() {

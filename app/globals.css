@@ -1160,42 +1160,35 @@
 
 /* sheets */
 @layer base {
-  [data-origin="trigger"] [data-origin="arrow-collapse"] {
+  [data-sheets="trigger"] [data-sheets="chevron"] {
     position: relative;
     margin-left: var(--ml-icon, auto);
     color: hsl(var(--color) / 0.7);
-    width: var(--sz-icon, 16px);
-    min-width: var(--sz-icon, 16px);
-    max-width: var(--sz-icon, 16px);
-    height: var(--sz-icon, 16px);
-    min-height: var(--sz-icon, 16px);
-    max-height: var(--sz-icon, 16px);
+    width: var(--sz-icon, 1.0625rem);
+    min-width: var(--sz-icon, 1.0625rem);
+    max-width: var(--sz-icon, 1.0625rem);
+    height: var(--sz-icon, 1.0625rem);
+    min-height: var(--sz-icon, 1.0625rem);
+    max-height: var(--sz-icon, 1.0625rem);
     transform: rotate(var(--tw-rotate));
     transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  [data-origin="trigger"][data-side="top"] [data-origin="arrow-collapse"] {
+  [data-sheets="trigger"][data-state*="open"] [data-sheets="chevron"],
+  [data-sheets="trigger"][data-side="top"] [data-sheets="chevron"],
+  [data-sheets="trigger"][data-side="bottom"][data-state*="open"] [data-sheets="chevron"] {
     --tw-rotate: -180deg;
   }
-  [data-origin="trigger"][data-side="top"][data-state*="open"] [data-origin="arrow-collapse"] {
+  [data-sheets="trigger"][data-side="bottom"] [data-sheets*="chevron"],
+  [data-sheets="trigger"][data-side="top"][data-state*="open"] [data-sheets="chevron"] {
     --tw-rotate: 0deg;
   }
-  [data-origin="trigger"][data-side="right"] [data-origin="arrow-collapse"] {
+  [data-sheets="trigger"][data-side="right"] [data-sheets="chevron"],
+  [data-sheets="trigger"][data-side="left"][data-state*="open"] [data-sheets="chevron"] {
     --tw-rotate: 90deg;
   }
-  [data-origin="trigger"][data-side="right"][data-state*="open"] [data-origin="arrow-collapse"] {
+  [data-sheets="trigger"][data-state*="closed"] [data-sheets="chevron"] [data-sheets="trigger"][data-side="left"] [data-sheets="chevron"],
+  [data-sheets="trigger"][data-side="right"][data-state*="open"] [data-sheets="chevron"] {
     --tw-rotate: -90deg;
-  }
-  [data-origin="trigger"][data-side="bottom"] [data-origin*="arrow-collapse"] {
-    --tw-rotate: 0deg;
-  }
-  [data-origin="trigger"][data-side="bottom"][data-state*="open"] [data-origin="arrow-collapse"] {
-    --tw-rotate: -180deg;
-  }
-  [data-origin="trigger"][data-side="left"] [data-origin="arrow-collapse"] {
-    --tw-rotate: -90deg;
-  }
-  [data-origin="trigger"][data-side="left"][data-state*="open"] [data-origin="arrow-collapse"] {
-    --tw-rotate: 90deg;
   }
 }
 
@@ -3152,7 +3145,11 @@ code[data-line-numbers-max-digits="3"] > [data-line]::before {
     @apply p-[0em_.25em] text-[85%] leading-normal transition-colors underline underline-offset-2 text-color decoration-color-muted hover:decoration-constructive hover:text-color font-geist-mono;
   }
 
-  & :where(:is(h1, h2, h3, h4, h5)):not(:is([data-demo-area] :is(h1, h2, h3, h4, h5))) {
+  & :where(:is(h1, )):not(:is([data-demo-area] :is(h1))) {
+    @apply text-color leading-none mb-6 mt-0 flex items-center cursor-default w-max [&>a>svg]:hover:text-constructive max-w-full;
+  }
+
+  & :where(:is(h2, h3, h4, h5)):not(:is([data-demo-area] :is(h2, h3, h4, h5))) {
     @apply text-color mt-9 mb-1 flex items-center cursor-default w-max [&>a>svg]:hover:text-constructive max-w-full;
   }
   & :where(:is(h1, h2, h3, h4, h5)) {
@@ -3197,13 +3194,13 @@ code[data-line-numbers-max-digits="3"] > [data-line]::before {
   }
   & code:not(:is([data-demo-area] code), [data-language="bash"], .inline-block),
   & .codebox {
-    @apply [--ff-mono:var(--ff-geist-mono)] p-[var(--p-code,0.15rem_0.25rem)] leading-normal [font-size:var(--fz-code,85%)] rounded-[var(--round-code,calc(var(--radius)-4px))] border bg-[--bg-code,hsl(var(--primitive))] border-primitive-foreground;
+    @apply [--ff-mono:var(--ff-geist-mono)] p-[var(--p-code,0rem_0.125rem)] mx-[.125rem] leading-normal [font-size:var(--fz-code,95%)] rounded-[var(--round-code,calc(var(--radius)-4px))] border bg-[--bg-code,hsl(var(--primitive))] border-primitive-foreground;
   }
 
   & :where(ul:is(:is([id="advantages"]) + ul:not(:is(p + ul)))) {
     &:not(:is([data-demo-area] &)) {
       & > li {
-        @apply marker:content-['✅'] marker:mr-1;
+        @apply marker:content-['✅'] pl-2;
       }
     }
   }

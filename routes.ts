@@ -13,8 +13,8 @@ export const ROUTES = {
   ],
   docs: [
     {
-      title: "Docs",
-      href: "/",
+      title: "Usage",
+      href: "/ocx",
       data: [
         { title: "ocx", href: "/ocx" },
         { title: "cvx", href: "/cvx" },
@@ -26,16 +26,17 @@ export const ROUTES = {
         { title: "Code of Conduct", href: "/coc" },
         { title: "others", href: "/others" }
       ]
-    },
-    {
-      title: "About",
-      href: "/about",
-      data: [{ title: "About app", href: "/about/app" }]
     }
+    // {
+    //   title: "About",
+    //   href: "/about",
+    //   data: [{ title: "About app", href: "/about/app" }]
+    // }
   ] as SingleRoute[],
   docsHead: [
-    { title: "Getting Started", href: "/" },
-    { title: "Table of Contents", href: "/toc" }
+    { title: "Table of Contents", href: "/toc" },
+    { title: "Getting Started", href: "/started" },
+    { title: "Installation", href: "/installation" }
   ] as InnerRoutes[],
   sections: [
     {

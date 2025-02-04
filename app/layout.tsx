@@ -9,7 +9,6 @@ import { META_THEME_COLORS, SEO_VERIFICATION, siteConfig, iconsConfig, linksConf
 import "./globals.css";
 import type { Metadata } from "next";
 
-
 export function metadata(): Metadata {
   return {
     title: {

@@ -84,6 +84,7 @@ export function ThemeToggle({ classNames, unstyled }: { classNames?: { wrapper?:
           key={i.name}
           role="button"
           data-state={keyTheme === i.name ? "active" : ""}
+          suppressHydrationWarning
           onClick={() => memoizedTheme(i.name)}
           aria-label={i.name}
           className={cn(

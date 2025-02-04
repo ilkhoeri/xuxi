@@ -13,12 +13,6 @@ The `ocx` function is a utility for combining different types of values into a s
 function ocx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T>;
 ```
 
-Additionally, `ocx` provides a `.raw()` method that performs deep merging **without removing falsy values**:
-
-```ts
-function ocx.raw<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T>;
-```
-
 ## How ocx works:
 
 1. **Input Processing:** <br />

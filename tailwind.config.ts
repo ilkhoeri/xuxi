@@ -7,7 +7,7 @@ export default {
   content: [
     "./app/**/*.{js,jsx,ts,tsx,md,mdx}",
     "./ui/**/*.{js,jsx,ts,tsx,md,mdx}",
-    "./d/**/*.{js,jsx,ts,tsx,md,mdx}",
+    "./md/**/*.{js,jsx,ts,tsx,md,mdx}",
     "./components/**/*.{js,jsx,ts,tsx,md,mdx}",
     "./pages/**/*.{js,jsx,ts,tsx,md,mdx}",
   ],
