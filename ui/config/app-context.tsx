@@ -47,7 +47,7 @@ function useAppFuntions(_app: useAppProps) {
   const [openAsideConfig, setOpenAsideConfig] = useConfig("__is_open_aside", openAside as `${Booleanish}`);
 
   const { dir: _dir, toggleDirection: toggleDir, ..._direction } = useDirection({ initialDirection: dir as Direction });
-  const [dirConfig, setDirConfig] = useConfig("__dir", _dir as Direction);
+  const [dirConfig, setDirConfig] = useConfig("__dir", dir as Direction);
 
   const toggleDirection = () => {
     toggleDir();
