@@ -12,10 +12,12 @@ export function setCookies(name: CookiesName, value: string, days = 30) {
 
 export function useCookies<T extends string>(name: CookiesName, initial: T) {
   const getCookie = React.useCallback(() => {
-    const cookies = document.cookie
-      .split("; ")
-      .find(row => row.startsWith(`${name}=`))
-      ?.split("=")[1];
+    const cookies =
+      typeof document !== "undefined" &&
+      document.cookie
+        .split("; ")
+        .find(row => row.startsWith(`${name}=`))
+        ?.split("=")[1];
     return cookies ? decodeURIComponent(cookies) : initial;
   }, [name, initial]);
 
