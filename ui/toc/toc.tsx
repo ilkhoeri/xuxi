@@ -74,7 +74,8 @@ export function DashboardTableOfContents({ toc, sub = 6 }: TocProps) {
           strokeLinecap="round"
           strokeLinejoin="round"
           xmlns="http://www.w3.org/2000/svg"
-          className="-rotate-45 stroke-[1.25] sizer [--sz:28px]">
+          className="-rotate-45 stroke-[1.25] sizer [--sz:28px]"
+        >
           <path d="M12 16l4 -4l-4 -4" />
           <path d="M8 12h8" />
         </svg>
@@ -131,13 +132,15 @@ function Tree({ tree, level = 1, sub = 3, activeItem }: TreeProps) {
       className={cn("text-span list-none", {
         "pl-4 rtl:pl-0 rtl:pr-4": level !== 1,
         "webkit-scrollbar lg:max-h-[calc(100dvh-13rem)] overflow-y-auto pb-4 -ml-4 [&>div>a]:hidden": level === 1
-      })}>
+      })}
+    >
       {tree.items.map((item, index) => {
         return (
           <div key={index} className={cn("text-muted-foreground pt-2")}>
             <a
               href={item.url}
-              className={cn("hover:text-color inline-block no-underline transition-colors", item.url === `#${activeItem}` ? "text-color" : "text-muted-foreground")}>
+              className={cn("hover:text-color inline-block no-underline transition-colors", item.url === `#${activeItem}` ? "text-color" : "text-muted-foreground")}
+            >
               {displayName(item.title)}
             </a>
             {item.items?.length ? <Tree sub={sub} tree={item} level={level + 1} activeItem={activeItem} /> : null}

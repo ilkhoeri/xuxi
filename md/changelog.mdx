@@ -122,7 +122,7 @@ Migrated from `bun` to `yarn`. Now, all command processes use `yarn` instead of 
 - Added `cleanFalsy` function and chaining support for `ocx` (`.clean()`).
 - Enhanced `ocxMap` type to support functions with an optional key parameter: `((key?: ocxKey) => ocxMap)`, enabling usage like:
   ```ts
-  ocx([{}, key => key?.role === 'admin' && { permissions: ['read', 'write', 'delete'] }]);
+  ocx([{}, key => key?.role === "admin" && { permissions: ["read", "write", "delete"] }]);
   ```
 - Provided `symbol documentation` for all functions.
 - Introduced official documentation: [ilkhoeri.github.io/cretex](https://ilkhoeri.github.io/cretex/).
@@ -134,20 +134,20 @@ Migrated from `bun` to `yarn`. Now, all command processes use `yarn` instead of 
 
 - Updated `cnx` function to trim whitespace by modifying:
   ```ts
-  inputs.join(' '); // previous
-  inputs.join(' ').trim(); // updated
+  inputs.join(" "); // previous
+  inputs.join(" ").trim(); // updated
   ```
 - Updated `cvx` function to trim whitespace by modifying:
 
   ```ts
-  variants.filter(Boolean).join(' '); // previous
+  variants.filter(Boolean).join(" "); // previous
   variants
     .filter(Boolean)
-    .join(' ')
+    .join(" ")
     .trim() // updated
 
-    [(keys.assign, variants)].join(' ') // previous
-    [(keys.assign, variants)].join(' ')
+    [(keys.assign, variants)].join(" ") // previous
+    [(keys.assign, variants)].join(" ")
     .trim(); // updated
   ```
 
@@ -157,8 +157,8 @@ Migrated from `bun` to `yarn`. Now, all command processes use `yarn` instead of 
 - If needed, users must implement their own `cn` utility as follows:
 
   ```ts
-  import { twMerge } from 'tailwind-merge';
-  import { cnx, type cnxValues } from 'cretex';
+  import { twMerge } from "tailwind-merge";
+  import { cnx, type cnxValues } from "cretex";
 
   export function cn(...merge: cnxValues[]): string {
     return twMerge(cnx(...merge));
