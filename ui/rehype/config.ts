@@ -11,7 +11,7 @@ function useStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
     initialValue
   });
 
-  return [getStoredValue!, setStoredValue];
+  return [getStoredValue!, setStoredValue] as const;
 }
 
 export function useConfig() {

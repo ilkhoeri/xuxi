@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
-import { CookiesName, setCookies, useCookies } from "./cookies";
-import { Cookies } from "./types";
+import { CookiesName, useConfig, useCookies } from "./cookies";
 import { useDirection, type Direction } from "@/hooks/use-direction";
 
 export enum Booleanish {
@@ -19,7 +18,7 @@ interface CtxProps {
   openAside: `${Booleanish}`;
   setOpenAside: (v: `${Booleanish}`) => void;
   // setCookies(name: `${Cookies}` | (string & {}), value: string): Promise<void>;
-  useCookies<T extends string>(name: CookiesName, initial: T): readonly [string, (value: string, days?: number) => void];
+  useCookies<T extends string>(name: CookiesName, initial: T, value: string | undefined): readonly [string, (value: string, days?: number) => void];
   toggleDirection: () => void;
   setDirection: (dir: Direction) => void;
   // initial type
@@ -39,14 +38,28 @@ export const useApp = () => {
 };
 
 function useAppFuntions(_app: useAppProps) {
-  const [initialisOpenAside] = useCookies("__is_open_aside", "true");
-  const [initialTheme] = useCookies("__theme", "system");
-  const [initialDirection] = useCookies("__dir", "ltr");
+  // const [initialisOpenAside] = useCookies("__is_open_aside", "true", _app.isOpenAside);
+  // const [initialTheme] = useCookies("__theme", "system", _app.theme);
+  // const [initialDirection] = useCookies("__dir", "ltr", _app.dir);
 
-  const { isOpenAside = initialisOpenAside, theme = initialTheme, dir = initialDirection, ...others } = _app;
-  const [openAside, setOpenAside] = React.useState<`${Booleanish}`>(isOpenAside as `${Booleanish}`);
-  const { dir: _dir, ..._direction } = useDirection({ initialDirection: dir as Direction });
-  return { theme, dir: _dir, openAside, setOpenAside, ..._direction, ...others };
+  const { isOpenAside = "true", theme = "system", dir = "ltr", ...others } = _app;
+  const [openAside, _setOpenAside] = React.useState<`${Booleanish}`>(isOpenAside as `${Booleanish}`);
+  const [openAsideConfig, setOpenAsideConfig] = useConfig("__is_open_aside", openAside as `${Booleanish}`);
+
+  const { dir: _dir, toggleDirection: toggleDir, ..._direction } = useDirection({ initialDirection: dir as Direction });
+  const [dirConfig, setDirConfig] = useConfig("__dir", _dir as Direction);
+
+  const toggleDirection = () => {
+    toggleDir();
+    setDirConfig(dir === "ltr" ? "rtl" : "ltr");
+  };
+
+  const setOpenAside = (v: `${Booleanish}` = isOpenAside === "true" ? "false" : "true") => {
+    _setOpenAside(v);
+    setOpenAsideConfig(v);
+  };
+
+  return { theme, dir: dirConfig, openAside: openAsideConfig, setOpenAside, toggleDirection, ..._direction, ...others };
 }
 
 export function AppProvider({ children, ...props }: AppProviderProps) {

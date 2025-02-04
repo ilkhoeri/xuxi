@@ -286,7 +286,7 @@ export const htmlCharacterEntities = [
 type NameFormat = "uppercase" | "capitalizeFirst" | "capitalize" | "lowercase" | "unformated";
 export function displayName(title: string, format: NameFormat = "capitalize") {
   const numberRgx = /^(\d+\.)\s*(.+)/;
-  const cleanTitle = title.replace(":", "").trim();
+  const cleanTitle = title.replace(":", "").replace("?", "").trim();
 
   // Jika formatnya [0.0.0] - YYYY-MM-DD, ubah menjadi v0.0.0
   const versionMatch = title.match(/^\[(\d+\.\d+\.\d+)\]\s*-\s*\d{4}-\d{2}-\d{2}$/);

@@ -131,7 +131,7 @@ function Tree({ tree, level = 1, sub = 3, activeItem }: TreeProps) {
     <div
       className={cn("text-span list-none", {
         "pl-4 rtl:pl-0 rtl:pr-4": level !== 1,
-        "webkit-scrollbar lg:max-h-[calc(100dvh-13rem)] overflow-y-auto pb-4 -ml-4 [&>div>a]:hidden": level === 1
+        "webkit-scrollbar lg:max-h-[calc(100dvh-13rem)] overflow-y-auto pb-4 -ml-4 rtl:ml-0 rtl:-mr-4 [&>div>a]:hidden": level === 1
       })}
     >
       {tree.items.map((item, index) => {
