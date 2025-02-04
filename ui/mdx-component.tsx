@@ -64,7 +64,7 @@ const components = {
     return (
       <>
         <pre className={cn("mb-4 mt-6 !bg-transparent !bg-none", className)} {...props} />
-        {__rawString__ && <CopyButton value={__rawString__} className={cn("absolute right-1 top-1 shadow", __withMeta__ && "top-16")} />}
+        {__rawString__ && <CopyButton value={__rawString__} className={cn("absolute right-1 top-1 shadow bg-transparent", __withMeta__ && "top-16")} />}
       </>
     );
   },

@@ -22,7 +22,8 @@ export const Burger = React.forwardRef<HTMLButtonElement, BurgerProps>(function 
           props?.onClick?.(e);
         },
         ...props
-      }}>
+      }}
+    >
       <Svg currentFill="fill" {...getStyles({ classes: "svg", open })}>
         {[...Array(3)].map((_, index) => (
           <path key={index} {...getStyles({ path: String(index) as Index, open, index })} />

@@ -11,6 +11,11 @@ export const ROUTES = {
       href: "https://oeri.vercel.app"
     }
   ],
+  docsHead: [
+    { title: "Table of Contents", href: "/toc" },
+    { title: "Getting Started", href: "/started" },
+    { title: "Installation", href: "/installation" }
+  ] as InnerRoutes[],
   docs: [
     {
       title: "Usage",
@@ -20,11 +25,18 @@ export const ROUTES = {
         { title: "cvx", href: "/cvx" },
         { title: "cnx", href: "/cnx" },
         { title: "clean", href: "/clean" },
-        { title: "links", href: "/links" },
+        { title: "types", href: "/types" }
+      ]
+    },
+    {
+      title: "Meta",
+      href: "/meta",
+      data: [
+        { title: "exported", href: "/exported" },
         { title: "license", href: "/license" },
         { title: "changelog", href: "/changelog" },
         { title: "Code of Conduct", href: "/coc" },
-        { title: "others", href: "/others" }
+        { title: "links", href: "/links" }
       ]
     }
     // {
@@ -33,11 +45,6 @@ export const ROUTES = {
     //   data: [{ title: "About app", href: "/about/app" }]
     // }
   ] as SingleRoute[],
-  docsHead: [
-    { title: "Table of Contents", href: "/toc" },
-    { title: "Getting Started", href: "/started" },
-    { title: "Installation", href: "/installation" }
-  ] as InnerRoutes[],
   sections: [
     {
       label: "Github Repository",
@@ -70,6 +77,10 @@ export const ROUTES = {
   },
   footRoutes: [] as InnerRoutes[]
 };
+
+export const tocList = [...ROUTES["docsHead"].map(d => d.href), ...ROUTES["docs"].flatMap(d => d.data.map(item => item.href))]
+  .map(href => href.slice(1)) // Menghapus karakter "/" di awal
+  .filter(href => href !== "toc"); // Mengecualikan "toc"
 
 type RouteMap = Record<string, { page: string }>;
 

@@ -120,7 +120,8 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((_props, ref) =>
         getStyles,
         color,
         ...stylesApi
-      }}>
+      }}
+    >
       <Root
         {...{
           ref,
@@ -128,7 +129,8 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((_props, ref) =>
           color: typeof color === "object" ? undefined : color,
           ...stylesApi,
           ...props
-        }}>
+        }}
+      >
         {children}
       </Root>
     </ctx.Provider>
@@ -313,7 +315,8 @@ export const TabsTab = React.forwardRef<HTMLButtonElement, TabsTabProps>((_props
         onKeyDown: handleKeyDown,
         ...ctx.getStyles("tab", { className, style: { "--tabs-color": color, ...style }, ...stylesApi }),
         ...props
-      }}>
+      }}
+    >
       {leftSection && (
         <span {...ctx.getStyles("tabSection", stylesApi)} data-position="left">
           {leftSection}
@@ -361,7 +364,8 @@ export const TabsPanel = React.forwardRef<HTMLDivElement, TabsPanelProps>((_prop
         ...ctx.getStyles("panel", stylesApi),
         ...props,
         hidden: !active
-      }}>
+      }}
+    >
       {content}
     </div>
   );

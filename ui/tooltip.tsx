@@ -68,7 +68,8 @@ const TooltipContent = React.forwardRef<React.ElementRef<typeof Primitive.Conten
           className
         ),
         ...props
-      }}>
+      }}
+    >
       {children}
       {withArrow && (
         <svg fill="currentColor" viewBox="0 0 15 6" strokeWidth="0" data-side={side} data-align={align} data-tooltip="arrow" className={arrow}>
@@ -131,7 +132,8 @@ const Tooltip = React.forwardRef<React.ElementRef<typeof Primitive.Trigger>, Too
             className: cn(classNames?.content, contentProps?.className),
             style: { ...styles?.content, ...contentProps?.style },
             ...contentProps
-          }}>
+          }}
+        >
           {content}
         </TooltipContent>
       )}

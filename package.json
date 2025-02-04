@@ -4,10 +4,15 @@
   "description": "cretex github docs pages",
   "private": true,
   "scripts": {
-    "dev": "npm run build:content && next dev --turbopack",
+    "dev": "npm run build:mdx && next dev --turbopack",
     "build": "next build",
-    "build:m2d": "bun run script/copy.ts",
+    "build:mdx": "bun build:m2d && bun generate:toc && bun build:content",
     "build:content": "contentlayer2 build",
+    "build:m2d": "bun run scripts/copy.ts",
+    "generate:toc": "bun run scripts/generateToc.ts",
+    "prettier:fix": "prettier --write ./* --ignore-unknown --no-error-on-unmatched-pattern",
+    "prettier:check": "prettier --check ./* --no-error-on-unmatched-pattern",
+    "prettier": "bun prettier:fix && bun prettier:check",
     "start": "next start",
     "lint": "next lint"
   },

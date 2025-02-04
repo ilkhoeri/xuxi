@@ -123,7 +123,8 @@ export function CodeBlockCommand(_props: React.ComponentProps<"pre"> & NpmComman
             ...config,
             packageManager: value as "pnpm" | "npm" | "yarn" | "bun"
           });
-        }}>
+        }}
+      >
         <Tabs.List className="flex flex-row items-center justify-start gap-3 border-b bg-background-box px-3 pt-0.5">
           {Object.entries(tabs).map(([key]) => {
             return (
@@ -133,7 +134,8 @@ export function CodeBlockCommand(_props: React.ComponentProps<"pre"> & NpmComman
                 data-pm={key}
                 className={cn("-mb-px border-b border-transparent p-1 font-geist-mono text-muted-foreground", {
                   "aria-selected:border-color aria-selected:text-color": mounted
-                })}>
+                })}
+              >
                 {key}
               </Tabs.Tab>
             );

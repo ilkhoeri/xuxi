@@ -283,7 +283,19 @@ export const htmlCharacterEntities = [
   { char: " ", entity: "&nbsp;" }
 ];
 
-export function displayName(title: string) {
-  const retitle = title.replace(":", "");
-  return title.startsWith("use") ? kebabToCamel(retitle) : transform.capitalize(retitle);
+type NameFormat = "uppercase" | "capitalizeFirst" | "capitalize" | "lowercase" | "unformated";
+export function displayName(title: string, format: NameFormat = "capitalize") {
+  const numberRgx = /^(\d+\.)\s*(.+)/;
+  const cleanTitle = title.replace(":", "").trim();
+
+  // Jika formatnya [0.0.0] - YYYY-MM-DD, ubah menjadi v0.0.0
+  const versionMatch = title.match(/^\[(\d+\.\d+\.\d+)\]\s*-\s*\d{4}-\d{2}-\d{2}$/);
+  if (versionMatch) return `v${versionMatch[1]}`;
+
+  if (numberRgx.test(cleanTitle)) return cleanTitle;
+
+  const emojiRgx = /[\p{Emoji}\u200B-\u200D\uFE0F]\s/gu;
+  if (emojiRgx.test(cleanTitle)) return cleanTitle.replace(emojiRgx, "");
+
+  return format !== "unformated" ? transform[format](cleanTitle) : cleanTitle;
 }

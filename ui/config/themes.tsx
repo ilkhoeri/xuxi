@@ -28,7 +28,8 @@ export function ThemeProvider({ children, enableSystem = true, attribute = "clas
         defaultTheme,
         disableTransitionOnChange,
         ...props
-      }}>
+      }}
+    >
       {children}
     </NextThemesProvider>
   );
@@ -91,7 +92,8 @@ export function ThemeToggle({ classNames, unstyled }: { classNames?: { wrapper?:
             !unstyled?.buttons &&
               "relative flex h-[var(--ttg-sz,30px)] w-[var(--ttg-sz,30px)] cursor-pointer select-none items-center justify-center rounded-lg border border-neutral-200 p-1 text-[13px] capitalize outline-0 transition-colors focus:bg-[#e4e4e4] focus:text-neutral-900 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-muted data-[state=active]:text-color dark:border-neutral-700 dark:focus:bg-[#373737] dark:focus:text-neutral-50",
             classNames?.buttons
-          )}>
+          )}
+        >
           <i.icon />
         </UnstyledButton>
       ))}

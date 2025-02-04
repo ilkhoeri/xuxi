@@ -14,12 +14,7 @@ const eslintConfig = config({
   rules: {
     "@typescript-eslint/ban-ts-comment": "error"
   },
-  extends: [
-    "next/core-web-vitals",
-    "next/typescript",
-    "prettier",
-    "plugin:tailwindcss/recommended"
-  ],
+  extends: ["next/core-web-vitals", "next/typescript", "prettier", "plugin:tailwindcss/recommended"],
   plugins: ["tailwindcss", "prettier"],
   ignorePatterns: ["**/fixtures/**"],
   rules: {

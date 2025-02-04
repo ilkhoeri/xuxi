@@ -54,7 +54,8 @@ export function NavLinkItem(_props: NavLinkItemTypes) {
           className: cn(className, classNames?.link, pathActive && classNames?.active),
           style,
           ...props
-        }}>
+        }}
+      >
         {image && (
           <Image
             alt=""
@@ -95,7 +96,8 @@ export const Mark = React.forwardRef<HTMLElement, MarkProps>(function Mark({ chi
         mark === true ? "bg-[#2ea043] tracking-wide" : "bg-[#e54b4b] tracking-[0]",
         className
       )}
-      {...props}>
+      {...props}
+    >
       {mark === true ? (childTrue ?? "True") : (childFalse ?? "False")}
     </mark>
   );

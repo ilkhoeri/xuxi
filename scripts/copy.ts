@@ -28,7 +28,7 @@ function syncCopy(meta: SyncCopyProps) {
     }
 
     const sourceContent = fs.readFileSync(sourcePath, "utf-8");
-    const targetContent = fs.existsSync(targetPath) ? fs.readFileSync(targetPath, "utf-8") : "";
+    // const targetContent = fs.existsSync(targetPath) ? fs.readFileSync(targetPath, "utf-8") : "";
 
     // const yamlMatch = targetContent.match(/^---\n(.*?)\n---/s);
     // const yamlMetadata = yamlMatch ? yamlMatch[0] : `---\ntitle: ${title}\ndate: ${date}\n---`;
@@ -46,14 +46,14 @@ function syncCopy(meta: SyncCopyProps) {
 const date = new Intl.DateTimeFormat("en-CA").format(new Date());
 
 syncCopy({
-  title: "Changelog",
+  title: "CHANGELOG",
   date,
   fileSource: "../../main/CHANGELOG.md",
   fileOutput: "../md/changelog.mdx"
 });
 
 syncCopy({
-  title: "Code of conduct",
+  title: "Code of Conduct",
   date,
   fileSource: "../../main/CODE_OF_CONDUCT.md",
   fileOutput: "../md/coc.mdx"

@@ -20,7 +20,8 @@ export function NavHead() {
       dir={dir}
       className={cn(
         "max-w-var border-b-muted/75 bg-background-theme/95 supports-[backdrop-filter]:bg-background-theme/60 fixed inset-x-0 top-0 z-[--z,88] mr-[--has-scrollbar] flex h-[--navbar] w-[calc(100%-var(--has-scrollbar,0px))] items-center justify-between border-0 border-b-[0.04rem] py-4 backdrop-blur md:px-5 xl:px-6"
-      )}>
+      )}
+    >
       <Polymorphic dir={dir} className="max-w-screen-3xl 3xl:px-12 relative mx-auto flex w-full items-center">
         <LinkHome className="[transition:all_0.5s_ease] max-md:data-[state=open]:translate-x-[-32px] max-md:data-[state=open]:opacity-0" />
 
@@ -49,7 +50,8 @@ export function LinkHome({ open, className }: { open?: boolean; className?: stri
       href="/"
       aria-label="oeri"
       data-state={open ? (open ? "open" : "closed") : undefined}
-      className={cn("font-geist-mono gap-2 rounded-lg px-2 py-1 text-lg font-medium leading-none", className)}>
+      className={cn("font-geist-mono gap-2 rounded-lg px-2 py-1 text-lg font-medium leading-none", className)}
+    >
       <LogoIcon size={30} />
       <span>Cretex</span>
     </Link>

@@ -29,7 +29,8 @@ export const CopyButton = React.forwardRef<
         "inline-flex items-center justify-center rounded-md ring-offset-background transition-colors text-muted-foreground [@media(hover:hover)]:hover:bg-muted/75 [@media(hover:hover)]:hover:text-color focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sizer [--sz:32px] p-0.5 bg-background",
         className
       )}
-      suppressHydrationWarning>
+      suppressHydrationWarning
+    >
       {clipboard.copied ? <CheckIcon className="size-5 animate-fade-in fade-in-0 zoom-in-0 [animation-duration:150ms]" /> : <CopyIcon className="size-5" />}
     </UnstyledButton>
   );
@@ -56,7 +57,8 @@ export const ScrollToggle = React.forwardRef<React.ComponentRef<typeof UnstyledB
         "fixed bottom-4 right-4 z-[99] mr-[--scrollbar-space,var(--has-scrollbar)] flex size-8 cursor-pointer select-none items-center justify-center rounded-xl border border-muted-foreground/40 bg-background/40 p-0.5 capitalize text-muted-foreground/90 outline-0 backdrop-blur transition-none duration-0 disabled:pointer-events-none disabled:opacity-50 supports-[backdrop-filter]:bg-background/40 [&_svg]:size-full",
         "after:absolute after:left-0 after:h-8 after:w-12 after:content-['']",
         className
-      )}>
+      )}
+    >
       <ChevronDownSquareIcon
         style={{
           rotate: bottom ? "180deg" : "0deg",

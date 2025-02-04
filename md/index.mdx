@@ -3,10 +3,9 @@ title: Cretex - The Ultimate Utility for Dynamic Data Management
 date: 2025-02-03
 ---
 
-<p align="center">
-  <img src="cretex-logo.svg" width="200px" align="center" alt="Cretex logo" />
-  <h1 align="center">Cretex</h1>
-</p>
+<div align="center">
+  <img src="/cretex-logo.svg" width="200px" align="center" alt="Cretex logo" />
+</div>
 
 <br />
 
@@ -24,7 +23,7 @@ Modern applications require a highly flexible and efficient way to handle struct
 
 - **Efficient API Response Handling** - Combine, clean, and structure API responses seamlessly.
 - **Advanced Data Serialization** - Process deeply nested objects without complexity.
-- **Dynamic Style Management** - Merge conditional styles with ease, similar to `clsx` and `cva`, but more powerful.
+- **Dynamic String Management** - Merge conditional string with ease and more powerful.
 - **Smart Object Merging** - Preserve important values while ensuring flexibility in updates.
 - **Optimized Performance** - Built-in cycle detection prevents infinite loops, and optimized processing ensures minimal overhead.
 - **Seamless TypeScript Support** - Fully typed for enhanced developer experience.
@@ -33,7 +32,7 @@ Modern applications require a highly flexible and efficient way to handle struct
 
 ## **Core Features**
 
-### **🔹 ocx - Object Combination with Chaining**
+### **ocx - Object Combination with Chaining**
 
 Cretex provides a powerful object merging utility with a **chaining mechanism** for advanced configurations.
 
@@ -41,7 +40,7 @@ Cretex provides a powerful object merging utility with a **chaining mechanism** 
 function ocx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T>;
 ```
 
-### **🔹 clean - Deep Cleaning of Objects**
+### **clean - Deep Cleaning of Objects**
 
 Removes falsy values, empty objects, and unnecessary data while maintaining control over exclusions.
 
@@ -49,7 +48,7 @@ Removes falsy values, empty objects, and unnecessary data while maintaining cont
 function clean<T extends ocxKey>(obj: T, exclude?: unknown[]): T;
 ```
 
-### **🔹 cnx - Dynamic String Management**
+### **cnx - Dynamic String Management**
 
 A simplified and powerful alternative to `clsx` that supports all argument types, including functions.
 
@@ -57,7 +56,7 @@ A simplified and powerful alternative to `clsx` that supports all argument types
 function cnx(...inputs: cnxValues[]): string;
 ```
 
-### **🔹 cvx - Variance Handling Management**
+### **cvx - Variance Handling Management**
 
 A flexible variant handling utility similar to `cva`, but with a more intuitive syntax.
 

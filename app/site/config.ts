@@ -10,8 +10,7 @@ export const siteConfig = {
   email: "khoeriilham@gmail.com",
   name: "Cretex",
   ogImage: "/assets/images/homepage.webp",
-  description:
-    "The Good Choice for Development Application based on React, components server, hooks, and more functions.",
+  description: "The Good Choice for Development Application based on React, components server, hooks, and more functions.",
   archives: ["https://github.com/ilkhoeri/ioeri"],
   keywords: [
     "ui",

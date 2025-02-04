@@ -337,7 +337,8 @@ export function SheetsProvider(_props: SheetsProviderProps) {
         isOpenMultiple,
         shouldRenderMultiple,
         handleOverlayClickMultiple
-      }}>
+      }}
+    >
       {children}
     </SheetsCtx.Provider>
   );
@@ -707,7 +708,8 @@ export const SheetsClose = React.forwardRef<React.ComponentRef<"button">, Sheets
           if (ctx && !ctx?.multipleOpen) ctx?.setOpen(false);
         },
         ...getStyles("closed", { variant, className, unstyled })
-      }}>
+      }}
+    >
       {children || <XIcon />}
     </button>
   );

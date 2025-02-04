@@ -1,7 +1,4 @@
-export function compareDesc(
-  dateLeft: Date | string | number,
-  dateRight: Date | string | number
-): number {
+export function compareDesc(dateLeft: Date | string | number, dateRight: Date | string | number): number {
   const d1 = new Date(dateLeft).getTime();
   const d2 = new Date(dateRight).getTime();
 
@@ -22,10 +19,7 @@ export function parseISO(dateString: string | undefined): Date {
   return date;
 }
 
-export function format(
-  date: Date | string | number,
-  formatStr: string
-): string {
+export function format(date: Date | string | number, formatStr: string): string {
   const d = new Date(date);
   if (isNaN(d.getTime())) {
     throw new Error("Invalid date provided to format");
