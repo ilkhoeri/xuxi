@@ -1,57 +1,29 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { useNavContext } from "./nav-ctx";
 import { NavLinkItem } from "@/ui/navlink";
 import { ButtonAside, LinkHome } from "./navhead";
 import { cvx, cvxProps } from "cretex";
 import { ScrollArea } from "@/ui/scroll-area";
 import { Sheets, SheetsContent, SheetsTrigger } from "@/ui/sheets";
-import { displayName } from "@/lib/text-parser";
+import { displayName, FormatName } from "@/lib/text-parser";
 import { cn as merge } from "@/lib/utils";
 import { useApp } from "./config/app-context";
-
+import { ChevronIcon } from "./icons";
 import { ROUTES } from "@/routes";
+
 import type { SingleRoute, NestedRoute, InnerRoutes } from "@/routes";
 
 import style from "./nav.module.css";
-import { ChevronIcon } from "./icons";
-import Link from "next/link";
-
-const docsRoutes = [
-  {
-    title: "Docs",
-    href: "/",
-    data: [
-      { title: "ocx", href: "/ocx" },
-      { title: "cvx", href: "/cvx" },
-      { title: "cnx", href: "/cnx" },
-      { title: "clean", href: "/clean" },
-      { title: "links", href: "/links" },
-      { title: "license", href: "/license" },
-      { title: "Code of conduct", href: "/coc" },
-      { title: "others", href: "/others" }
-    ]
-  },
-  {
-    title: "About",
-    href: "/about",
-    data: [{ title: "About app", href: "/about/app" }]
-  }
-];
-
-const headSegment: InnerRoutes[] = [
-  { title: "Getting Started", href: "/" },
-  { title: "Table of Contents", href: "/toc" }
-];
 
 interface NavLeftProps {
   classNames?: { aside?: string; overlay?: string };
-  routes?: (SingleRoute | NestedRoute)[] | null;
-  headRoutes?: InnerRoutes[];
+  routes?: (InnerRoutes | SingleRoute | NestedRoute)[] | null;
 }
 export function NavLeft(_props: NavLeftProps) {
-  const { classNames, routes = ROUTES["docs"], headRoutes = ROUTES["docsHead"] } = _props;
+  const { classNames, routes = ROUTES["docs"] } = _props;
   const { rootSegment, minQuery, maxQuery: query, open, setOpen, toggle } = useNavContext();
   const { dir } = useApp();
 
@@ -76,7 +48,6 @@ export function NavLeft(_props: NavLeftProps) {
         )}
 
         <ScrollArea dir={dir} classNames={{ viewport: classes({ selector: "nav" }), thumb: "max-md:sr-only" }}>
-          <HeadRoutes {...{ routes: headRoutes, setOpen, query }} />
           <NavRoutes {...{ routes, setOpen, query }} />
         </ScrollArea>
       </aside>
@@ -86,93 +57,87 @@ export function NavLeft(_props: NavLeftProps) {
   );
 }
 
-interface HeadRoutesProps {
-  routes: InnerRoutes[];
+interface RequiredNavProps {
+  query?: boolean;
   setOpen: (v: boolean) => void;
-  query: boolean | undefined;
 }
-function HeadRoutes(props: HeadRoutesProps) {
-  const { routes, query, setOpen } = props;
-  if (!routes) return null;
-  return routes.map((i, _i) => (
+
+interface InnerItemProps extends RequiredNavProps, InnerRoutes {
+  format?: FormatName;
+}
+function InnerItem(props: InnerItemProps) {
+  const { title, href, format = "unformated", setOpen, query } = props;
+  return (
     <NavLinkItem
-      key={_i}
-      href={i.href}
-      title={i.title}
-      className="z-9 text-muted-foreground data-[path=active]:text-constructive flex w-full select-none flex-row flex-nowrap items-center justify-between rounded-sm py-1 text-sm font-medium focus-visible:ring-inset focus-visible:ring-offset-[-2px]"
+      href={href}
+      title={displayName(title, format)}
+      className={style.link}
       onClick={() => {
         if (query) {
           setTimeout(() => {
             setOpen(false);
-          }, 500);
+          }, 350);
         }
       }}
     />
-  ));
+  );
 }
 
-interface NavRoutesProps {
-  routes: (SingleRoute | NestedRoute)[] | null;
-  query?: boolean;
-  setOpen: (v: boolean) => void;
+interface SingleItemProps extends RequiredNavProps {
+  routes: InnerRoutes[];
+}
+function SingleItem({ routes, ...props }: SingleItemProps) {
+  if (!routes || routes?.length === 0) return null;
+  return routes.map((route, index) => <InnerItem key={index} {...route} {...props} />);
+}
+
+interface NavRoutesProps extends RequiredNavProps {
+  routes: (InnerRoutes | SingleRoute | NestedRoute)[] | null;
 }
 function NavRoutes(props: NavRoutesProps) {
   const { routes, query, setOpen } = props;
+
+  const required = { query, setOpen };
+
   if (!routes) return null;
 
-  function Item({ routes }: { routes: InnerRoutes[] }) {
-    return routes?.map((route, index) => (
-      <NavLinkItem
-        key={index}
-        href={route.href}
-        title={displayName(route.title)}
-        className={style.link}
-        onClick={() => {
-          if (query) {
-            setTimeout(() => {
-              setOpen(false);
-            }, 500);
-          }
-        }}
-      />
-    ));
-  }
-
   return routes.map((route, index) => {
-    if ((route as NestedRoute).data[0].data) {
-      const nestedRoute = route as NestedRoute; // Handle NestedRoute
+    if ((route as NestedRoute)?.data?.[0].data) {
+      const nestedRoute = route as NestedRoute;
+      const value = String(nestedRoute.title.replace(/\s/g, "-").toLowerCase());
       return (
-        <Sheets.Collapsible key={index} defaultOpen className={style.collapse}>
-          <div data-sheets="trigger-snap" {...getStyles("snap")}>
-            <Link href={nestedRoute.href || ""} aria-label={nestedRoute.title}>
-              <span className="truncate">{displayName(nestedRoute.title)}</span>
-            </Link>
-            <SheetsTrigger unstyled aria-label={nestedRoute.title} {...getStyles("trigger")}>
-              <ChevronIcon chevron="down" data-sheets="chevron" />
-            </SheetsTrigger>
-          </div>
-          <SheetsContent unstyled className="z-1 w-full">
-            <NavRoutes routes={nestedRoute.data} {...{ query, setOpen }} />
-          </SheetsContent>
-        </Sheets.Collapsible>
+        <Sheets.Accordion key={`nested-${index}`} defaultOpen={value} className={style.collapse}>
+          <Sheets.Item value={value}>
+            <div data-sheets="trigger-snap" {...getStyles("snap")}>
+              <InnerItem href={nestedRoute.href || ""} title={nestedRoute.title} {...required} />
+            </div>
+            <SheetsContent unstyled data-nested className="z-1 w-full">
+              <NavRoutes routes={nestedRoute.data} {...required} />
+            </SheetsContent>
+          </Sheets.Item>
+        </Sheets.Accordion>
       );
-    } else {
-      const singleRoute = route as SingleRoute; // Handle SingleRoute
+    } else if ((route as SingleRoute)?.data?.[0]) {
+      const singleRoute = route as SingleRoute;
+      const value = String(singleRoute.title.replace(/\s/g, "-").toLowerCase());
       return (
-        <Sheets.Collapsible key={index} defaultOpen className={style.collapse}>
-          <div data-sheets="trigger-snap" {...getStyles("snap")}>
-            <Link href={singleRoute.href || ""} aria-label={singleRoute.title}>
-              <span className="truncate">{displayName(singleRoute.title)}</span>
-            </Link>
-            <SheetsTrigger unstyled aria-label={singleRoute.title} {...getStyles("trigger")}>
-              <ChevronIcon chevron="down" data-sheets="chevron" />
-            </SheetsTrigger>
-          </div>
-          <SheetsContent data-inner-collapse="">
-            <Item routes={singleRoute.data} />
-          </SheetsContent>
-        </Sheets.Collapsible>
+        <Sheets.Accordion key={`single-${index}`} defaultOpen={value} className={style.collapse}>
+          <Sheets.Item value={value}>
+            <div data-sheets="trigger-snap" {...getStyles("snap")}>
+              <InnerItem href={singleRoute.href || ""} title={singleRoute.title} {...required} />
+              <SheetsTrigger unstyled aria-label={singleRoute.title} {...getStyles("trigger")}>
+                <ChevronIcon chevron="down" data-sheets="chevron" />
+              </SheetsTrigger>
+            </div>
+            <SheetsContent data-single>
+              <SingleItem routes={singleRoute.data} {...required} />
+            </SheetsContent>
+          </Sheets.Item>
+        </Sheets.Accordion>
       );
+    } else if (route as InnerRoutes) {
+      const innerRoutes = route as InnerRoutes;
+      return <InnerItem key={`${innerRoutes.href}-${index}`} {...innerRoutes} {...required} />;
     }
   });
 }

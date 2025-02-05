@@ -25,6 +25,21 @@ export function NavHead() {
       <Polymorphic dir={dir} className="max-w-screen-3xl 3xl:px-12 relative mx-auto flex w-full items-center">
         <LinkHome className="[transition:all_0.5s_ease] max-md:data-[state=open]:translate-x-[-32px] max-md:data-[state=open]:opacity-0" />
 
+        {minQuery && ROUTES?.["services"] && ROUTES?.["services"]?.length > 0 && (
+          <div dir={dir} className="relative hidden h-full items-center justify-between rounded-sm text-sm font-medium md:flex ltr:ml-10 ltr:mr-auto rtl:ml-auto rtl:mr-10">
+            {ROUTES["services"].map(i => (
+              <Link
+                key={i.href}
+                href={i.href}
+                role="button"
+                className="text-muted-foreground centered hover:text-color data-[active]:text-color h-6 cursor-pointer select-none rounded-sm transition-colors"
+              >
+                <span className="z-1 relative px-2 py-1">{i.title}</span>
+              </Link>
+            ))}
+          </div>
+        )}
+
         <div dir={dir} className="flex items-center ltr:ml-auto rtl:mr-auto [&_svg]:size-[1.375rem] gap-1.5">
           <div className="grid grid-flow-col gap-0.5">
             <LinksSection />
@@ -59,6 +74,8 @@ export function LinkHome({ open, className }: { open?: boolean; className?: stri
 }
 
 function LinksSection() {
+  if (ROUTES?.["sections"]?.length < 0) return null;
+
   return ROUTES["sections"].map((i, __i) => (
     <NavLinkItem
       key={__i}

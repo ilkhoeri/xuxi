@@ -13,6 +13,31 @@ function nameFile(fileSource: string) {
   return file[file.length - 1];
 }
 
+/**
+ * expecting a folder structure like the following:
+ * ```md
+ * cretex
+ * ├── main (module root)
+ * │ ├── CHANGELOG.md
+ * │ ├── CODE_OF_CONDUCT.md
+ * │ ├── CONTRIBUTING.md
+ * │ ├── LICENSE
+ * │ │
+ * │ └── // others folder and files...
+ * │
+ * ├── docs (docs root)
+ * │ ├── md
+ * │ │ ├── file-1.mdx
+ * │ │ ├── file-2.mdx
+ * │ │ └── // others files...
+ * │ │
+ * │ └── // others folder and files...
+ * │
+ * └── // end...
+ * ```
+ * @param meta {@link SyncCopyProps SyncCopyProps}
+ * @returns void
+ */
 function syncCopy(meta: SyncCopyProps) {
   const { title, date, fileSource, fileOutput } = meta;
   const sourcePath = path.resolve(__dirname, fileSource);
@@ -37,9 +62,9 @@ function syncCopy(meta: SyncCopyProps) {
 
     fs.writeFileSync(targetPath, newContent, "utf-8");
 
-    console.info(`Synchronized ${title} from ${nameFile(fileSource)} to ${nameFile(fileOutput)} successfully.`);
+    console.info(`\n✅ Synchronized ${title} from [${nameFile(fileSource)}] to [${nameFile(fileOutput)}] Successfully.\n`);
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error:", `\n${error}\n`);
   }
 }
 

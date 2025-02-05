@@ -31,11 +31,11 @@ export async function NavFoot() {
       <Polymorphic el="section" className={Styles({ as: "section", section: "top" })}>
         <div className="col-span-1 w-max lg:col-span-2">
           <Link href="/" className="flex flex-initial items-center rounded-lg font-semibold text-muted-foreground hover:text-color" aria-label="HOME">
-            <LogoIcon className="mr-2 flex h-[36px] w-[36px] flex-none items-center justify-center rounded-xl border bg-background-theme p-1" />
+            <LogoIcon className="mr-2 flex h-[72px] w-[72px] flex-none items-center justify-center rounded-xl bg-background-theme p-1" />
           </Link>
         </div>
 
-        {ROUTES["footRoutes"].length > 0 && (
+        {ROUTES["footRoutes"] && ROUTES["footRoutes"]?.length > 0 && (
           <Polymorphic el="nav" className="col-span-1 lg:col-span-10">
             <ul role="list" className={Styles({ as: "list" })}>
               {ROUTES["footRoutes"].map((i, index) => (

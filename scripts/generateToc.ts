@@ -94,7 +94,7 @@ function extractHeadingsFromFile(filePath: string) {
 //   return toc;
 // }
 
-// Fungsi untuk membuat Table of Contents berdasarkan daftar `tocList`
+// Membuat Table of Contents berdasarkan daftar `tocList`
 function generateTableOfContents(files: string[] = tocList) {
   let toc = `# Table of Contents\n\n---\n\n`;
 
@@ -130,6 +130,8 @@ function generateTableOfContents(files: string[] = tocList) {
     }
   });
 
+  console.log("Running Generated List:", files);
+
   return toc;
 }
 
@@ -137,22 +139,27 @@ interface GenerateTocFileProps {
   title: string;
   date: Date | string | number;
 }
-// Fungsi untuk menghasilkan file TOC.mdx
+
+// Menghasilkan file toc.mdx
 function generateTocFile({ title, date }: GenerateTocFileProps) {
-  // const mdxFiles = fs.readdirSync("md").filter(file => file.endsWith(".mdx"));
-  const toc = generateTableOfContents();
+  try {
+    const toc = generateTableOfContents();
 
-  const tocFilePath = path.join("md", "toc.mdx");
+    const tocFilePath = path.join("md", "toc.mdx");
 
-  const yamlMetadata = `---\ntitle: ${title}\ndate: ${date}\n---`;
-  const content = `${yamlMetadata}\n\n${toc.trim()}\n`;
+    const yamlMetadata = `---\ntitle: ${title}\ndate: ${date}\n---`;
+    const content = `${yamlMetadata}\n\n${toc.trim()}\n`;
 
-  fs.writeFileSync(tocFilePath, content, "utf-8");
-  console.log("✅ Table of Contents has been generated at 'md/toc.mdx'");
+    fs.writeFileSync(tocFilePath, content, "utf-8");
+
+    console.info(`\n✅ ${title} has been generated at ${tocFilePath}\n`);
+  } catch (error) {
+    console.error("Error:", `\n${error}\n`);
+  }
 }
 
 const date = new Intl.DateTimeFormat("en-CA").format(new Date());
-// Jalankan fungsi untuk menghasilkan Table of Contents
+
 generateTocFile({
   title: "Table of Contents",
   date

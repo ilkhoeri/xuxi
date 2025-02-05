@@ -5,18 +5,11 @@ export type SingleRoute = { title: string; href?: string; data: InnerRoutes[] };
 export type NestedRoute = { title: string; href?: string; data: SingleRoute[] };
 
 export const ROUTES = {
-  services: [
-    {
-      title: "Component",
-      href: "https://oeri.vercel.app"
-    }
-  ],
-  docsHead: [
+  services: [] as InnerRoutes[],
+  docs: [
     { title: "Table of Contents", href: "/toc" },
     { title: "Getting Started", href: "/started" },
-    { title: "Installation", href: "/installation" }
-  ] as InnerRoutes[],
-  docs: [
+    { title: "Installation", href: "/installation" },
     {
       title: "Usage",
       href: "/ocx",
@@ -39,12 +32,7 @@ export const ROUTES = {
         { title: "links", href: "/links" }
       ]
     }
-    // {
-    //   title: "About",
-    //   href: "/about",
-    //   data: [{ title: "About app", href: "/about/app" }]
-    // }
-  ] as SingleRoute[],
+  ] as (InnerRoutes | SingleRoute | NestedRoute)[],
   sections: [
     {
       label: "Github Repository",
@@ -78,9 +66,31 @@ export const ROUTES = {
   footRoutes: [] as InnerRoutes[]
 };
 
-export const tocList = [...ROUTES["docsHead"].map(d => d.href), ...ROUTES["docs"].flatMap(d => d.data.map(item => item.href))]
-  .map(href => href.slice(1)) // Menghapus karakter "/" di awal
-  .filter(href => href !== "toc"); // Mengecualikan "toc"
+// Mengambil semua href dari docs secara rekursif
+function extractHrefs(routes: (InnerRoutes | SingleRoute | NestedRoute)[]): string[] {
+  const seen = new Set<string>();
+  const result: string[] = [];
+
+  const traverse = (items: (InnerRoutes | SingleRoute | NestedRoute)[]) => {
+    for (const item of items) {
+      if (item.href) {
+        const cleanHref = item.href.slice(1); // Hilangkan "/" di awal
+        if (!seen.has(cleanHref)) {
+          seen.add(cleanHref);
+          result.push(cleanHref);
+        }
+      }
+      if ("data" in item) {
+        traverse(item.data); // Rekursi ke dalam `data`
+      }
+    }
+  };
+
+  traverse(routes);
+  return result;
+}
+
+export const tocList = extractHrefs(ROUTES["docs"]).filter(href => href !== "toc");
 
 type RouteMap = Record<string, { page: string }>;
 

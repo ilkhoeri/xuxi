@@ -1,8 +1,6 @@
 "use cilent";
-import { Cookies } from "./types";
 import * as React from "react";
-
-export type CookiesName = `${Cookies}` | (string & {});
+import { CookiesName } from "./app-context";
 
 export function setCookies(name: CookiesName, value: string, days = 30) {
   const date = new Date();
@@ -12,12 +10,10 @@ export function setCookies(name: CookiesName, value: string, days = 30) {
 
 export function useCookies<T extends string>(name: CookiesName, initial: T) {
   const getCookie = React.useCallback(() => {
-    const cookies =
-      typeof document !== "undefined" &&
-      document.cookie
-        .split("; ")
-        .find(row => row.startsWith(`${name}=`))
-        ?.split("=")[1];
+    const cookies = document.cookie
+      .split("; ")
+      .find(row => row.startsWith(`${name}=`))
+      ?.split("=")[1];
     return cookies ? decodeURIComponent(cookies) : initial;
   }, [name, initial]);
 

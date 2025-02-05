@@ -1,7 +1,31 @@
+const DEFAULT_CONJUNCTIONS = ["and", "or", "of", "the", "this", "with", "dan", "atau", "yang", "untuk", "di", "ke", "dari", "oleh", "pada"];
+
+export type FormatName = keyof typeof transform;
+
 /** Transforms a given string based on the specified transformation type. */
 export const transform = Object.assign(
   {},
   {
+    /**
+     * @param words - The input string to transform.
+     * @returns string
+     */
+    unformated: (words: string | undefined) => {
+      if (!words) return "";
+      return words;
+    },
+    /**
+     * @param words - The input string to transform.
+     * @returns string
+     */
+    uppercaseFirst: (words: string | undefined) => {
+      if (!words) return "";
+      return words
+        .toLowerCase()
+        .split(" ")
+        .map((word, index) => (index === 0 || !DEFAULT_CONJUNCTIONS.includes(word) ? toUpper(word) : word))
+        .join(" ");
+    },
     /**
      * @param words - The input string to transform.
      * @returns string
@@ -66,8 +90,6 @@ export function truncate(word: string, maxWord: number = 30): string {
   }
   return slicedWords;
 }
-
-const DEFAULT_CONJUNCTIONS = ["and", "or", "of", "the", "this", "with", "dan", "atau", "yang", "untuk", "di", "ke", "dari", "oleh"];
 
 /**
  *
@@ -283,19 +305,18 @@ export const htmlCharacterEntities = [
   { char: " ", entity: "&nbsp;" }
 ];
 
-type NameFormat = "uppercase" | "capitalizeFirst" | "capitalize" | "lowercase" | "unformated";
-export function displayName(title: string, format: NameFormat = "capitalize") {
+export function displayName(title: string, format: FormatName = "capitalize") {
   const numberRgx = /^(\d+\.)\s*(.+)/;
-  const cleanTitle = title.replace(":", "").replace("?", "").trim();
+  const cleanTitle = title?.replace(":", "").replace("?", "").trim();
 
-  // Jika formatnya [0.0.0] - YYYY-MM-DD, ubah menjadi v0.0.0
-  const versionMatch = title.match(/^\[(\d+\.\d+\.\d+)\]\s*-\s*\d{4}-\d{2}-\d{2}$/);
-  if (versionMatch) return `v${versionMatch[1]}`;
+  // untuk format [0.0.0] - YYYY-MM-DD
+  const versionMatch = title?.match(/^\[(\d+\.\d+\.\d+)\]\s*-\s*\d{4}-\d{2}-\d{2}$/);
+  if (versionMatch) return `v${versionMatch[1]}`; // ubah menjadi v0.0.0
 
   if (numberRgx.test(cleanTitle)) return cleanTitle;
 
   const emojiRgx = /[\p{Emoji}\u200B-\u200D\uFE0F]\s/gu;
   if (emojiRgx.test(cleanTitle)) return cleanTitle.replace(emojiRgx, "");
 
-  return format !== "unformated" ? transform[format](cleanTitle) : cleanTitle;
+  return transform[format](cleanTitle);
 }

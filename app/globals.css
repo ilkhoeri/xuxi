@@ -3146,7 +3146,10 @@ code[data-line-numbers-max-digits="3"] > [data-line]::before {
   }
 
   & :where(:is(h1, )):not(:is([data-demo-area] :is(h1))) {
-    @apply text-color leading-none mb-6 mt-0 flex items-center cursor-default w-max [&>a>svg]:hover:text-constructive max-w-full;
+    @apply text-color leading-none mb-[2.1rem] mt-0 flex items-center cursor-default w-max [&>a>svg]:hover:text-constructive max-w-full;
+    & ~ ul ul li a {
+      @apply text-constructive-emphasis transition-colors underline-hover;
+    }
   }
 
   & :where(:is(h2, h3, h4, h5)):not(:is([data-demo-area] :is(h2, h3, h4, h5))) {
