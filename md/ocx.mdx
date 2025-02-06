@@ -849,7 +849,66 @@ console.log(
 // }
 ```
 
-### Complex API Serialization Example
+---
+
+### Serialization Example
+
+#### 1. API Response Cleaning & Normalization
+
+```ts
+const apiResponse = {
+  user: "JohnDoe",
+  email: null,
+  role: "admin",
+  metadata: { lastLogin: undefined, verified: true }
+};
+
+const serialized = ocx(apiResponse);
+console.log(serialized);
+// { user: "JohnDoe", role: "admin", metadata: { verified: true } }
+```
+
+👉 The `clean()` function removes `null` and `undefined` values ​​from the API response.
+
+#### 2. Query Parameter Serialization
+
+```ts
+const queryParams = {
+  search: "typescript",
+  page: 1,
+  limit: undefined,
+  sort: "desc"
+};
+
+const serializedQuery = new URLSearchParams(ocx(queryParams)).toString();
+console.log(serializedQuery);
+// "search=typescript&page=1&sort=desc"
+```
+
+👉 Only valid values ​​are included in the query string.
+
+#### 3. Object Serialization for Caching
+
+```ts
+const cacheData = {
+  id: "123",
+  preferences: {
+    theme: "dark",
+    notifications: false
+  },
+  timestamp: () => new Date().toISOString()
+};
+
+const serializedData = JSON.stringify(ocx(cacheData));
+console.log(serializedData);
+// {"id":"123","preferences":{"theme":"dark"},"timestamp":"2025-02-05T12:34:56.789Z"}
+```
+
+👉 The function in the object is executed, then the object is cleaned up before being serialized.
+
+---
+
+### Complex Serialization Example
 
 ```ts
 const user = { id: 1, name: "Alice", email: "alice@example.com" };

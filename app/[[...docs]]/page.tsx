@@ -36,7 +36,7 @@ export default async function Home({ params }: SlugParams) {
   const toc = await getTableOfContents(docs.body.raw);
 
   return (
-    <main className="w-full relative flex flex-col md:flex-row mx-auto min-h-screen pt-[--navbar] pb-20 max-lg:pr-8 rtl:max-lg:pr-0 rtl:max-lg:pl-8 max-w-var">
+    <main className="w-full relative flex flex-col md:flex-row mx-auto min-h-screen pt-[--navbar] pb-20 md:max-lg:pr-8 rtl:md:max-lg:pr-0 rtl:md:max-lg:pl-8 max-w-var">
       <NavLeft />
 
       <article className="relative w-full max-w-full overflow-x-hidden max-md:px-6 pt-9 flex flex-col">
