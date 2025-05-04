@@ -1,14 +1,14 @@
 // @ts-ignore TS6133
 import { describe, test, expect } from '@jest/globals';
 
-import { object, clean } from '../src'; // Named export
+import { ocx, object, clean } from '../src'; // Named export
 import x from '../src/index'; // Default export alias
 import * as xuxi from '../src/index'; // Test for namespace imports
 
 describe('Example Usage', () => {
   test('Default', () => {
     expect(
-      object(
+      ocx(
         { a: 1 },
         [{ b: 2 }, { d: 4, e: null }, { f: undefined, g: NaN }],
         () => ({ c: 3 }),
@@ -23,13 +23,13 @@ describe('Example Usage', () => {
   });
 
   test('Default behavior 1', () => {
-    const result = object({ name: 'John', age: null }, { age: 30, city: 'New York' }, () => ({ country: 'USA' }));
+    const result = ocx({ name: 'John', age: null }, { age: 30, city: 'New York' }, () => ({ country: 'USA' }));
     expect(result).toEqual({ name: 'John', age: 30, city: 'New York', country: 'USA' });
   });
 
   test('Default behavior 2', () => {
-    const dynamic = (prev: x.ObjectKey) => prev?.a && { e: prev.a + 5 };
-    const result = object([{ a: 1 }], [{ b: 2 }, { c: 3 }], { d: 4 }, dynamic);
+    const dynamic = (prev: x.ocxKey) => prev?.a && { e: prev.a + 5 };
+    const result = ocx([{ a: 1 }], [{ b: 2 }, { c: 3 }], { d: 4 }, dynamic);
     expect(result).toEqual({ a: 1, b: 2, c: 3, d: 4, e: 6 });
   });
 
@@ -47,11 +47,11 @@ describe('Example Usage', () => {
     });
 
     const userOverride = {
-      email: null, // This will be removed in object()
+      email: null, // This will be removed in ocx()
       settings: { notifications: false }
     };
 
-    const response = object(userBase, userOverride);
+    const response = ocx(userBase, userOverride);
     expect(response).toEqual({ id: 123, name: 'Alice', settings: { theme: 'light' } });
   });
 
@@ -65,9 +65,9 @@ describe('Example Usage', () => {
       !false && { h: { h1: 'h1', h2: 'h2' } }, // like this if you want to get valid value
       true && { f: { f3: 'f3', f1: 'F1' } }
     ];
-    const getKeys = (key?: x.ObjectKey) => key && { keys: Object.keys(key) };
+    const getKeys = (key?: x.ocxKey) => key && { keys: Object.keys(key) };
     expect(
-      object(
+      ocx(
         'ignored',
         target,
         source,
@@ -91,7 +91,7 @@ describe('Example Usage', () => {
     const metadata = () => ({ timestamp: 1738340551295 });
     const flags = { active: true, verified: false };
 
-    const serialized = object(user, metadata, flags);
+    const serialized = ocx(user, metadata, flags);
     expect(serialized).toEqual({
       id: 1,
       name: 'Alice',
@@ -108,9 +108,7 @@ describe('Example Usage', () => {
       { id: 3, name: 'Charlie', active: true, details: { role: 'admin', age: 35 } }
     ];
 
-    const serialized = data.map(item =>
-      object(item, { isAdult: item.details.age >= 18 }, key => key?.active && { status: 'online' }, !item.active && { status: 'offline', inactiveSince: '2023-12-01' })
-    );
+    const serialized = data.map(item => ocx(item, { isAdult: item.details.age >= 18 }, key => key?.active && { status: 'online' }, !item.active && { status: 'offline', inactiveSince: '2023-12-01' }));
     expect(serialized).toEqual([
       {
         id: 1,
@@ -342,7 +340,7 @@ describe('Example Usage', () => {
       }
     };
 
-    const apiResponse = object(
+    const apiResponse = ocx(
       user,
       updated,
       { preferences, metadata },
@@ -709,39 +707,39 @@ describe('Example Usage', () => {
 
 describe('object function', () => {
   test('should return the accumulator unchanged for falsy values', () => {
-    expect(object({ key: 'value' }, null, undefined, false, 0, '')).toEqual({ key: 'value' });
+    expect(ocx({ key: 'value' }, null, undefined, false, 0, '')).toEqual({ key: 'value' });
   });
 
   test('should return an empty object when no valid input is provided', () => {
-    expect(object(null, undefined, false, 0, '')).toEqual({});
+    expect(ocx(null, undefined, false, 0, '')).toEqual({});
   });
 
   test('should skip falsy values like null, undefined, or false', () => {
-    expect(object(0)).toEqual({});
+    expect(ocx(0)).toEqual({});
   });
 
   test('should return an empty object if no valid inputs are provided', () => {
-    expect(object(null, undefined, false)).toEqual({});
+    expect(ocx(null, undefined, false)).toEqual({});
   });
 
   test('should return the accumulator when input is null', () => {
-    expect(object(null)).toEqual({});
+    expect(ocx(null)).toEqual({});
   });
 
   test('should return the accumulator when input is undefined', () => {
-    expect(object(undefined)).toEqual({});
+    expect(ocx(undefined)).toEqual({});
   });
 
   test('should return the accumulator when input is falsy', () => {
-    expect(object(false)).toEqual({});
+    expect(ocx(false)).toEqual({});
   });
 
   test('should return the accumulator when input is falsy', () => {
-    expect(object('ignore')).toEqual({});
+    expect(ocx('ignore')).toEqual({});
   });
 
   test('should return the accumulator when input is falsy', () => {
-    expect(object({})).toEqual({});
+    expect(ocx({})).toEqual({});
   });
 });
 
@@ -749,38 +747,38 @@ describe('Object handling', () => {
   test('should merge multiple objects', () => {
     const obj1 = { key1: 'value1' };
     const obj2 = { key2: 'value2' };
-    const result = object(obj1, obj2);
+    const result = ocx(obj1, obj2);
     expect(result).toEqual({ key1: 'value1', key2: 'value2' });
   });
 
   test('should handle nested objects', () => {
     const obj1 = { key1: { nestedKey: 'nestedValue' } };
     const obj2 = { key2: 'value2' };
-    const result = object(obj1, obj2);
+    const result = ocx(obj1, obj2);
     expect(result).toEqual({ key1: { nestedKey: 'nestedValue' }, key2: 'value2' });
   });
 
   test('should handle arrays of objects', () => {
     const input = [{ key1: 'value1' }, { key2: 'value2' }];
-    const result = object(input);
+    const result = ocx(input);
     expect(result).toEqual({ key1: 'value1', key2: 'value2' });
   });
 
   test('should handle nested arrays of objects', () => {
     const input = [[{ key1: 'value1' }], { key2: 'value2' }];
-    const result = object(input);
+    const result = ocx(input);
     expect(result).toEqual({ key1: 'value1', key2: 'value2' });
   });
 
   test('should handle functions returning objects', () => {
     const input = () => ({ key1: 'value1' });
-    const result = object(input);
+    const result = ocx(input);
     expect(result).toEqual({ key1: 'value1' });
   });
 
   test('should handle nested functions', () => {
     const input = () => () => ({ key1: 'value1' });
-    const result = object(input);
+    const result = ocx(input);
     expect(result).toEqual({ key1: 'value1' });
   });
 
@@ -788,7 +786,7 @@ describe('Object handling', () => {
     const obj1 = { key1: 'value1' };
     const arr = [{ key2: 'value2' }, { key3: 'value3' }];
     const fn = () => ({ key4: 'value4' });
-    const result = object(obj1, arr, fn);
+    const result = ocx(obj1, arr, fn);
     expect(result).toEqual({
       key1: 'value1',
       key2: 'value2',
@@ -801,29 +799,29 @@ describe('Object handling', () => {
 describe('Array handling', () => {
   test('should handle arrays of objects', () => {
     const input = [{ key1: 'value1' }, { key2: 'value2' }];
-    expect(object(input)).toEqual({ key1: 'value1', key2: 'value2' });
+    expect(ocx(input)).toEqual({ key1: 'value1', key2: 'value2' });
   });
 
   test('should handle nested arrays of objects', () => {
     const input = [[{ key1: 'value1' }], { key2: 'value2' }];
-    expect(object(input)).toEqual({ key1: 'value1', key2: 'value2' });
+    expect(ocx(input)).toEqual({ key1: 'value1', key2: 'value2' });
   });
 });
 
 describe('Function handling', () => {
   test('should handle functions returning objects', () => {
     const input = () => ({ key1: 'value1' });
-    expect(object(input)).toEqual({ key1: 'value1' });
+    expect(ocx(input)).toEqual({ key1: 'value1' });
   });
 
   test('should handle nested functions returning objects', () => {
     const input = () => () => ({ key1: 'value1' });
-    expect(object(input)).toEqual({ key1: 'value1' });
+    expect(ocx(input)).toEqual({ key1: 'value1' });
   });
 
   test('should handle functions returning falsy values', () => {
     const input = () => null;
-    expect(object(input)).toEqual({});
+    expect(ocx(input)).toEqual({});
   });
 });
 
@@ -832,7 +830,7 @@ describe('Mixed inputs', () => {
     const obj = { key1: 'value1' };
     const arr = [{ key2: 'value2' }, { key3: 'value3' }];
     const fn = () => ({ key4: 'value4' });
-    expect(object(obj, arr, fn)).toEqual({
+    expect(ocx(obj, arr, fn)).toEqual({
       key1: 'value1',
       key2: 'value2',
       key3: 'value3',
@@ -844,7 +842,7 @@ describe('Mixed inputs', () => {
     const obj = { key1: { nestedKey: 'value1' } };
     const arr = [[{ key2: 'value2' }], { key3: 'value3' }];
     const fn = () => ({ key4: { nestedKey: 'value4' } });
-    expect(object(obj, arr, fn)).toEqual({
+    expect(ocx(obj, arr, fn)).toEqual({
       key1: { nestedKey: 'value1' },
       key2: 'value2',
       key3: 'value3',
@@ -874,7 +872,7 @@ describe('object function - deep merge scenarios', () => {
     const obj1 = { key1: { nestedKey: 'value1' } };
     const obj2 = { key1: { nestedKey2: 'value2' } };
 
-    const result = object(obj1, obj2);
+    const result = ocx(obj1, obj2);
 
     expect(result).toEqual({
       key1: {
@@ -888,7 +886,7 @@ describe('object function - deep merge scenarios', () => {
     const obj1 = { key1: { nestedKey: 'value1' } };
     const objFn = () => ({ key1: { nestedKey2: 'value2' } });
 
-    const result = object(obj1, objFn);
+    const result = ocx(obj1, objFn);
 
     expect(result).toEqual({
       key1: {
@@ -902,7 +900,7 @@ describe('object function - deep merge scenarios', () => {
     const obj1 = { key1: { nestedKey1: { subKey: 'value1' } } };
     const obj2 = { key1: { nestedKey1: { subKey2: 'value2' } } };
 
-    const result = object(obj1, obj2);
+    const result = ocx(obj1, obj2);
 
     expect(result).toEqual({
       key1: {
@@ -918,7 +916,7 @@ describe('object function - deep merge scenarios', () => {
     const obj1 = { key1: { nestedKey1: { subKey: 'value1' } } };
     const objFn = () => ({ key1: { nestedKey1: { subKey2: 'value2' } } });
 
-    const result = object(obj1, objFn);
+    const result = ocx(obj1, objFn);
 
     expect(result).toEqual({
       key1: {
@@ -933,19 +931,19 @@ describe('object function - deep merge scenarios', () => {
 
 describe('Edge cases - Circular References', () => {
   test('should handle empty inputs', () => {
-    expect(object()).toEqual({});
+    expect(ocx()).toEqual({});
   });
 
   test('should handle circular references gracefully', () => {
     const obj: any = {};
     obj.self = obj;
-    expect(() => object(obj)).not.toThrow();
+    expect(() => ocx(obj)).not.toThrow();
   });
 
   test('should handle symbols as keys', () => {
     const sym = Symbol('key');
     const obj = { [sym]: 'value' };
-    expect(object(obj)).toEqual({ [sym]: 'value' });
+    expect(ocx(obj)).toEqual({ [sym]: 'value' });
   });
 
   test('should handle symbols as [Symbol(metadata)]', () => {
@@ -957,8 +955,8 @@ describe('Edge cases - Circular References', () => {
     };
 
     // Menggunakan object untuk membersihkan objek tanpa menghapus Symbol
-    const obj = object(user);
-    expect(object(obj)).toEqual({ name: 'Alice', age: 25, [metaKey]: { role: 'admin' } });
+    const obj = ocx(user);
+    expect(ocx(obj)).toEqual({ name: 'Alice', age: 25, [metaKey]: { role: 'admin' } });
   });
 
   test('should handle circular references gracefully', () => {
@@ -971,11 +969,11 @@ describe('Edge cases - Circular References', () => {
   });
 
   test('should prevent infinite recursion with deep circular references', () => {
-    const objA: x.ObjectKey = { name: 'A' };
-    const objB: x.ObjectKey = { name: 'B', ref: objA };
+    const objA: x.ocxKey = { name: 'A' };
+    const objB: x.ocxKey = { name: 'B', ref: objA };
     objA.ref = objB; // Circular reference
 
-    const result = x.object(objA, objB);
+    const result = x.ocx(objA, objB);
     expect(result).toEqual({ name: 'B', ref: { name: 'A', ref: { name: 'B', ref: { name: 'A', ref: objB } } } });
   });
 
@@ -1057,8 +1055,8 @@ describe('object preserve function', () => {
   });
 
   test('should prevent infinite recursion with deep circular references', () => {
-    const objA: x.ObjectKey = { name: 'A' };
-    const objB: x.ObjectKey = { name: 'B', ref: objA };
+    const objA: x.ocxKey = { name: 'A' };
+    const objB: x.ocxKey = { name: 'B', ref: objA };
     objA.ref = objB; // Circular reference
 
     const result = x.object.preserve(objA, objB);
@@ -1066,7 +1064,7 @@ describe('object preserve function', () => {
   });
 });
 
-describe('export validation object()', () => {
+describe('export validation ocx()', () => {
   test('should correctly export object as a named export', () => {
     expect(object).toBeDefined();
     expect(typeof object).toBe('function');
@@ -1094,14 +1092,14 @@ describe('clean Mixed inputs', () => {
     const obj = { key1: false };
     const arr = [{ key2: undefined }, { key3: null }];
     const fn = () => ({ key4: 'value4' });
-    expect(clean(object(obj, arr, fn))).toEqual({ key4: 'value4' });
+    expect(clean(ocx(obj, arr, fn))).toEqual({ key4: 'value4' });
   });
 
   test('should handle deeply nested mixed inputs', () => {
     const obj = { key1: !true && { nestedKey: 'value1' } };
     const arr = [[{ key2: 'value2' }], false && { key3: 'value3' }];
     const fn = () => ({ key4: { nestedKey: 'value4' } });
-    expect(clean(object(obj, arr, fn))).toEqual({
+    expect(clean(ocx(obj, arr, fn))).toEqual({
       key2: 'value2',
       key4: { nestedKey: 'value4' }
     });
