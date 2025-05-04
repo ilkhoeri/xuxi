@@ -44,7 +44,7 @@ function sv(v: cnxValues): string {
  * @param v - The value to be processed.
  * @returns A string representation of the object.
  */
-function rv(v: cnxValues, separator: string = ' '): string {
+function rv(v: cnxValues, spt: string = ' '): string {
   let k = 0,
     y,
     s = '';
@@ -52,8 +52,8 @@ function rv(v: cnxValues, separator: string = ' '): string {
     if (Array.isArray(v)) {
       for (; k < v.length; k++) {
         if (v[k]) {
-          if ((y = rv(v[k]))) {
-            s && (s += separator);
+          if ((y = rv(v[k], spt))) {
+            s && (s += spt);
             s += y;
           }
         }
@@ -61,13 +61,13 @@ function rv(v: cnxValues, separator: string = ' '): string {
     } else {
       for (y in v) {
         if ((v as keyMap)[y]) {
-          s && (s += separator);
-          s += `${y}: ${typeof (v as keyMap)[y] === 'object' ? rv((v as keyMap)[y]) : (v as keyMap)[y]}`;
+          s && (s += spt);
+          s += typeof (v as keyMap)[y] === 'object' ? `${y}.${rv((v as keyMap)[y], `${spt}${y}.`)}` : `${y}: ${(v as keyMap)[y]}`;
         }
       }
       for (const sym of Object.getOwnPropertySymbols(v)) {
         if ((v as keyMap)[sym]) {
-          s && (s += separator);
+          s && (s += spt);
           s += `${String(sym)}: ${(v as keyMap)[sym]}`;
         }
       }
@@ -81,7 +81,7 @@ function rv(v: cnxValues, separator: string = ' '): string {
  * @param v - The value to be processed.
  * @returns A string representation of the instance.
  */
-function iv(v: cnxValues, separator: string = ' '): string {
+function iv(v: cnxValues, spt: string = ' '): string {
   let k = 0,
     y,
     s = '';
@@ -90,14 +90,14 @@ function iv(v: cnxValues, separator: string = ' '): string {
   } else if (v instanceof Map) {
     for (const [q, u] of v.entries()) {
       if (u) {
-        s && (s += separator);
+        s && (s += spt);
         s += `${q}: ${u}`;
       }
     }
   } else if (v instanceof Set) {
     v.forEach(e => {
       if (e) {
-        s && (s += separator);
+        s && (s += spt);
         s += e;
       }
     });
@@ -105,15 +105,15 @@ function iv(v: cnxValues, separator: string = ' '): string {
     if (Array.isArray(v)) {
       for (; k < v.length; k++) {
         if (v[k]) {
-          if ((y = iv(v[k]))) {
-            s && (s += separator);
+          if ((y = iv(v[k], spt))) {
+            s && (s += spt);
             s += y;
           }
         }
       }
     }
   } else if (typeof v === 'function') {
-    s += iv(v(s));
+    s += iv(v(s), spt);
   }
   return s;
 }
@@ -137,6 +137,9 @@ function cnx(...args: cnxValues[]): string {
 }
 
 type StringValues = cnxValues;
+interface ExtendsOpt {
+  separator?: string;
+}
 /**
  * Represents a string utility object returned by the `string()` function.
  *
@@ -146,10 +149,10 @@ type StringValues = cnxValues;
 interface StringFunction {
   /** Converts input values into a space-separated string. Similar to how class names are joined in CSS-in-JS libraries. */
   toString(): string;
-  /** Recursively serializes objects, arrays, and nested structures into a flattened key=value pair string. */
-  recursive(): string;
+  /** Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string. */
+  recursive(opts?: ExtendsOpt): string;
   /** Detects specific object types like Date, Map, and Set, and converts them into human-readable strings. */
-  instanceof(): string;
+  instanceof(opts?: ExtendsOpt): string;
   /** Implicitly converts the object to a string when used in a primitive context (e.g., template literals). */
   [Symbol.toPrimitive](): string;
 }
@@ -162,7 +165,6 @@ interface StringFunction {
  *
  * This is especially useful for conditionally building class names, query strings,
  * or logging structured data.
- *
  * @param args - One or more values to be stringified or serialized.
  * @returns An object with string conversion utilities.
  */
@@ -171,11 +173,11 @@ function string(...args: StringValues[]): StringFunction {
     toString() {
       return cnx(...args);
     },
-    recursive() {
-      return rv(args);
+    recursive(opts: ExtendsOpt = {}) {
+      return rv(args, opts.separator);
     },
-    instanceof() {
-      return iv(args);
+    instanceof(opts: ExtendsOpt = {}) {
+      return iv(args, opts.separator);
     },
     [Symbol.toPrimitive]() {
       return cnx(...args);
@@ -183,4 +185,4 @@ function string(...args: StringValues[]): StringFunction {
   };
 }
 
-export { cnx, string, rv as recursive, iv as instanceof };
+export { cnx, string };

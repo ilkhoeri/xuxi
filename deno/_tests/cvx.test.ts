@@ -135,7 +135,7 @@ test('should correctly export variant as the default export (alias x)', () => {
 });
 
 test('should include variant in the namespace export', () => {
-  expect(x).toHaveProperty('variant');
+  expect(x).toHaveProperty('cvx');
   expect(x.cvx).toBe(cvx);
 });
 

@@ -177,6 +177,7 @@ const object: ocxFunction = (...obj) => clean(baseOcx(...obj), [0]);
 object.raw = baseOcx as typeof baseOcx;
 object.preserve = preserveRoot as typeof preserveRoot;
 
+/** Recursively merge objects with support for arrays, dynamic functions, and non falsy properties into a single object. */
 function ocx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T> {
   return clean(baseOcx(...obj), [0]);
 }

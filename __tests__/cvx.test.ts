@@ -140,7 +140,7 @@ describe('export validation', () => {
   });
 
   test('should include variant in the namespace export', () => {
-    expect(xuxi).toHaveProperty('variant');
+    expect(xuxi).toHaveProperty('cvx');
     expect(xuxi.cvx).toBe(cvx);
   });
 

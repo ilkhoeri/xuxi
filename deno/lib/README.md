@@ -110,6 +110,66 @@ import x from 'xuxi';
 x.cnx(['', baz, (foo as string) !== 'foo' && bar], { '': !props }, '', () => ({ '' }), undefined, [{ '' }, () => ({ '' })]);
 ```
 
+### **string**
+
+```ts
+// examples input
+const response = {
+  status: 'success',
+  data: { user: 'JohnDoe', admin: true },
+  [Symbol('meta')]: 'confidential'
+};
+const input = [
+  'btn',
+  null,
+  false,
+  undefined,
+  { 'btn-primary': true, 'btn-disabled': false },
+  ['shadow', 'rounded'],
+  response,
+  new Date('2025-02-05'),
+  new Map([
+    ['key1', 'value1'],
+    ['key2', 'value2']
+  ]),
+  new Set(['unique1', 'unique2'])
+];
+```
+
+- `.toString()`
+  Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string.
+
+```ts
+import x from 'xuxi';
+
+console.log(x.string(input).toString());
+// "btn btn-primary shadow rounded status data"
+```
+
+- `.recursive()`
+  Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string.
+
+```ts
+import x from 'xuxi';
+
+console.log(x.string(input).recursive());
+// "btn-primary: true status: success data.user: JohnDoe data.admin: true Symbol(meta): confidential"
+console.log(x.string(input).recursive({ separator: ', ' }));
+// "btn-primary: true, status: success, data.user: JohnDoe, data.admin: true, Symbol(meta): confidential"
+```
+
+- `.instanceof()`
+  Detects specific object types like Date, Map, and Set, and converts them into human-readable strings.
+
+```ts
+import x from 'xuxi';
+
+console.log(x.string(input).instanceof());
+// "2025-02-05T00:00:00.000Z key1: value1 key2: value2 unique1 unique2"
+console.log(x.string(input).instanceof({ separator: ', ' }));
+// "2025-02-05T00:00:00.000Z, key1: value1, key2: value2, unique1, unique2"
+```
+
 ---
 
 ### **clean**
