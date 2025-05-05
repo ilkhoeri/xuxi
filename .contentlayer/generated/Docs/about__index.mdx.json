@@ -1,0 +1,24 @@
+{
+  "title": "About",
+  "date": "2025-02-02T00:00:00.000Z",
+  "published": false,
+  "featured": false,
+  "component": false,
+  "toc": true,
+  "body": {
+    "raw": "",
+    "code": "var Component=(()=>{var f=Object.create;var a=Object.defineProperty;var _=Object.getOwnPropertyDescriptor;var d=Object.getOwnPropertyNames;var j=Object.getPrototypeOf,l=Object.prototype.hasOwnProperty;var p=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),M=(t,e)=>{for(var n in e)a(t,n,{get:e[n],enumerable:!0})},c=(t,e,n,u)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let o of d(e))!l.call(t,o)&&o!==n&&a(t,o,{get:()=>e[o],enumerable:!(u=_(e,o))||u.enumerable});return t};var g=(t,e,n)=>(n=t!=null?f(j(t)):{},c(e||!t||!t.__esModule?a(n,\"default\",{value:t,enumerable:!0}):n,t)),C=t=>c(a({},\"__esModule\",{value:!0}),t);var s=p((b,m)=>{m.exports=_jsx_runtime});var F={};M(F,{default:()=>i,frontmatter:()=>D});var r=g(s()),D={title:\"About\",date:\"2025-02-02\"};function x(t){return(0,r.jsx)(r.Fragment,{})}function i(t={}){let{wrapper:e}=t.components||{};return e?(0,r.jsx)(e,{...t,children:(0,r.jsx)(x,{...t})}):x(t)}return C(F);})();\n;return Component;"
+  },
+  "_id": "about/index.mdx",
+  "_raw": {
+    "sourceFilePath": "about/index.mdx",
+    "sourceFileName": "index.mdx",
+    "sourceFileDir": "about",
+    "contentType": "mdx",
+    "flattenedPath": "about"
+  },
+  "type": "Docs",
+  "slug": "about",
+  "slugAsParams": "",
+  "url": "/about"
+}
