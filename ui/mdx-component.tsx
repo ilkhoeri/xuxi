@@ -47,7 +47,7 @@ const components = {
     />
   ),
   details: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => <summary className={cn("my-4", className)} {...props} />,
-  summary: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => <summary className={cn("*:select-none cursor-pointer", className)} {...props} />,
+  summary: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => <summary className={cn("*:select-none select-none cursor-pointer", className)} {...props} />,
   pre: ({
     className,
     __rawString__,
