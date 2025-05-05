@@ -1,7 +1,7 @@
 {
-  "name": "cretex",
+  "name": "xuxi",
   "version": "1.0.0",
-  "description": "cretex github docs pages",
+  "description": "xuxi github docs pages",
   "private": true,
   "scripts": {
     "dev": "npm run build:mdx && next dev --turbopack",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ilkhoeri/cretex"
+    "url": "git+https://github.com/ilkhoeri/xuxi"
   },
   "keywords": [
     "pages"
@@ -26,7 +26,7 @@
   "author": "ilkhoeri",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ilkhoeri/cretex/issues"
+    "url": "https://github.com/ilkhoeri/xuxi/issues"
   },
   "homepage": "https://ilkhoeri.github.io",
   "dependencies": {
@@ -34,12 +34,12 @@
     "@radix-ui/react-tooltip": "^1.1.7",
     "@vercel/analytics": "^1.4.1",
     "contentlayer2": "^0.5.3",
-    "cretex": "^0.0.3",
     "next": "15.1.6",
     "next-contentlayer2": "^0.5.3",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "xuxi": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

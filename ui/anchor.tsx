@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Link from "next/link";
-import { cvx, type cvxProps } from "cretex";
+import { cvx, type cvxVariants } from "xuxi";
 import { cn } from "@/lib/utils";
 
 const classes = cvx({
@@ -26,7 +26,7 @@ function getStyles(opt: Options) {
 
 export interface AnchorProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "target">,
-    Omit<cvxProps<typeof classes>, "role">,
+    Omit<cvxVariants<typeof classes>, "role">,
     Omit<Link.LinkProps, "href">,
     AnchorTargets {
   unstyled?: boolean;

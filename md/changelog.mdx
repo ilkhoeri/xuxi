@@ -1,6 +1,6 @@
 ---
 title: CHANGELOG
-date: 2025-02-06
+date: 2025-05-05
 ---
 
 # CHANGELOG
@@ -24,9 +24,9 @@ Be sure to always refer to the latest documentation for the most up-to-date usag
 ### **Documentation**
 
 - **New Documentation Page**
-  Introduced a dedicated [**documentation page**](https://ilkhoeri.github.io/cretex/) for improved readability and accessibility.
+  Introduced a dedicated [**documentation page**](https://ilkhoeri.github.io/xuxi/) for improved readability and accessibility.
 - **Centralized Examples & Usage**
-  All code examples and usage guidelines are now directed to the [**documentation page**](https://ilkhoeri.github.io/cretex/), ensuring consistency and ease of reference.
+  All code examples and usage guidelines are now directed to the [**documentation page**](https://ilkhoeri.github.io/xuxi/), ensuring consistency and ease of reference.
 - **Refined Symbol Documentation**
   Simplified and enhanced symbol documentation for better clarity and maintainability.
 
@@ -125,8 +125,8 @@ Migrated from `bun` to `yarn`. Now, all command processes use `yarn` instead of 
   ocx([{}, key => key?.role === "admin" && { permissions: ["read", "write", "delete"] }]);
   ```
 - Provided `symbol documentation` for all functions.
-- Introduced official documentation: [ilkhoeri.github.io/cretex](https://ilkhoeri.github.io/cretex/).
-- Version now available and installable via [JSR](https://jsr.io/@cretex/dynamic).
+- Introduced official documentation: [ilkhoeri.github.io/xuxi](https://ilkhoeri.github.io/xuxi/).
+- Version now available and installable via [JSR](https://jsr.io/@xuxi/dynamic).
 - Added support for **Deno**.
 - Expanded test coverage to ensure all possible return scenarios are validated for each function.
 
@@ -158,7 +158,7 @@ Migrated from `bun` to `yarn`. Now, all command processes use `yarn` instead of 
 
   ```ts
   import { twMerge } from "tailwind-merge";
-  import { cnx, type cnxValues } from "cretex";
+  import { cnx, type cnxValues } from "xuxi";
 
   export function cn(...merge: cnxValues[]): string {
     return twMerge(cnx(...merge));

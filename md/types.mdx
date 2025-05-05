@@ -7,17 +7,17 @@ date: 2025-02-03
 
 ## InferType
 
-`inferType<T>` is a utility type that extracts the return type of a given function type. It simplifies type inference, making it easier to work with dynamically typed functions without manually specifying return types.
+`InferType<T>` is a utility type that extracts the return type of a given function type. It simplifies type inference, making it easier to work with dynamically typed functions without manually specifying return types.
 
 This is especially useful in scenarios where functions are passed as generics, allowing for better type safety and code maintainability.
 
 ### Syntax
 
 ```ts
-type inferType<T> = T extends (...args: any[]) => infer R ? R : never;
+type InferType<T> = T extends (...args: any[]) => infer R ? R : never;
 ```
 
-### How inferType Works
+### How InferType Works
 
 - If `T` is a function type, it extracts and returns the function’s return type (`R`).
 - If `T` is **not** a function, it resolves to `never`, preventing invalid type inference.
@@ -30,26 +30,26 @@ type inferType<T> = T extends (...args: any[]) => infer R ? R : never;
 function getNumber(): number {
   return 42;
 }
-type Result = inferType<typeof getNumber>;
+type Result = InferType<typeof getNumber>;
 // Result is inferred as `number`
 
 // Example 2: Inferring return type from a function type
 type MyFunction = () => string;
-type Extracted = inferType<MyFunction>;
+type Extracted = InferType<MyFunction>;
 // Extracted is `string`
 
 // Example 3: Handling functions with parameters
 type Multiply = (a: number, b: number) => number;
-type Output = inferType<Multiply>;
+type Output = InferType<Multiply>;
 // Output is `number`
 
 // Example 4: Non-function types resolve to `never`
 type NotAFunction = string;
-type InvalidExtraction = inferType<NotAFunction>;
+type InvalidExtraction = InferType<NotAFunction>;
 // InvalidExtraction is `never`
 ```
 
-### When to Use inferType
+### When to Use InferType
 
 - When working with **generic functions** and needing to extract their return types dynamically.
 - When dealing with **higher-order functions** that take functions as arguments and return other functions.

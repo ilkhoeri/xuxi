@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 export function metadata(): Metadata {
   return {
     title: {
-      template: "%s | Cretex",
+      template: "%s | Xuxi",
       default: siteConfig.name
     },
     applicationName: siteConfig.name,

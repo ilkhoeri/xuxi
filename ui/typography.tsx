@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cvx, type cvxProps } from "cretex";
+import { cvx, type cvxVariants } from "xuxi";
 import { cn } from "@/lib/utils";
 
 const classes = cvx({
@@ -37,7 +37,7 @@ export type TypographyProps<T extends React.ElementType = "div"> = React.PropsWi
   className?: string;
   style?: React.CSSProperties & Record<string, any>;
   ref?: React.ComponentPropsWithRef<T>["ref"];
-} & cvxProps<typeof classes>;
+} & cvxVariants<typeof classes>;
 
 type TypographyElement = <T extends React.ElementType = "div">(_props: TypographyProps<T>) => React.ReactElement;
 

@@ -1,4 +1,4 @@
-import x from "cretex";
+import x from "xuxi";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...merge: x.cnxValues[]) {

@@ -45,7 +45,7 @@ export function DashboardTableOfContents({ toc, sub = 6 }: TocProps) {
   const mounted = useMounted();
 
   const paths = pathname.split("/").filter(Boolean);
-  const editPageLink = paths.length ? `https://github.com/ilkhoeri/cretex/edit/docs/md/${paths.join("/")}.mdx` : "";
+  const editPageLink = paths.length ? `https://github.com/ilkhoeri/xuxi/edit/docs/md/${paths.join("/")}.mdx` : "";
 
   if (!toc?.items?.length) return null;
 

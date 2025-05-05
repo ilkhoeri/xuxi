@@ -16,7 +16,7 @@ If you're using an ESM-based environment (e.g., modern browsers, `node` with `"t
 1. **Using the default export**:
 
    ```typescript
-   import x from "cretex";
+   import x from "xuxi";
 
    // Access functions, types, or properties through the default export
    x.cnx();
@@ -27,7 +27,7 @@ If you're using an ESM-based environment (e.g., modern browsers, `node` with `"t
 2. **Using named exports**:
 
    ```typescript
-   import { cnx, cvx, ocx } from "cretex";
+   import { cnx, cvx, ocx } from "xuxi";
 
    // Use specific functions or properties directly
    cnx();
@@ -38,7 +38,7 @@ If you're using an ESM-based environment (e.g., modern browsers, `node` with `"t
 3. **Combining default and named imports**:
 
    ```typescript
-   import x, { cnx } from "cretex";
+   import x, { cnx } from "xuxi";
 
    x.cnx(); // Access via default export
    cnx(); // Access directly as a named export
@@ -51,7 +51,7 @@ If you're working in a CommonJS environment (e.g., Node.js with `"type": "common
 1. **Default export is wrapped in a `default` property**:
 
    ```javascript
-   const x = require("cretex").default;
+   const x = require("xuxi").default;
 
    // Access functions, types, or properties through the default export
    x.cnx();
@@ -62,7 +62,7 @@ If you're working in a CommonJS environment (e.g., Node.js with `"type": "common
 2. **Using named exports (requires destructuring)**:
 
    ```javascript
-   const { cnx, cvx, ocx } = require("cretex");
+   const { cnx, cvx, ocx } = require("xuxi");
 
    cnx();
    cvx();
@@ -91,10 +91,10 @@ This library is compiled with **`target: es2020`**, meaning it utilizes modern J
 
 **Example Table of Imports**
 
-| **Use Case**                | **ESM Import Syntax**                     | **CJS Import Syntax**                                                              |
-| --------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------------- |
-| Default Export              | `import x from 'cretex';`                 | `const x = require('cretex').default;`                                             |
-| Named Exports               | `import { cnx, cvx, ocx } from 'cretex';` | `const { cnx, cvx, ocx } = require('cretex');`                                     |
-| Combining Default and Named | `import x, { cnx } from 'cretex';`        | `const x = require('cretex').default;` <br /> `const { cnx } = require('cretex');` |
+| **Use Case**                | **ESM Import Syntax**                   | **CJS Import Syntax**                                                          |
+| --------------------------- | --------------------------------------- | ------------------------------------------------------------------------------ |
+| Default Export              | `import x from 'xuxi';`                 | `const x = require('xuxi').default;`                                           |
+| Named Exports               | `import { cnx, cvx, ocx } from 'xuxi';` | `const { cnx, cvx, ocx } = require('xuxi');`                                   |
+| Combining Default and Named | `import x, { cnx } from 'xuxi';`        | `const x = require('xuxi').default;` <br /> `const { cnx } = require('xuxi');` |
 
 By understanding these nuances, you can confidently use this library in any environment.

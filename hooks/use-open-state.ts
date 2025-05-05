@@ -5,7 +5,6 @@ import { useMeasureScrollbar } from "@/hooks/use-measure-scrollbar";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useClickOutside } from "@/hooks/use-click-outside";
 import { SizeElement, useElementRect } from "@/hooks/use-element-info";
-import { inferType } from "cretex";
 
 export enum Selector {
   Trigger = "trigger",
@@ -455,7 +454,7 @@ export function useOpenState(options: OpenStateOptions = {}) {
   };
 }
 
-export function useOpenStateHandler(trigger: "click" | "hover", use: Partial<inferType<typeof useOpenState>> = {}) {
+export function useOpenStateHandler(trigger: "click" | "hover", use: Partial<InferType<typeof useOpenState>> = {}) {
   useEffect(() => {
     const windowTouchStart = () => {
       if (!use?.isTouchDevice) use?.setIsTouchDevice?.(true);

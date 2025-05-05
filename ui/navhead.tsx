@@ -68,7 +68,7 @@ export function LinkHome({ open, className }: { open?: boolean; className?: stri
       className={cn("font-geist-mono gap-2 rounded-lg px-2 py-1 text-lg font-medium leading-none", className)}
     >
       <LogoIcon size={30} />
-      <span>Cretex</span>
+      <span>Xuxi</span>
     </Link>
   );
 }

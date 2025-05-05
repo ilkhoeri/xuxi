@@ -2,7 +2,7 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
 import { mergeRefs } from "@/hooks/use-merged-ref";
-import { cvx, inferType, rem, ocx } from "cretex";
+import { cvx, rem, ocx } from "xuxi";
 import { useHotkeys } from "@/hooks/use-hotkeys";
 import { useMeasureScrollbar } from "@/hooks/use-measure-scrollbar";
 import { useClickOutside } from "@/hooks/use-click-outside";
@@ -47,8 +47,8 @@ interface SheetsContextProps {
   contentRef: React.RefObject<HTMLDivElement>;
   overlayRef: React.RefObject<HTMLDivElement>;
   useHideScrollbar(value?: string | undefined): [boolean, number] | undefined;
-  triggerBounding: inferType<typeof useElementRect>;
-  contentBounding: inferType<typeof useElementRect>;
+  triggerBounding: InferType<typeof useElementRect>;
+  contentBounding: InferType<typeof useElementRect>;
   render: boolean;
   open: boolean;
   setOpen: (value: boolean) => void;
@@ -337,7 +337,8 @@ export function SheetsProvider(_props: SheetsProviderProps) {
         isOpenMultiple,
         shouldRenderMultiple,
         handleOverlayClickMultiple
-      }}>
+      }}
+    >
       {children}
     </SheetsCtx.Provider>
   );
@@ -719,7 +720,8 @@ export const SheetsClose = React.forwardRef<React.ComponentRef<"button">, Sheets
           if (ctx && !ctx?.multipleOpen) ctx?.setOpen(false);
         },
         ...getStyles("closed", { variant, className, unstyled })
-      }}>
+      }}
+    >
       {children || <XIcon />}
     </button>
   );

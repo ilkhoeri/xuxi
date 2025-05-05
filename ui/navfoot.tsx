@@ -4,7 +4,7 @@ import { NavLinkItem } from "./navlink";
 import { ROUTES } from "@/routes";
 import { BrandOeriIcon, LogoIcon } from "@/ui/icons";
 import { Polymorphic } from "@/ui/polymorphic-slot";
-import { cvx, cvxProps } from "cretex";
+import { cvx, cvxVariants } from "xuxi";
 import { cn } from "@/lib/utils";
 
 const classes = cvx({
@@ -24,8 +24,8 @@ const classes = cvx({
 });
 
 interface StylesProps {
-  selector?: NonNullable<cvxProps<typeof classes>["selector"]>;
-  opts?: { section?: NonNullable<cvxProps<typeof classes>["section"]>; className?: string };
+  selector?: NonNullable<cvxVariants<typeof classes>["selector"]>;
+  opts?: { section?: NonNullable<cvxVariants<typeof classes>["section"]>; className?: string };
 }
 function getStyles(selector: StylesProps["selector"], opts: StylesProps["opts"] = {}) {
   return { className: cn(classes({ selector, section: opts.section }), opts.className) };
@@ -83,7 +83,8 @@ export async function NavFoot() {
             target="_blank"
             href="https://github.com/ilkhoeri"
             aria-label="Oeri UI"
-            className="mx-2 cursor-pointer gap-2 rounded-lg transition-colors duration-200 hover:text-color">
+            className="mx-2 cursor-pointer gap-2 rounded-lg transition-colors duration-200 hover:text-color"
+          >
             <BrandOeriIcon size={22} aria-label="oeri Logo" className="duration-200 ease-linear group-hover:scale-110" /> oeri
           </a>
         </div>

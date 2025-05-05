@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Loader } from "./loader";
 import { injectComponentIntoFirstChild, PolymorphicSlot } from "./polymorphic-slot";
-import { cvx, type cvxProps } from "cretex";
+import { cvx, type cvxVariants } from "xuxi";
 import { cn } from "@/lib/utils";
 
 export type MouseEventButtonType = React.MouseEvent<HTMLButtonElement, MouseEvent>;
@@ -85,12 +85,12 @@ export const buttonVariants = cvx({
   }
 });
 
-type Variants = cvxProps<typeof buttonVariants> & { unstyled?: boolean };
+type Variants = cvxVariants<typeof buttonVariants> & { unstyled?: boolean };
 export function buttonStyle(variants?: Variants, className?: string) {
   return cn(!variants?.unstyled && buttonVariants({ ...variants }), className);
 }
 
-export interface ButtonProps extends UnstyledButtonProps<"color">, cvxProps<typeof buttonVariants> {
+export interface ButtonProps extends UnstyledButtonProps<"color">, cvxVariants<typeof buttonVariants> {
   unstyled?: boolean;
 }
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((_props, ref) => {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Svg } from "@/ui/icons/ctx";
-import { cvx, rem, type cvxProps } from "cretex";
+import { cvx, rem, type cvxVariants } from "xuxi";
 import { UnstyledButton, type UnstyledButtonProps } from "./button";
 import { cn } from "@/lib/utils";
 
@@ -34,7 +34,7 @@ export const Burger = React.forwardRef<HTMLButtonElement, BurgerProps>(function 
 });
 
 type Index = "0" | "1" | "2";
-type Selector = cvxProps<typeof burger>;
+type Selector = cvxVariants<typeof burger>;
 type Options = {
   className?: string;
   unstyled?: boolean;

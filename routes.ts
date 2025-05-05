@@ -36,7 +36,7 @@ export const ROUTES = {
   sections: [
     {
       label: "Github Repository",
-      href: "https://github.com/ilkhoeri/cretex",
+      href: "https://github.com/ilkhoeri/xuxi",
       icon: BrandGithubFillIcon,
       color: "#6e5494"
     },

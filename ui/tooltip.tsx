@@ -68,7 +68,8 @@ const TooltipContent = React.forwardRef<React.ComponentRef<typeof Primitive.Cont
           className
         ),
         ...props
-      }}>
+      }}
+    >
       {children}
       {withArrow && (
         <svg fill="currentColor" viewBox="0 0 15 6" strokeWidth="0" data-side={side} data-align={align} data-tooltip="arrow" className={arrow}>

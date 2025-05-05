@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ocx, type cvxResult } from "cretex";
+import { ocx, type cvxResult } from "xuxi";
 import { cn } from "@/lib/utils";
 
 type SubKeys = {

@@ -8,7 +8,7 @@ export const siteConfig = {
   creator: "@ilkhoeri",
   url: `${process.env.SITE_URL}`,
   email: "khoeriilham@gmail.com",
-  name: "Cretex",
+  name: "Xuxi",
   ogImage: "/assets/images/homepage.webp",
   description: "The Good Choice for Development Application based on React, components server, hooks, and more functions.",
   archives: ["https://github.com/ilkhoeri/ioeri"],
@@ -38,14 +38,14 @@ export const siteConfig = {
 export const iconsConfig: Metadata = {
   icons: {
     icon: [
-      { url: "/icons/cretex-asset.png" },
-      // new URL("/icons/cretex-asset.png", siteConfig.url),
+      { url: "/icons/xuxi-asset.png" },
+      // new URL("/icons/xuxi-asset.png", siteConfig.url),
       {
-        url: "/icons/cretex-asset.png",
+        url: "/icons/xuxi-asset.png",
         media: "(prefers-color-scheme: dark)"
       }
     ],
-    shortcut: ["/icons/cretex-asset.png"],
+    shortcut: ["/icons/xuxi-asset.png"],
     apple: [
       { url: "/icons/apple-icon.png" },
       {
@@ -164,8 +164,8 @@ export const linksConfig: Metadata = {
     creator: siteConfig.creator,
     creatorId: "1467726470533754880",
     images: {
-      url: absoluteUrl("/icons/cretex-asset.png"),
-      alt: "cretex"
+      url: absoluteUrl("/icons/xuxi-asset.png"),
+      alt: "xuxi"
     },
     app: {
       name: "twitter_app",
@@ -225,7 +225,7 @@ export const linksConfig: Metadata = {
    * <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
    */
   appleWebApp: {
-    title: "Apple Web App | Cretex",
+    title: "Apple Web App | Xuxi",
     statusBarStyle: "black-translucent",
     startupImage: [
       "/icons/apple-touch-icon.png",

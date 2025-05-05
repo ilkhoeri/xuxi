@@ -1699,7 +1699,8 @@ html[class="dark"]:root {
     url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiBzdHJva2U9IiM3NTc1NzUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgYXJpYS1oaWRkZW49InRydWUiIGhlaWdodD0iMTZweCIgd2lkdGg9IjE2cHgiPjxwYXRoIGQ9Ik03IDdtMCAyLjY2N2EyLjY2NyAyLjY2NyAwIDAgMSAyLjY2NyAtMi42NjdoOC42NjZhMi42NjcgMi42NjcgMCAwIDEgMi42NjcgMi42Njd2OC42NjZhMi42NjcgMi42NjcgMCAwIDEgLTIuNjY3IDIuNjY3aC04LjY2NmEyLjY2NyAyLjY2NyAwIDAgMSAtMi42NjcgLTIuNjY3eiI+PC9wYXRoPjxwYXRoIGQ9Ik00LjAxMiAxNi43MzdhMi4wMDUgMi4wMDUgMCAwIDEgLTEuMDEyIC0xLjczN3YtMTBjMCAtMS4xIC45IC0yIDIgLTJoMTBjLjc1IDAgMS4xNTggLjM4NSAxLjUgMSI+PC9wYXRoPjwvc3ZnPg==);
   --has-copy: center / 50% no-repeat transparent
     url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiBzdHJva2U9IiM3NTc1NzUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgYXJpYS1oaWRkZW49InRydWUiIGhlaWdodD0iMTZweCIgd2lkdGg9IjE2cHgiPjxwYXRoIGQ9Ik01IDEybDUgNWwxMCAtMTAiPjwvcGF0aD48L3N2Zz4=);
-  --shadow-kbd: inset 0 -0.05rem 0.5rem hsl(var(--muted-foreground) / 0.08), inset 0 0.05rem #f1f7feb5, inset 0 0.25rem 0.5rem hsl(var(--muted-foreground) / 0.17),
+  --shadow-kbd:
+    inset 0 -0.05rem 0.5rem hsl(var(--muted-foreground) / 0.08), inset 0 0.05rem #f1f7feb5, inset 0 0.25rem 0.5rem hsl(var(--muted-foreground) / 0.17),
     inset 0 -0.1rem hsl(var(--background) / 0.9), 0 0 0 0.075rem hsl(var(--muted-foreground) / 0.25), 0 0.08rem 0.17rem hsl(var(--background) / 0.95);
   --ff-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --ff-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -3163,7 +3164,7 @@ code[data-line-numbers-max-digits="3"] > [data-line]::before {
     }
   }
 
-  & :where(:is(h1,h2, h3, h4, h5)):not(:is([data-demo-area] :is(h1,h2, h3, h4, h5))){
+  & :where(:is(h1, h2, h3, h4, h5)):not(:is([data-demo-area] :is(h1, h2, h3, h4, h5))) {
     & a {
       & code {
         @apply [--p-code:0rem_0.5rem] [--round-code:.4375rem];
@@ -3171,7 +3172,8 @@ code[data-line-numbers-max-digits="3"] > [data-line]::before {
       & svg {
         @apply absolute left-0 rtl:left-auto rtl:right-0;
       }
-    }}
+    }
+  }
 
   & :where(:is(h1, )):not(:is([data-demo-area] :is(h1))) {
     @apply text-color leading-none mb-[2.1rem] mt-0 flex items-center cursor-default w-max [&>a>svg]:hover:text-constructive max-w-full;

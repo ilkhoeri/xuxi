@@ -16,7 +16,7 @@ function nameFile(fileSource: string) {
 /**
  * expecting a folder structure like the following:
  * ```md
- * cretex
+ * xuxi
  * ├── main (module root)
  * │ ├── CHANGELOG.md
  * │ ├── CODE_OF_CONDUCT.md

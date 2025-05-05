@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useNavContext } from "./nav-ctx";
 import { NavLinkItem } from "@/ui/navlink";
 import { ButtonAside, LinkHome } from "./navhead";
-import { cvx, cvxProps } from "cretex";
+import { cvx, cvxVariants } from "xuxi";
 import { ScrollArea } from "@/ui/scroll-area";
 import { Sheets, SheetsContent, SheetsTrigger } from "@/ui/sheets";
 import { displayName, FormatName } from "@/lib/text-parser";
@@ -154,7 +154,7 @@ function Overlay({ minQuery, open, setOpen, className }: { minQuery?: boolean; o
   return <span onClick={() => setOpen(false)} {...getStyles("overlay", { className })} />;
 }
 
-function getStyles(selector: NonNullable<cvxProps<typeof classes>["selector"]>, opts: { className?: string } = {}) {
+function getStyles(selector: NonNullable<cvxVariants<typeof classes>["selector"]>, opts: { className?: string } = {}) {
   return { className: merge(classes({ selector }), opts.className) };
 }
 
