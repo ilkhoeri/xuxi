@@ -4,6 +4,7 @@ import changelogMdx from './changelog.mdx.json' with { type: 'json' }
 import cleanMdx from './clean.mdx.json' with { type: 'json' }
 import cnxMdx from './cnx.mdx.json' with { type: 'json' }
 import cocMdx from './coc.mdx.json' with { type: 'json' }
+import converterMdx from './converter.mdx.json' with { type: 'json' }
 import cvxMdx from './cvx.mdx.json' with { type: 'json' }
 import exportedMdx from './exported.mdx.json' with { type: 'json' }
 import indexMdx from './index.mdx.json' with { type: 'json' }
@@ -18,4 +19,4 @@ import typesMdx from './types.mdx.json' with { type: 'json' }
 import about__appMdx from './about__app.mdx.json' with { type: 'json' }
 import about__indexMdx from './about__index.mdx.json' with { type: 'json' }
 
-export const allDocs = [changelogMdx, cleanMdx, cnxMdx, cocMdx, cvxMdx, exportedMdx, indexMdx, installationMdx, licenseMdx, linksMdx, metaMdx, ocxMdx, startedMdx, tocMdx, typesMdx, about__appMdx, about__indexMdx]
+export const allDocs = [changelogMdx, cleanMdx, cnxMdx, cocMdx, converterMdx, cvxMdx, exportedMdx, indexMdx, installationMdx, licenseMdx, linksMdx, metaMdx, ocxMdx, startedMdx, tocMdx, typesMdx, about__appMdx, about__indexMdx]

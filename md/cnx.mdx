@@ -1,6 +1,6 @@
 ---
 title: cnx
-date: 2025-02-02
+date: 2025-05-05
 ---
 
 # **cnx**
@@ -12,7 +12,7 @@ Useful for dynamically managing string classes in JavaScript or TypeScript appli
 ## Syntax
 
 ```ts
-function cnx(...inputs: cnxValues[]): string;
+function cnx(...args: cnxValues[]): string;
 ```
 
 ## How cnx works:
@@ -21,12 +21,12 @@ function cnx(...inputs: cnxValues[]): string;
    An empty array (classes) is used to store valid strings.
 
 2. **Input Iteration:** <br />
-   Each item in the `...inputs` parameter (spread operator) is processed with the following logic: <br />
+   Each item in the `...args` parameter (spread operator) is processed with the following logic: <br />
 
 - String or Number: <br />
   Immediately converted to a string and inserted into the array.
 - Array: <br />
-  Processed recursively using `cnx(...input)` to support nested structures.
+  Processed recursively using `cnx(...args)` to support nested structures.
 - Object: <br />
   Iterate over the keys and values ​​(key-value pairs). If the value is "truthy" (e.g., `true`), the key (class name) is added to the array.
 - Function: <br />
@@ -47,40 +47,36 @@ cnx(['', baz, (foo as string) !== 'foo' && bar], { '': !props }, '', () => ({ ''
 ### Basic Merging
 
 ```ts
-cnx("hello", "world");
-// Output: "hello world"
+cnx("hello", "world"); // "hello world"
 
-cnx(() => "there", "dynamic");
-// Output: "there dynamic"
+cnx(() => "there", "dynamic"); // "there dynamic"
 
-cnx(["extra", 0, false, "bar"]);
-// Output: "extra bar"
+cnx(["extra", 0, false, "bar"]); // "extra bar"
 
-cnx("hello", true && "foo", false && "bar");
-// Output: "hello foo"
+cnx("hello", true && "foo", false && "bar"); // "hello foo"
 ```
 
 ### Complex Merging
 
 ```ts
 cnx(["foo"], ["", 0, false, "bar"], [["baz", [["hello"], "there"]]]);
-// Output: "foo bar baz hello there"
+// "foo bar baz hello there"
 
 cnx("foo", [1 && "bar", { baz: false, bat: null }, ["hello", ["world"]]], "cya");
-// Output: "foo bar hello world cya"
+// "foo bar hello world cya"
 
 cnx("foo", { primary: true, disabled: false }, ["extra", null, undefined], () => "dynamic");
-// Output: "foo primary extra dynamic"
+// "foo primary extra dynamic"
 
 cnx([{ color: "red", fontSize: "16px" }, () => ({ backgroundColor: "blue" }), undefined, [{ margin: "10px" }, () => ({ padding: "5px" })]]);
-// Output: "color fontSize backgroundColor margin padding"
+// "color fontSize backgroundColor margin padding"
 ```
 
 ### Ignored Falsy
 
 ```ts
 cnx(Boolean, Object, undefined, null, "", 0, NaN);
-// Output: ""
+// ""
 ```
 
 ## Advantages
@@ -97,13 +93,15 @@ cnx(Boolean, Object, undefined, null, "", 0, NaN);
 import { cnx, type cnxValues } from "xuxi";
 import { twMerge } from "tailwind-merge";
 
-export function cn(...merge: cnxValues[]): string {
-  return twMerge(cnx(...merge));
+export function cn(...args: cnxValues[]): string | undefined {
+  if (!args) return;
+  return twMerge(cnx(...args));
 }
 ```
 
 ```ts
 cn("bg-black dark:bg-white font-normal", { "font-medium": true });
+// bg-black dark:bg-white font-medium
 ```
 
 ## IntelliSense

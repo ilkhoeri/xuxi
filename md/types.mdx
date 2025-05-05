@@ -1,9 +1,63 @@
 ---
 title: Types
-date: 2025-02-03
+date: 2025-05-05
 ---
 
 # **Types**
+
+## cvxVariants
+
+Extracts the properties of the first argument of a given function type variants.
+
+### Syntax
+
+```ts
+type cvxVariants<T extends (...keys: any) => any> = Omit<Undefined<Parameters<T>[0]>, ExcludeKeys>;
+```
+
+```tsx
+import { cvx, type cvxVariants } from "xuxi";
+
+const classes = cvx({
+  assign: "flex items-center justify-center",
+  variants: {
+    weight: {
+      light: "font-light",
+      bold: "font-bold",
+      semibold: "font-semibold"
+    },
+    color: {
+      blue: "text-blue-600",
+      green: "text-green-700",
+      red: "text-red-500",
+      purple: "text-purple-500"
+    },
+    size: {
+      sm: "h-4",
+      md: "h-6",
+      lg: "h-10",
+      xl: "h-14"
+    }
+  }
+});
+```
+
+```tsx
+type VariantsType = cvxVariants<typeof classes>;
+// Output:
+// type VariantsType = {
+//     weight?: "bold" | "light" | "semibold" | undefined;
+//     color?: "blue" | "green" | "red" | "purple" | undefined;
+//     size?: "sm" | "md" | "lg" | "xl" | undefined;
+// };
+```
+
+```tsx
+type Color = NonNullable<cvxVariants<typeof classes>["color"]>;
+// type Color = "blue" | "green" | "red" | "purple";
+```
+
+---
 
 ## InferType
 

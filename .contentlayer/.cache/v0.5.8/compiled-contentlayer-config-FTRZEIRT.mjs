@@ -6614,4 +6614,4 @@ export {
   computedFields,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-RUMJWD6P.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-FTRZEIRT.mjs.map

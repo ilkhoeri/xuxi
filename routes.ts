@@ -12,11 +12,12 @@ export const ROUTES = {
     { title: "Installation", href: "/installation" },
     {
       title: "Usage",
-      href: "/ocx",
+      href: "/cnx",
       data: [
-        { title: "ocx", href: "/ocx" },
-        { title: "cvx", href: "/cvx" },
         { title: "cnx", href: "/cnx" },
+        { title: "cvx", href: "/cvx" },
+        { title: "ocx", href: "/ocx" },
+        { title: "converter", href: "/converter" },
         { title: "clean", href: "/clean" },
         { title: "types", href: "/types" }
       ]
