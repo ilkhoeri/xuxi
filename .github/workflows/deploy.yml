@@ -41,5 +41,5 @@ jobs:
           entrypoint: "jsr:@deno/nextjs-start"
           root: "."
           include: .next, public, .contentlayer/generated
-          exclude: .next/static/media/00045315ec24c208-s.woff2
+          exclude: .next/static/**/*.woff2
 
