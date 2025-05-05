@@ -4,12 +4,12 @@ import { NavLinkItem } from "./navlink";
 import { ROUTES } from "@/routes";
 import { BrandOeriIcon, LogoIcon } from "@/ui/icons";
 import { Polymorphic } from "@/ui/polymorphic-slot";
-import { cvx } from "cretex";
+import { cvx, cvxProps } from "cretex";
 import { cn } from "@/lib/utils";
 
-const Styles = cvx({
+const classes = cvx({
   variants: {
-    as: {
+    selector: {
       footer: "mx-auto flex flex-col w-full relative text-sm bg-background-theme max-w-screen-3xl",
       section: "px-6 md:px-8 lg:px-10 xl:px-10",
       list: "gap-x-6 grid sm:grid-cols-2 md:grid-flow-col md:grid-cols-4 md:grid-rows-5 lg:grid-cols-5",
@@ -23,12 +23,20 @@ const Styles = cvx({
   }
 });
 
+interface StylesProps {
+  selector?: NonNullable<cvxProps<typeof classes>["selector"]>;
+  opts?: { section?: NonNullable<cvxProps<typeof classes>["section"]>; className?: string };
+}
+function getStyles(selector: StylesProps["selector"], opts: StylesProps["opts"] = {}) {
+  return { className: cn(classes({ selector, section: opts.section }), opts.className) };
+}
+
 export async function NavFoot() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={Styles({ as: "footer" })}>
-      <Polymorphic el="section" className={Styles({ as: "section", section: "top" })}>
+    <footer {...getStyles("footer")}>
+      <Polymorphic el="section" {...getStyles("section", { section: "top" })}>
         <div className="col-span-1 w-max lg:col-span-2">
           <Link href="/" className="flex flex-initial items-center rounded-lg font-semibold text-muted-foreground hover:text-color" aria-label="HOME">
             <LogoIcon className="mr-2 flex h-[72px] w-[72px] flex-none items-center justify-center rounded-xl bg-background-theme p-1" />
@@ -37,10 +45,10 @@ export async function NavFoot() {
 
         {ROUTES["footRoutes"] && ROUTES["footRoutes"]?.length > 0 && (
           <Polymorphic el="nav" className="col-span-1 lg:col-span-10">
-            <ul role="list" className={Styles({ as: "list" })}>
+            <ul role="list" {...getStyles("list")}>
               {ROUTES["footRoutes"].map((i, index) => (
-                <li key={index} role="listitem" className={Styles({ as: "listitem" })}>
-                  <NavLinkItem href={i.href} title={i.title} className={Styles({ as: "link" })} />
+                <li key={index} role="listitem" {...getStyles("listitem")}>
+                  <NavLinkItem href={i.href} title={i.title} {...getStyles("link")} />
                 </li>
               ))}
             </ul>
@@ -60,7 +68,7 @@ export async function NavFoot() {
         />
       </Polymorphic>
 
-      <Polymorphic el="section" className={Styles({ as: "section", section: "bottom" })}>
+      <Polymorphic el="section" {...getStyles("section", { section: "bottom" })}>
         <div className="flex flex-col items-center gap-x-4 sm:flex-row">
           <p>&copy; {currentYear} oeri rights MIT</p>
           <hr className="hidden h-4 w-[1px] border-l border-l-neutral-400 sm:inline-block" />
@@ -75,8 +83,7 @@ export async function NavFoot() {
             target="_blank"
             href="https://github.com/ilkhoeri"
             aria-label="Oeri UI"
-            className="mx-2 cursor-pointer gap-2 rounded-lg transition-colors duration-200 hover:text-color"
-          >
+            className="mx-2 cursor-pointer gap-2 rounded-lg transition-colors duration-200 hover:text-color">
             <BrandOeriIcon size={22} aria-label="oeri Logo" className="duration-200 ease-linear group-hover:scale-110" /> oeri
           </a>
         </div>

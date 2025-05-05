@@ -45,13 +45,13 @@ function TooltipProvider(_props: ProviderProps) {
   );
 }
 
-const TooltipTrigger = React.forwardRef<React.ElementRef<typeof Primitive.Trigger>, Primitive.TooltipTriggerProps>((_props, ref) => {
+const TooltipTrigger = React.forwardRef<React.ComponentRef<typeof Primitive.Trigger>, Primitive.TooltipTriggerProps>((_props, ref) => {
   const { touch, triggerRef } = useTooltipCtx();
   return <Primitive.Trigger {...{ ref: mergeRefs(triggerRef, ref), "data-touch": `${touch}`, ..._props }} />;
 });
 TooltipTrigger.displayName = Primitive.TooltipTrigger.displayName;
 
-const TooltipContent = React.forwardRef<React.ElementRef<typeof Primitive.Content>, Primitive.TooltipContentProps & { withArrow?: boolean }>(function TooltipContent(
+const TooltipContent = React.forwardRef<React.ComponentRef<typeof Primitive.Content>, Primitive.TooltipContentProps & { withArrow?: boolean }>(function TooltipContent(
   { className, sideOffset = 4, children, withArrow, align, side, ...props },
   ref
 ) {
@@ -64,12 +64,11 @@ const TooltipContent = React.forwardRef<React.ElementRef<typeof Primitive.Conten
         side,
         sideOffset: withArrow ? Number(sideOffset) + 9 : sideOffset,
         className: cn(
-          "group/content relative z-50 flex items-center justify-center rounded-md border bg-background px-3 py-1.5 text-sm text-muted-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 [&_[data-tooltip]]:text-background",
+          "group/content relative z-50 flex items-center justify-center rounded-md border bg-background px-1 py-0.5 text-sm text-muted-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 [&_[data-tooltip]]:text-background",
           className
         ),
         ...props
-      }}
-    >
+      }}>
       {children}
       {withArrow && (
         <svg fill="currentColor" viewBox="0 0 15 6" strokeWidth="0" data-side={side} data-align={align} data-tooltip="arrow" className={arrow}>
@@ -97,7 +96,7 @@ export interface TooltipProps
   contentProps?: Omit<Primitive.TooltipContentProps, KeyType>;
 }
 
-const Tooltip = React.forwardRef<React.ElementRef<typeof Primitive.Trigger>, TooltipProps>((_props, ref) => {
+const Tooltip = React.forwardRef<React.ComponentRef<typeof Primitive.Trigger>, TooltipProps>((_props, ref) => {
   const {
     open,
     onOpenChange,

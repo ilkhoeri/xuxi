@@ -1,16 +1,16 @@
 "use client";
 import * as React from "react";
-import { NpmCommands } from "./types";
 import { Tabs } from "@/ui/tabs";
-import { Button } from "@/ui/button";
-import { Event, trackEvent } from "./event";
-import { useConfig } from "./config";
 import { cn } from "@/lib/utils";
-import { HasCopyIcon } from "@/ui/icons";
-import { ScrollArea } from "@/ui/scroll-area";
-import { visit } from "unist-util-visit";
-import { UnistNode, UnistTree } from "./types";
+import { Button } from "@/ui/button";
+import { useConfig } from "./config";
 import { Tooltip } from "../tooltip";
+import { HasCopyIcon } from "@/ui/icons";
+import { visit } from "unist-util-visit";
+import { Event, trackEvent } from "./event";
+import { ScrollArea } from "@/ui/scroll-area";
+
+import { UnistNode, UnistTree, NpmCommands } from "./types";
 
 export function rehypeCommand() {
   return (tree: UnistTree) => {
@@ -109,7 +109,7 @@ export function CodeBlockCommand(_props: React.ComponentProps<"pre"> & NpmComman
     setCopied(true);
   }, [packageManager, tabs]);
 
-  const copyLabel = "Copy code";
+  const copyLabel = "Copy";
   const copiedLabel = "Copied";
 
   return (
@@ -123,9 +123,8 @@ export function CodeBlockCommand(_props: React.ComponentProps<"pre"> & NpmComman
             ...config,
             packageManager: value as "pnpm" | "npm" | "yarn" | "bun"
           });
-        }}
-      >
-        <Tabs.List className="flex flex-row items-center justify-start gap-3 border-b bg-background-box px-3 pt-0.5">
+        }}>
+        <Tabs.List className="flex flex-row items-center justify-start gap-3 border-b bg-muted/45 px-3 pt-0.5">
           {Object.entries(tabs).map(([key]) => {
             return (
               <Tabs.Tab
@@ -134,8 +133,7 @@ export function CodeBlockCommand(_props: React.ComponentProps<"pre"> & NpmComman
                 data-pm={key}
                 className={cn("-mb-px border-b border-transparent p-1 font-geist-mono text-muted-foreground", {
                   "aria-selected:border-color aria-selected:text-color": mounted
-                })}
-              >
+                })}>
                 {key}
               </Tabs.Tab>
             );
@@ -143,7 +141,7 @@ export function CodeBlockCommand(_props: React.ComponentProps<"pre"> & NpmComman
         </Tabs.List>
         {Object.entries(tabs).map(([key, value]) => {
           return (
-            <ScrollArea key={key} dir="ltr" orientation="horizontal">
+            <ScrollArea key={key} dir="ltr" orientation="horizontal" classNames={{ viewport: "bg-[var(--bg-code,hsl(var(--primitive)))]" }}>
               <Tabs.Panel
                 value={key}
                 className={cn("mt-0 px-4 py-5", {
@@ -162,7 +160,7 @@ export function CodeBlockCommand(_props: React.ComponentProps<"pre"> & NpmComman
       </Tabs>
 
       <Tooltip asChild content={copied ? copiedLabel : copyLabel} side="left" aria-label={copied ? copiedLabel : copyLabel}>
-        <Button size="icon" variant="ghost" className="absolute right-1 top-px z-10 border-0 [&_svg]:size-5" onClick={copyCommand}>
+        <Button size="icon" variant="ghost" className="[--sz:28px] absolute right-1 top-[3px] z-10 border-0 [&_svg]:size-4" onClick={copyCommand}>
           <span className="sr-only">Copy</span>
           <HasCopyIcon has={copied} />
         </Button>

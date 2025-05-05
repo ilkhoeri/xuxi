@@ -16,7 +16,7 @@ export async function setCookies(name: string, value: string) {
 
 export async function cookiesValues() {
   const cookieStore = await cookies();
-  const dir = cookieStore.get(Cookies.dir)?.value;
+  const dir = cookieStore.get(Cookies.dir)?.value || "ltr";
   const theme = cookieStore.get(Cookies.theme)?.value;
   const isOpenAside = cookieStore.get(Cookies.isOpenAside)?.value;
 

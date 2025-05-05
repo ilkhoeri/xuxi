@@ -337,8 +337,7 @@ export function SheetsProvider(_props: SheetsProviderProps) {
         isOpenMultiple,
         shouldRenderMultiple,
         handleOverlayClickMultiple
-      }}
-    >
+      }}>
       {children}
     </SheetsCtx.Provider>
   );
@@ -547,13 +546,19 @@ export const SheetsItem = React.forwardRef<React.ComponentRef<"div">, SheetsItem
 });
 SheetsItem.displayName = "SheetsItem";
 
-export interface SheetsTriggerProps extends ComponentProps<"button"> {}
+export interface SheetsTriggerProps extends ComponentProps<"button"> {
+  openChangeOnContextMenu?: boolean;
+}
 export const SheetsTrigger = React.forwardRef<React.ComponentRef<"button">, SheetsTriggerProps>((_props, ref) => {
-  const { type = "button", role = "button", className, id, unstyled, style, onClick, "aria-controls": arCont, ...props } = _props;
+  const { openChangeOnContextMenu = false, type = "button", role = "button", className, id, unstyled, style, onClick, onContextMenu, "aria-controls": arCont, ...props } = _props;
   const { variant, ...ctx } = useSheetsCtx(id);
   const ctxItem = useSheetsItemCtx();
 
   const isAccordion = variant === SheetsVariant.Accordion;
+  const openChange = () => {
+    if (isAccordion && ctxItem) ctxItem?.toggleId();
+    ctx?.toggle();
+  };
 
   return (
     <button
@@ -567,8 +572,14 @@ export const SheetsTrigger = React.forwardRef<React.ComponentRef<"button">, Shee
         "data-value": ctx?.multipleOpen ? String(ctx?.triggerRef?.current?.id) : undefined,
         onClick: e => {
           onClick?.(e);
-          if (isAccordion && ctxItem) ctxItem?.toggleId();
-          ctx?.toggle();
+          if (!openChangeOnContextMenu) openChange();
+        },
+        onContextMenu: e => {
+          onContextMenu?.(e);
+          if (openChangeOnContextMenu) {
+            e.preventDefault();
+            openChange();
+          }
         },
         ...ctx?.attr(ctxItem ? ctxItem?.dataStateItem : undefined),
         ...getStyles("trigger", { variant, className, unstyled }),
@@ -708,8 +719,7 @@ export const SheetsClose = React.forwardRef<React.ComponentRef<"button">, Sheets
           if (ctx && !ctx?.multipleOpen) ctx?.setOpen(false);
         },
         ...getStyles("closed", { variant, className, unstyled })
-      }}
-    >
+      }}>
       {children || <XIcon />}
     </button>
   );

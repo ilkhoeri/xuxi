@@ -182,7 +182,7 @@ export default makeSource({
         {
           behavior: "wrap",
           properties: {
-            className: ["subheading-anchor", "anchor_id text-color flex flex-row-reverse items-center gap-2"],
+            className: ["subheading-anchor", "anchor_id text-color flex flex-row flex-wrap justify-start items-center pl-8 rtl:pl-0 rtl:pr-8 relative"],
             ariaLabel: "Link to section"
           },
           content: [
@@ -191,8 +191,8 @@ export default makeSource({
               tagName: "svg",
               properties: {
                 xmlns: "http://www.w3.org/2000/svg",
-                width: "17",
-                height: "17",
+                width: "18",
+                height: "18",
                 fillRule: "evenodd",
                 clipRule: "evenodd",
                 fill: "currentColor",

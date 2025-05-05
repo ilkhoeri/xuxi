@@ -1,20 +1,49 @@
 .collapse {
-  @apply h-auto w-full flex flex-col gap-1 border-b-0;
+  @apply h-auto w-full flex flex-col gap-1 border-b-0 [--w:100%];
 
-  & [data-single] {
-    @apply [--w:100%] z-1 px-0.5;
-  }
-  & [data-nested] {
-    @apply [--w:100%] z-2 pl-4 rtl:pl-0 rtl:pr-4;
-    & [data-sheets="item"]::before {
-      @apply content-[''] absolute bg-muted rounded-none w-[0.75px] h-[--accordion-content-h] [--line-inset:calc((1rem-7.5px)*-1)] left-[--line-inset] right-auto rtl:right-[--line-inset] rtl:left-auto bottom-0;
+  & [data-sheets="root"]:is([data-sheets="content"] a + [data-sheets="root"]:has([data-single])) {
+    @apply ltr:pl-4 rtl:pr-4;
+
+    & [data-sheets="trigger-snap"] {
+      @apply font-medium text-sm rounded-sm py-1 flex flex-row items-center flex-nowrap justify-start min-w-max h-7 transition-colors focus-visible:ring-inset focus-visible:ring-offset-[-2px] hover:text-color w-full max-md:active:text-color md:hover:text-color;
+    }
+    & [data-single][data-sheets="content"] {
+      &::before {
+        @apply content-[''] absolute bg-muted rounded-none w-[0.75px] h-[calc(var(--accordion-content-h,0rem)+1.75rem)] [--line-inset:calc((1rem-5.5px)*-1)] left-[--line-inset] right-auto rtl:right-[--line-inset] rtl:left-auto bottom-0;
+      }
     }
   }
+
+  & [data-single] {
+    @apply z-1 px-0.5;
+  }
+
+  & [data-nested] {
+    @apply z-2;
+    &:not(:has(a + [data-sheets="root"] [data-single])) {
+      @apply pl-4 rtl:pl-0 rtl:pr-4;
+      & [data-sheets="item"]::before {
+        @apply content-[''] absolute bg-muted rounded-none w-[0.75px] h-[--accordion-content-h] [--line-inset:calc((1rem-5.5px)*-1)] left-[--line-inset] right-auto rtl:right-[--line-inset] rtl:left-auto bottom-0;
+      }
+    }
+
+    & [data-sheets="root"] {
+      & [data-single] {
+        & a {
+          @apply ltr:-ml-0.5 rtl:-mr-0.5;
+        }
+      }
+    }
+  }
+
   & [data-sheets="item"] {
     @apply relative flex select-none flex-col last-of-type:border-b-transparent;
   }
 
   & [data-sheets="trigger-snap"] {
+    &:not(:is([data-sheets="content"] a + [data-sheets="root"] :is([data-sheets="trigger-snap"]))) {
+      @apply font-medium text-sm w-full flex flex-row items-center max-md:active:text-color md:hover:text-color;
+    }
     & > a {
       @apply w-full text-left flex flex-row items-center justify-start;
     }
