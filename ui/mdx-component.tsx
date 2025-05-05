@@ -46,6 +46,8 @@ const components = {
       {...props}
     />
   ),
+  details: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => <summary className={cn("my-4", className)} {...props} />,
+  summary: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => <summary className={cn("*:select-none cursor-pointer", className)} {...props} />,
   pre: ({
     className,
     __rawString__,
@@ -65,8 +67,18 @@ const components = {
     if (isCommand) return <CodeBlockCommand {...{ __npmCommand__, __yarnCommand__, __pnpmCommand__, __bunCommand__ }} />;
     return (
       <>
-        <pre className={cn("mb-4 mt-6 !bg-transparent !bg-none", className)} {...props} />
-        {__rawString__ && <CopyButton value={__rawString__} className={cn("absolute right-1 top-0.5 shadow bg-transparent", __withMeta__ && "top-16")} />}
+        <pre className={cn("peer mb-4 mt-6 !bg-transparent !bg-none", className)} {...props} />
+        {__rawString__ && (
+          <CopyButton
+            value={__rawString__}
+            aria-label="copy"
+            title="copy code"
+            className={cn(
+              "absolute right-1 top-0.5 shadow bg-transparent opacity-0 transition-all duration-300 peer-hover:opacity-100 peer-hover:pointer-events-auto",
+              __withMeta__ && "top-16"
+            )}
+          />
+        )}
       </>
     );
   },
