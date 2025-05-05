@@ -37,7 +37,7 @@ cvx({
 ## Example Usage
 
 ```tsx
-import { cvx, type cvxProps } from "xuxi";
+import { cvx, type cvxVariants } from "xuxi";
 
 const classes = cvx({
   // assign values that is definitely returned
@@ -74,7 +74,7 @@ const classes = cvx({
 ```
 
 ```tsx
-type VariantsType = cvxProps<typeof classes>;
+type VariantsType = cvxVariants<typeof classes>;
 // Output:
 // type VariantsType = {
 //     variant?: "bold" | "light" | "semibold" | undefined;
@@ -85,7 +85,7 @@ type VariantsType = cvxProps<typeof classes>;
 ```
 
 ```tsx
-type Color = NonNullable<cvxProps<typeof classes>["color"]>;
+type Color = NonNullable<cvxVariants<typeof classes>["color"]>;
 // Output:
 // type Color = "blue" | "green" | "red" | "purple";
 ```

@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useId } from "@/hooks/use-id";
 import { useUncontrolled } from "@/hooks/use-uncontrolled";
-import { cvx, rem, type cvxProps, ocx } from "xuxi";
+import { cvx, rem, type cvxVariants, ocx } from "xuxi";
 import { cn } from "@/lib/utils";
 
 const classes = cvx({
@@ -19,8 +19,8 @@ const classes = cvx({
   }
 });
 
-type Variant = NonNullable<cvxProps<typeof classes>["variant"]>;
-type __TabsSelector = NonNullable<cvxProps<typeof classes>["selector"]>;
+type Variant = NonNullable<cvxVariants<typeof classes>["variant"]>;
+type __TabsSelector = NonNullable<cvxVariants<typeof classes>["selector"]>;
 type Options = StylesNames<__TabsSelector> & __TabsProps & {};
 type CSSProperties = React.CSSProperties & { [key: string]: any };
 type NestedRecord<U extends [string, unknown], T extends string> = {
