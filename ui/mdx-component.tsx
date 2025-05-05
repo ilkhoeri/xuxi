@@ -74,7 +74,7 @@ const components = {
             aria-label="copy"
             title="copy code"
             className={cn(
-              "absolute right-1 top-0.5 shadow bg-transparent opacity-0 transition-all duration-300 peer-hover:opacity-100 peer-hover:pointer-events-auto",
+              "absolute right-1 top-0.5 shadow bg-transparent opacity-0 transition-all duration-300 peer-hover:opacity-100 hover:opacity-100 peer-hover:pointer-events-auto",
               __withMeta__ && "top-16"
             )}
           />
