@@ -9,7 +9,41 @@ Be sure to always refer to the latest documentation for the most up-to-date usag
 
 ---
 
-## [0.0.45] - 2025-02-04
+## [1.0.1] - 2025-05-18
+
+### Added
+
+- Enhanced `cvx` function to support variant keys with stringified falsy values such as `'false'`, `'null'`, `'undefined'` by automatically mapping input values like `false`, `null`, and `undefined` to their corresponding string keys.
+- Introduced a utility type `cvxPrimitiveCast<T>` to map variant string keys to their respective primitive types, e.g.:
+
+  - `'true'` → `true`
+  - `'false'` → `false`
+  - `'null'` → `null`
+  - `'undefined'` → `undefined`
+  - Numeric strings (including decimals, e.g. `'1.5'`) → numeric literals (e.g. `1.5`)
+
+- Updated `cvxResult<T>` type to leverage `cvxPrimitiveCast`, making variant input types reflect accurate primitive types instead of string literals. This improves type safety and developer DX by enabling:
+
+  - `variants: { state: { true: ..., false: ... } }` to infer `{ state?: true | false | undefined }`
+  - `variants: { size: { "0": ..., "1": ... } }` to infer `{ size?: 0 | 1 | undefined }`
+
+- Extended `cvxPrimitiveCast` to support special numeric values `'Infinity'` and `'NaN'` by mapping them to their respective JS constants `Infinity` and `NaN`, allowing variants like:
+
+  - `{ state: { Infinity: 'IS_INFINITY', NaN: 'IS_NAN' } }`
+    and input usage like `xx({ state: Infinity })`.
+
+### Fixed
+
+- Fixed type narrowing to correctly handle falsy variant keys when variant input values are boolean, `null`, or `undefined` (instead of only strings).
+
+### Notes
+
+- The improved `cvxPrimitiveCast` utility can be further extended to support other special cases or custom mappings as needed.
+- The runtime logic in `cvx` now coerces variant input values to strings to check variant keys, supporting flexible input without sacrificing type safety.
+
+---
+
+## [1.0.0] - 2025-05-05
 
 ### **Enhancements**
 
@@ -29,17 +63,13 @@ Be sure to always refer to the latest documentation for the most up-to-date usag
 
 This release focuses on improving type safety, refining documentation, and ensuring a more structured approach to learning and utilizing the library.
 
----
-
-## [0.0.4] - 2025-01-31
-
 ### Changed
 
 #### **Refactored:**
 
-- `ocx`
+- `object`
 
-  - **Improvements:** Covers all scenarios that were present in the `ocx.raw()` implementation, including:
+  - **Improvements:** Covers all scenarios that were present in the `object.raw()` implementation, including:
 
     - **Replaced** `new WeakSet<object>()` with `new WeakMap<object, object>()` to avoid duplicate processing of nested objects and prevent infinite loops.
     - **Created** a separate `merge()` function to make it more modular.
@@ -48,7 +78,7 @@ This release focuses on improving type safety, refining documentation, and ensur
     - **Supports all previous scenarios** more efficiently.
     - **Supports arrays as input** and processes the elements in the array with recursion.
     - **Supports functions as input** and executes their results to get the objects to merge.
-    - **Supports deep object merging** using recursion with [`ocx.raw`](./src/ocx.ts).
+    - **Supports deep object merging** using recursion with [`object.raw`](./src/ocx.ts).
     - **Use `Reflect.ownKeys()` to handle `Symbol` property** to avoid losing special keys.
     - **Maintain compatibility with various input types (objects, functions, arrays, symbols, etc.)**
 
@@ -71,7 +101,7 @@ This release focuses on improving type safety, refining documentation, and ensur
 
   - **Removed:**
 
-    - `.clean()` chaining, as `ocx` now **removes falsy values by default**.
+    - `.clean()` chaining, as `object` now **removes falsy values by default**.
 
   - **Introduced:**
 
@@ -81,7 +111,7 @@ This release focuses on improving type safety, refining documentation, and ensur
   - **Added**:
 
     - Support handles merging objects containing `Symbol` keys.
-    - Support for `Symbol` as object keys in `ocx` and `ocx.raw()`.
+    - Support for `Symbol` as object keys in `object` and `object.raw()`.
 
   - **Fixed**:
 
@@ -95,22 +125,10 @@ This release focuses on improving type safety, refining documentation, and ensur
     - **implementation:** to use `seen = new WeakSet<object>()` by default, preventing infinite recursion and improving performance.
   - Improved **deep cleaning** for objects, empty objects, arrays, and mixed data structures.
   - Added **new documentation** section for `clean()`.
-- **`px`, `rem`, `em`, and `createConverter`** functions are now **Removed**.
-  - These functions will no longer be distributed within this package.
-  - They are now available via a **separate npm package**: [**`str-merge`**](https://www.npmjs.com/package/str-merge).
-  - Users requiring these utilities should install **`str-merge`** separately.
 
 ---
 
-## [0.0.3] - 2025-01-29
-
-### Changed
-
-Migrated from `bun` to `yarn`. Now, all command processes use `yarn` instead of `bun`.
-
----
-
-## [0.0.2] - 2025-01-29
+## [0.1.0] - 2025-05-04
 
 ### Added
 
@@ -126,6 +144,8 @@ Migrated from `bun` to `yarn`. Now, all command processes use `yarn` instead of 
 - Expanded test coverage to ensure all possible return scenarios are validated for each function.
 
 ### Changed
+
+Migrated from `bun` to `yarn`. Now, all command processes use `yarn` instead of `bun`.
 
 - Updated `cnx` function to trim whitespace by modifying:
   ```ts
