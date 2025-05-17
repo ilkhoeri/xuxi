@@ -1,6 +1,6 @@
 ---
 title: CHANGELOG
-date: 2025-05-05
+date: 2025-05-18
 ---
 
 # CHANGELOG
@@ -11,6 +11,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Be sure to always refer to the latest documentation for the most up-to-date usage guidelines.
+
+---
+
+## [1.0.1] - 2025-05-18
+
+### Added
+
+- Enhanced `cvx` function to support variant keys with stringified falsy values such as `'false'`, `'null'`, `'undefined'` by automatically mapping input values like `false`, `null`, and `undefined` to their corresponding string keys.
+- Introduced a utility type `cvxPrimitiveCast<T>` to map variant string keys to their respective primitive types, e.g.:
+
+  - `'true'` → `true`
+  - `'false'` → `false`
+  - `'null'` → `null`
+  - `'undefined'` → `undefined`
+  - Numeric strings (including decimals, e.g. `'1.5'`) → numeric literals (e.g. `1.5`)
+
+- Updated `cvxResult<T>` type to leverage `cvxPrimitiveCast`, making variant input types reflect accurate primitive types instead of string literals. This improves type safety and developer DX by enabling:
+
+  - `variants: { state: { true: ..., false: ... } }` to infer `{ state?: true | false | undefined }`
+  - `variants: { size: { "0": ..., "1": ... } }` to infer `{ size?: 0 | 1 | undefined }`
+
+- Extended `cvxPrimitiveCast` to support special numeric values `'Infinity'` and `'NaN'` by mapping them to their respective JS constants `Infinity` and `NaN`, allowing variants like:
+
+  - `{ state: { Infinity: 'IS_INFINITY', NaN: 'IS_NAN' } }`
+    and input usage like `xx({ state: Infinity })`.
+
+### Fixed
+
+- Fixed type narrowing to correctly handle falsy variant keys when variant input values are boolean, `null`, or `undefined` (instead of only strings).
+
+### Notes
+
+- The improved `cvxPrimitiveCast` utility can be further extended to support other special cases or custom mappings as needed.
+- The runtime logic in `cvx` now coerces variant input values to strings to check variant keys, supporting flexible input without sacrificing type safety.
 
 ---
 
