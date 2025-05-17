@@ -29,6 +29,7 @@ x.ocx(
 ### **object**
 
 - `.raw()`
+
   A version of ocx that performs deep merging without removing falsy values.
 
 ```ts
@@ -41,6 +42,7 @@ console.log(result);
 ```
 
 - `.preserve()`
+
   A version of ocx that performs a deep join without overwriting the value at the first key, only change the value if it does not exist and without removing falsy values.
 
 ```ts
@@ -99,6 +101,26 @@ const classes = x.cvx({
 });
 ```
 
+#### **Cvx Types**
+
+```ts
+const xx = cvx({
+  assign: 'CLASS',
+  variants: { state: { Infinity: 'IS_INFINITY', NaN: 'IS_NAN', true: 'IS_TRUE', false: 'IS_FALSE', null: 'IS_NULL', undefined: 'IS_UNDEFINED' } }
+});
+
+console.log(xx({ state: true })); // ✅ (valid)
+console.log(xx({ state: false })); // ✅ (valid)
+console.log(xx({ state: Infinity })); // ✅ (valid)
+console.log(xx({ state: null })); // ✅ (valid)
+console.log(xx({ state: NaN })); // ✅ (valid)
+console.log(xx({ state: undefined })); // ✅ (valid)
+console.log(xx({ state: 'random' as any })); // ❌ (not found!)
+
+type state = cvxVariants<typeof xx>['state'];
+// type state = number | boolean | null | undefined
+```
+
 ---
 
 ### **cnx**
@@ -137,6 +159,7 @@ const input = [
 ```
 
 - `.toString()`
+
   Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string.
 
 ```ts
@@ -147,6 +170,7 @@ console.log(x.string(input).toString());
 ```
 
 - `.recursive()`
+
   Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string.
 
 ```ts
@@ -159,6 +183,7 @@ console.log(x.string(input).recursive({ separator: ', ' }));
 ```
 
 - `.instanceof()`
+
   Detects specific object types like Date, Map, and Set, and converts them into human-readable strings.
 
 ```ts

@@ -15,8 +15,11 @@ export type cvxVariants<T extends (...keys: any) => any> = Omit<Undefined<Parame
 /** Describes a structure for variant configurations, where each key maps to a set of possible string values. */
 export type cvxKeys = { [key: string]: { [key: string]: string } };
 
-/** Represents a mapping of variant keys to one of their possible values. */
-export type cvxResult<T extends cvxKeys> = { [K in keyof T]?: keyof T[K] };
+/** Casts string keys to primitive values if they match known literals. */
+export type cvxPrimitiveCast<T extends string> = T extends 'true' ? true : T extends 'false' ? false : T extends 'null' ? null : T extends 'undefined' ? undefined : T extends 'Infinity' ? typeof Infinity : T extends 'NaN' ? typeof NaN : T extends `${infer N extends number}` ? N : T;
+
+/** Variant result type that infers primitive equivalents from string keys. */
+export type cvxResult<T extends cvxKeys> = { [K in keyof T]?: cvxPrimitiveCast<keyof T[K] & string> };
 
 /**
  * Configuration object for defining variants and their options.
@@ -45,11 +48,13 @@ export interface cvxRecord<T extends cvxKeys> {
  */
 function cvx<T extends cvxKeys>(keys: cvxRecord<T>): (variants?: cvxResult<T>) => string {
   return (variants: cvxResult<T> = {}) => {
-    const merg = { ...keys.defaultVariants, ...variants } as cvxResult<T>;
-
+    const merged = { ...keys.defaultVariants, ...variants } as cvxResult<T>;
     const vars = Object.keys(keys.variants).map(key => {
-      const varKey = merg[key as keyof T] || keys.defaultVariants?.[key as keyof T];
-      return varKey ? keys.variants[key as keyof T][varKey as keyof T[keyof T]] : undefined;
+      const input = merged[key as keyof T];
+      const inputStr = String(input);
+      const variantOptions = keys.variants[key as keyof T];
+      const variantKey = inputStr in variantOptions ? inputStr : (input as keyof T[keyof T]);
+      return variantKey ? variantOptions[variantKey] : undefined;
     });
 
     return cnx(keys.assign, vars);
