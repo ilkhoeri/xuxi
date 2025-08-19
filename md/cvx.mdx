@@ -92,6 +92,8 @@ type Color = NonNullable<cvxVariants<typeof classes>["color"]>;
 
 ### Cvx Types
 
+- **Example**
+
 ```ts
 const xx = cvx({
   assign: "CLASS",
@@ -103,10 +105,18 @@ const xx = cvx({
       NaN: "IS_NAN",
       null: "IS_NULL",
       undefined: "IS_UNDEFINED"
+    },
+    default: {
+      true: "DEFAULT_TRUE",
+      false: "DEFAULT_FALSE"
     }
   }
 });
+```
 
+- **Validated Result**:
+
+```ts
 console.log(xx({ state: true })); // ✅ (valid)
 console.log(xx({ state: false })); // ✅ (valid)
 console.log(xx({ state: Infinity })); // ✅ (valid)
@@ -114,9 +124,36 @@ console.log(xx({ state: null })); // ✅ (valid)
 console.log(xx({ state: NaN })); // ✅ (valid)
 console.log(xx({ state: undefined })); // ✅ (valid)
 console.log(xx({ state: "random" as any })); // ❌ (not found!)
+```
 
-type state = cvxVariants<typeof xx>["state"];
-// type state = number | boolean | null | undefined
+- **Validation Types**
+
+```ts
+type xxVariantsKeys = keyof x.cvxVariants<typeof xx>;
+// type xxVariantsKeys = "default" | "state";
+
+type xxVariants = x.cvxVariants<typeof xx>;
+// type xxVariants = {
+//   default?: boolean | undefined;
+//   state?: number | boolean | null | undefined;
+// };
+
+type stateVariants = cvxVariants<typeof xx>["state"];
+// type stateVariants = number | boolean | null | undefined
+```
+
+or with `ocx()`
+
+```ts
+const getVariants = x.ocx({
+  root: rootVariants,
+  description: decsVariants,
+  action: actVariants,
+  dismiss: dissVariants
+});
+
+type getVariantsKeys = keyof x.cvxResult<typeof getVariants>;
+// type getVariantsKeys = "root" | "description" | "dismiss" | "action";
 ```
 
 ## Advantages
