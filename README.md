@@ -104,7 +104,16 @@ const classes = x.cvx({
 ```ts
 const xx = cvx({
   assign: 'CLASS',
-  variants: { state: { Infinity: 'IS_INFINITY', NaN: 'IS_NAN', true: 'IS_TRUE', false: 'IS_FALSE', null: 'IS_NULL', undefined: 'IS_UNDEFINED' } }
+  variants: {
+    state: {
+      Infinity: 'IS_INFINITY',
+      NaN: 'IS_NAN',
+      true: 'IS_TRUE',
+      false: 'IS_FALSE',
+      null: 'IS_NULL',
+      undefined: 'IS_UNDEFINED'
+    }
+  }
 });
 
 console.log(xx({ state: true })); // ✅ (valid)
@@ -125,16 +134,13 @@ type state = cvxVariants<typeof xx>['state'];
 
 ```ts
 import x from 'xuxi';
+// import { cnx } from 'xuxi';
 
 // allows receiving Arrays, Objects and Functions
 x.cnx(['', baz, (foo as string) !== 'foo' && bar], { '': !props }, '', () => ({ '' }), undefined, [{ '' }, () => ({ '' })]);
 ```
 
-### **new Cnx()**
-
 ```ts
-import { Cnx } from 'xuxi';
-
 // examples input
 const response = {
   status: 'success',
@@ -158,23 +164,14 @@ const input = [
 ];
 ```
 
-- `.toString()`
-
-  Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string.
-
-```ts
-console.log(new Cnx(input).toString());
-// "btn btn-primary shadow rounded status data"
-```
-
 - `.recursive()`
 
   Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string.
 
 ```ts
-console.log(new Cnx(input).recursive());
+console.log(cnx.recursive(input));
 // "btn-primary: true status: success data.user: JohnDoe data.admin: true Symbol(meta): confidential"
-console.log(new Cnx(input).recursive({ separator: ', ' }));
+console.log(cnx.recursive(input, ', '));
 // "btn-primary: true, status: success, data.user: JohnDoe, data.admin: true, Symbol(meta): confidential"
 ```
 
@@ -183,9 +180,9 @@ console.log(new Cnx(input).recursive({ separator: ', ' }));
   Detects specific object types like Date, Map, and Set, and converts them into human-readable strings.
 
 ```ts
-console.log(new Cnx(input).instance());
+console.log(cnx.instance(input).instance());
 // "2025-02-05T00:00:00.000Z key1: value1 key2: value2 unique1 unique2"
-console.log(new Cnx(input).instance({ separator: ', ' }));
+console.log(cnx.instance(input, ', '));
 // "2025-02-05T00:00:00.000Z, key1: value1, key2: value2, unique1, unique2"
 ```
 

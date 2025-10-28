@@ -1,8 +1,9 @@
 // @ts-ignore TS6133
 import { expect } from 'https://deno.land/x/expect@v0.2.6/mod.ts';
+// @ts-ignore TS6133
 const test = Deno.test;
 
-import { cnx, Cnx, trim } from '../lib/cnx.ts'; // Named export
+import { cnx, trim } from '../lib/cnx.ts'; // Named export
 import * as x from '../lib/index.ts'; // Test for namespace imports
 
 test('should return an empty string when inputs are null or undefined', () => {
@@ -89,59 +90,35 @@ test('should return an empty string if no valid inputs are provided', () => {
   expect(cnx(null, undefined, false, '')).toBe('');
 });
 
-// test('should handle tagged template mode', () => {
-//   const item = 'apples';
-//   const quantity = 5;
-//   expect(Cnx.raw`We have ${quantity} ${item}.`).toBe('We have 5 apples.');
-// });
+test('should handle tagged template mode', () => {
+  const item = 'apples';
+  const quantity = 5;
+  expect(cnx.raw`We have ${quantity} ${item}.`).toBe('We have 5 apples.');
+});
 
-// it('should return an empty string when inputs are null or undefined', () => {
-//   expect(new Cnx(null, NaN, undefined).toString()).toBe('');
-// });
+it('should return an empty string when inputs are null or undefined', () => {
+  expect(trim(null)).toBe('');
+});
 
-// it('should ignore boolean values', () => {
-//   expect(new Cnx(true, false).toString()).toBe('');
-// });
+it('should ignore boolean values', () => {
+  expect(trim(true, false)).toBe('');
+});
 
-// it('should handle unsupported types gracefully', () => {
-//   expect(new Cnx(() => Symbol('test')).toString()).toBe('');
-// });
+it('should handle unsupported types gracefully', () => {
+  expect(trim(() => Symbol('test'))).toBe('');
+});
 
-// it('should combine valid and invalid values correctly in serialize', () => {
-//   expect(new Cnx('valid', null, 42, false).serialize()).toBe('valid 42');
-// });
+it('should combine valid and invalid values correctly', () => {
+  expect(trim(['valid', null, 42, false], '')).toBe('valid42');
+});
 
-// test('string handles falsy values correctly in serialize', () => {
-//   expect(new Cnx().serialize()).toEqual('');
-// });
+test('trim handles falsy values correctly', () => {
+  expect(trim(undefined)).toEqual('');
+});
 
-// test('string handles falsy values correctly in serialize with separator', () => {
-//   expect(new Cnx('1', '2').serialize({ separator: 'x' })).toEqual('1x2');
-// });
-
-// it('should return an empty string when inputs are null or undefined', () => {
-//   expect(trim(null)).toBe('');
-// });
-
-// it('should ignore boolean values', () => {
-//   expect(trim(true, false)).toBe('');
-// });
-
-// it('should handle unsupported types gracefully', () => {
-//   expect(trim(() => Symbol('test'))).toBe('');
-// });
-
-// it('should combine valid and invalid values correctly', () => {
-//   expect(trim(['valid', null, 42, false], '')).toBe('valid42');
-// });
-
-// test('trim handles falsy values correctly', () => {
-//   expect(trim(undefined)).toEqual('');
-// });
-
-// test('trim handles falsy values correctly', () => {
-//   expect(trim(['1', '2'], 'x')).toEqual('1x2');
-// });
+test('trim handles falsy values correctly', () => {
+  expect(trim(['1', '2'], 'x')).toEqual('1x2');
+});
 
 test('should correctly export string as a named export', () => {
   expect(cnx).toBeDefined();
@@ -154,8 +131,8 @@ test('should correctly export string as the default export (alias x)', () => {
   expect(x.cnx).toBe(cnx); // Ensure both exports point to the same function
 });
 
-test('should include cnxSerialize in the namespace export', () => {
-  expect(x).toHaveProperty('cnxSerialize');
+test('should include trim in the namespace export', () => {
+  expect(x).toHaveProperty('trim');
   expect(x.cnx).toBe(cnx);
 });
 

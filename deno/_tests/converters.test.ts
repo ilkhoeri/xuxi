@@ -1,5 +1,6 @@
-// @ts-ignore TS6133
+// @ts-ignore
 import { expect } from 'https://deno.land/x/expect@v0.2.6/mod.ts';
+// @ts-ignore
 const test = Deno.test;
 
 import { rem, em, px, createConverter } from '../lib/converters.ts'; // Named exports

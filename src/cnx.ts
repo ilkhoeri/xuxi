@@ -175,4 +175,44 @@ function cnx(...args: cnxValues[]): string {
   return s;
 }
 
-export { cnx, sv as cnxSerialize, rv as cnxRecursive, iv as cnxInstance };
+/** Handle tagged template */
+function raw(strings: cnxStrings, ...values: cnxValues[]): string {
+  let s = '';
+  if (!(Array.isArray(strings) && 'raw' in strings)) return s;
+  for (let i = 0; i < strings.length; i++) {
+    s += strings[i];
+    if (i < values.length) {
+      const val = sv(values[i]);
+      if (val) s += val;
+    }
+  }
+  return s;
+}
+
+function spt(i: Primitive) {
+  if (i === null) return '';
+  switch (typeof i) {
+    case 'string':
+      return i;
+    case 'number':
+      return i <= 0 ? '' : ' ';
+    case 'boolean':
+      return i ? ' ' : '';
+    default:
+      return ' ';
+  }
+}
+
+function trim(input: cnxValues, separator: cnxSeparator = ' '): string {
+  const sp = spt(separator);
+  return cnx(input).replace(/\s+/g, sp);
+}
+
+cnx.raw = raw;
+cnx.trim = trim;
+cnx.serialize = sv;
+cnx.recursive = rv;
+cnx.instance = iv;
+cnx.separator = spt;
+
+export { cnx, trim };

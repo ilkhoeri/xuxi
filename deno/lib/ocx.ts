@@ -150,27 +150,6 @@ function ocxClean<T extends ocxKey>(obj: T, exclude: unknown[] = [], seen: WeakS
   }, {} as T);
 }
 
-// /** Recursively merge objects with support for arrays, dynamic functions, and non falsy properties into a single object. */
-// function ocx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxReturn<T> {
-//   return ocxClean(ocxRaw(...obj), [0]);
-// }
-
-interface XuxiObject {
-  /**
-   * Merges multiple objects and removes falsy values by default.
-   * @template T - The base object type.
-   * @param obj - One or more objects to merge.
-   * @returns The deeply merged object with falsy values removed.
-   */
-  <T extends ocxKey>(...obj: ocxObj<T>[]): ocxReturn<T>;
-  /** A version of `object` that performs deep merging **without** removing falsy values. */
-  raw: typeof ocxRaw;
-  /** A version of `object` that performs a deep join **without overwriting** the value at the first key, only change the value if it does not exist. */
-  preserve: typeof ocxPreserve;
-  /* A version of `object` that performs to the `clean` property of the `object` variable. */
-  clean: typeof ocxClean;
-}
-
 /**
  * Recursively merge objects with support for arrays, dynamic functions, and non falsy properties into a single object.
  *
@@ -180,9 +159,15 @@ interface XuxiObject {
  * @example
  * @see {@link https://ilkhoeri.github.io/xuxi/?id=ocx Docs}
  */
-const ocx: XuxiObject = (...obj) => ocxClean(ocxRaw(...obj), [0]);
+function ocx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxReturn<T> {
+  return ocxClean(ocxRaw(...obj), [0]);
+}
+
+/** A version of `object` that performs deep merging **without** removing falsy values. */
 ocx.raw = ocxRaw as typeof ocxRaw;
+/** A version of `object` that performs a deep join **without overwriting** the value at the first key, only change the value if it does not exist. */
 ocx.preserve = ocxPreserve as typeof ocxPreserve;
+/* A version of `object` that performs to the `clean` property of the `object` variable. */
 ocx.clean = ocxClean as typeof ocxClean;
 
 export { ocx, ocxClean as clean };

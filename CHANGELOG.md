@@ -9,11 +9,21 @@ Be sure to always refer to the latest documentation for the most up-to-date usag
 
 ---
 
+## [1.0.4] - 2025-10-28
+
+### Refactor cnx and ocx APIs, add trim utility
+
+- Refactored the `cnx` and `ocx` modules to use function-based `APIs` instead of class-based ones, removing legacy class code and updating documentation and tests accordingly. Added a new `trim` utility to `cnx` for whitespace normalization.
+- Updated exports and improved tagged template support.
+- Bumped version to `1.0.4`.
+
 ## [1.0.3] - 2025-10-28
 
 ### Refactor API: rename object to ocx, update cnx exports
 
-- Replaces all references to the 'object' API with 'ocx' for consistency, updates documentation and tests accordingly, and refactors cnx exports to provide named serialization utilities (cnxSerialize, cnxRecursive, cnxInstance). Also updates build scripts and version numbers to 1.0.3. This change improves clarity and aligns the API with current naming conventions.
+- Replaces all references to the `object` API with `ocx` for consistency, updates documentation and tests accordingly, and refactors `cnx` exports to provide named serialization utilities (`cnxSerialize`, `cnxRecursive`, `cnxInstance`).
+- Also updates build scripts and version numbers to 1.0.3.
+- This change improves clarity and aligns the API with current naming conventions.
 
 ## [1.0.2] - -
 
