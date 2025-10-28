@@ -4,17 +4,14 @@ import { cnx } from './cnx';
 type ExcludeKeys = 'defaultVariants' | '';
 /** Utility type to exclude `undefined` from a given type `T`. */
 type Undefined<T> = T extends undefined ? never : T;
-
 /**
  * Extracts the properties of the first argument of a given function type `T`, excluding `ExcludeKeys`.
  * @example
  * @docs {@link https://ilkhoeri.github.io/xuxi/cvx#cvxvariants Docs}
  */
 export type cvxVariants<T extends (...keys: any) => any> = Omit<Undefined<Parameters<T>[0]>, ExcludeKeys>;
-
 /** Describes a structure for variant configurations, where each key maps to a set of possible string values. */
 export type cvxKeys = { [key: string]: { [key: string]: string } };
-
 /** Casts string keys to primitive values if they match known literals. */
 export type cvxPrimitiveCast<T extends string> = T extends 'true' ? boolean : T extends 'false' ? boolean : T extends 'null' ? null : T extends 'undefined' ? undefined : T extends 'Infinity' ? typeof Infinity : T extends 'NaN' ? typeof NaN : T extends `${infer N extends number}` ? N : T;
 /** Utility type to remove index signatures */
@@ -66,5 +63,4 @@ function cvx<T extends cvxKeys>(keys: cvxRecord<T>): (variants?: cvxResult<T>) =
     return cnx(keys.assign, vars);
   };
 }
-
 export { cvx };

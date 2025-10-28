@@ -16,7 +16,6 @@ function sv(v: cnxValues, sp: string = ' '): string {
   let y,
     k = 0,
     s = '';
-
   if (v === null) s += v;
   switch (typeof v) {
     case 'string':
@@ -49,7 +48,6 @@ function sv(v: cnxValues, sp: string = ' '): string {
       s += sv((v as Function)(s), sp);
       break;
   }
-
   /**
   if (typeof v === 'string' || typeof v === 'number' || typeof v === 'bigint' || v === null) {
     s += v;
@@ -75,7 +73,6 @@ function sv(v: cnxValues, sp: string = ' '): string {
     s += sv((v as Function)(s), sp);
   }
     */
-
   return s;
 }
 
@@ -177,7 +174,7 @@ function cnx(...args: cnxValues[]): string {
 }
 
 /** Handle tagged template */
-function raw(strings: cnxStrings, ...values: cnxValues[]): string {
+function cnxRaw(strings: cnxStrings, ...values: cnxValues[]): string {
   let s = '';
   if (!(Array.isArray(strings) && 'raw' in strings)) return s;
   for (let i = 0; i < strings.length; i++) {
@@ -204,16 +201,16 @@ function spt(i: Primitive): string {
   }
 }
 
-function trim(input: cnxValues, separator: cnxSeparator = ' '): string {
+function cnxTrim(input: cnxValues, separator: cnxSeparator = ' '): string {
   const sp = spt(separator);
   return cnx(input).replace(/\s+/g, sp);
 }
 
-cnx.raw = raw as typeof raw;
-cnx.trim = trim as typeof trim;
+cnx.raw = cnxRaw as typeof cnxRaw;
+cnx.trim = cnxTrim as typeof cnxTrim;
 cnx.serialize = sv as typeof sv;
 cnx.recursive = rv as typeof rv;
 cnx.instance = iv as typeof iv;
 cnx.separator = spt as typeof spt;
 
-export { cnx, trim };
+export { cnx, cnxTrim as trim };

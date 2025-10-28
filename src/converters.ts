@@ -4,14 +4,12 @@
  * @returns {string} The converted value in `rem` units.
  */
 const rem: (value: unknown) => string = createConverter('rem', { shouldScale: true });
-
 /**
  * Converts a value to an `em` unit.
  * @param {unknown} value - The value to convert. Can be a number, string, or other types.
  * @returns {string} The converted value in `em` units.
  */
 const em: (value: unknown) => string = createConverter('em');
-
 /**
  * Converts a value to a pixel (`px`) unit or returns the original value if it cannot be converted.
  * @param {unknown} value - The value to convert. Can be a number, string, or other types.
@@ -30,20 +28,16 @@ function px(value: unknown): string | number {
     if (tr.includes('calc') || tr.includes('var')) {
       return tr;
     }
-
     const uMap: Record<string, number> = { px: 1, rem: 16, em: 16 };
     const u = Object.keys(uMap).find(unit => tr.includes(unit));
-
     if (u) {
       return parseFloat(tr.replace(u, '')) * uMap[u];
     }
-
     const num = Number(tr);
     return !isNaN(num) ? num : NaN;
   }
   return NaN;
 }
-
 /**
  * Creates a converter function for a specific unit (e.g., `rem`, `em`).
  * @param units - The target unit for conversion (e.g., `rem`, `em`).
@@ -79,7 +73,6 @@ function createConverter(units: string, { shouldScale = false } = {}): (value: u
           .join(' ');
       }
       if (value.includes(units)) return shouldScale ? scaleRem(value) : value;
-
       const replaced = value.replace('px', '');
       if (!Number.isNaN(Number(replaced))) {
         const val = `${Number(replaced) / 16}${units}`;
@@ -90,7 +83,6 @@ function createConverter(units: string, { shouldScale = false } = {}): (value: u
   }
   return converter;
 }
-
 /**
  * Scales a `rem` value if scaling is enabled.
  * @param {string} value - The `rem` value to scale.
@@ -102,7 +94,6 @@ function scaleRem(value: string): string {
   if (value === '0rem') return '0rem';
   return value;
 }
-
 /**
  * Processes and extracts scaled values from `calc()` or `var()` strings.
  * @param {unknown} value - The value to transform.
@@ -114,11 +105,9 @@ function getTransformedScaledValue(value: unknown): unknown {
   if (typeof value !== 'string' || !/var\(--.*?scale\)/.test(value)) {
     return value;
   }
-
   return value
     ?.match(/^calc\((.*?)\)$/)?.[1]
     ?.split('*')[0]
     ?.trim();
 }
-
 export { createConverter, px, rem, em };

@@ -6,7 +6,6 @@ export type Primitive = string | number | boolean | symbol | bigint | null | und
 export type cnxStateValues<T = any> = (v: T) => cnxValues;
 export type cnxStrings = cnxValues | TemplateStringsArray;
 export type cnxSeparator = string | number | boolean | null | undefined;
-
 /**
  * Serializes a given value into a space-separated string.
  * @param v - The value to be processed.
@@ -16,7 +15,6 @@ function sv(v: cnxValues, sp: string = ' '): string {
   let y,
     k = 0,
     s = '';
-
   if (v === null) s += v;
   switch (typeof v) {
     case 'string':
@@ -52,7 +50,6 @@ function sv(v: cnxValues, sp: string = ' '): string {
 
   return s;
 }
-
 /**
  * Recursively serializes objects into a key-value string format.
  * @param v - The value to be processed.
@@ -89,7 +86,6 @@ function rv(v: cnxValues, sp: string = ' '): string {
   }
   return s;
 }
-
 /**
  * Serializes instances of Date, Map, and Set objects into a string format.
  * @param v - The value to be processed.
@@ -131,7 +127,6 @@ function iv(v: cnxValues, sp: string = ' '): string {
   }
   return s;
 }
-
 /**
  * Converts input values into a space-separated string.
  * @param args - Input values.
@@ -149,9 +144,8 @@ function cnx(...args: cnxValues[]): string {
   }
   return s;
 }
-
 /** Handle tagged template */
-function raw(strings: cnxStrings, ...values: cnxValues[]): string {
+function cnxRaw(strings: cnxStrings, ...values: cnxValues[]): string {
   let s = '';
   if (!(Array.isArray(strings) && 'raw' in strings)) return s;
   for (let i = 0; i < strings.length; i++) {
@@ -163,7 +157,6 @@ function raw(strings: cnxStrings, ...values: cnxValues[]): string {
   }
   return s;
 }
-
 function spt(i: Primitive): string {
   if (i === null) return '';
   switch (typeof i) {
@@ -177,17 +170,14 @@ function spt(i: Primitive): string {
       return ' ';
   }
 }
-
-function trim(input: cnxValues, separator: cnxSeparator = ' '): string {
+function cnxTrim(input: cnxValues, separator: cnxSeparator = ' '): string {
   const sp = spt(separator);
   return cnx(input).replace(/\s+/g, sp);
 }
-
-cnx.raw = raw as typeof raw;
-cnx.trim = trim as typeof trim;
+cnx.raw = cnxRaw as typeof cnxRaw;
+cnx.trim = cnxTrim as typeof cnxTrim;
 cnx.serialize = sv as typeof sv;
 cnx.recursive = rv as typeof rv;
 cnx.instance = iv as typeof iv;
 cnx.separator = spt as typeof spt;
-
-export { cnx, trim };
+export { cnx, cnxTrim as trim };
