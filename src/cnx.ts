@@ -75,6 +75,7 @@ function sv(v: cnxValues, sp: string = ' '): string {
     s += sv((v as Function)(s), sp);
   }
     */
+
   return s;
 }
 
@@ -189,7 +190,7 @@ function raw(strings: cnxStrings, ...values: cnxValues[]): string {
   return s;
 }
 
-function spt(i: Primitive) {
+function spt(i: Primitive): string {
   if (i === null) return '';
   switch (typeof i) {
     case 'string':
@@ -208,11 +209,11 @@ function trim(input: cnxValues, separator: cnxSeparator = ' '): string {
   return cnx(input).replace(/\s+/g, sp);
 }
 
-cnx.raw = raw;
-cnx.trim = trim;
-cnx.serialize = sv;
-cnx.recursive = rv;
-cnx.instance = iv;
-cnx.separator = spt;
+cnx.raw = raw as typeof raw;
+cnx.trim = trim as typeof trim;
+cnx.serialize = sv as typeof sv;
+cnx.recursive = rv as typeof rv;
+cnx.instance = iv as typeof iv;
+cnx.separator = spt as typeof spt;
 
 export { cnx, trim };
