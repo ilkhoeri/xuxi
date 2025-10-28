@@ -2,7 +2,8 @@
 export type ocxKey = { [key: string]: any };
 
 /** A generic type that extends `T` with `ocxKey`, allowing `T` to have arbitrary key-value pairs. */
-export type ocxAcc<T> = T & ocxKey;
+export type ocxReturn<T> = T & ocxKey;
+type ocxAcc<T> = T & ocxKey;
 /**
  * A flexible mapping type that can be an:
  * - plain object (`ocxKey`)
@@ -30,10 +31,10 @@ export function isPlainObject(value: unknown): value is ocxKey {
  * @param obj - One or more objects to merge.
  * @returns The deeply merged object.
  */
-function baseOcx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T> {
+function ocxRaw<T extends ocxKey>(...obj: ocxObj<T>[]): ocxReturn<T> {
   const seen = new WeakMap<object, object>(); // Use WeakMap to store processed objects
 
-  function merge<T extends ocxKey>(acc: ocxAcc<T>, input: ocxObj<T>): ocxAcc<T> {
+  function merge<T extends ocxKey>(acc: ocxAcc<T>, input: ocxObj<T>): ocxReturn<T> {
     if (!input) return acc;
 
     if (isPlainObject(input)) {
@@ -43,11 +44,11 @@ function baseOcx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T> {
       acc = newAcc; // Use copied version
     }
 
-    if (Array.isArray(input)) return { ...acc, ...baseOcx(...input) };
+    if (Array.isArray(input)) return { ...acc, ...ocxRaw(...input) };
 
     if (typeof input === 'function') {
       const result = input(acc);
-      return isPlainObject(result) ? merge(acc, result) : { ...acc, ...baseOcx(result) };
+      return isPlainObject(result) ? merge(acc, result) : { ...acc, ...ocxRaw(result) };
     }
 
     if (isPlainObject(input)) {
@@ -74,10 +75,10 @@ function baseOcx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T> {
  * @param obj - One or more objects to merge.
  * @returns The deeply merged object **without overwriting** the value at the first key, only change the value if it does not exist.
  */
-function preserveRoot<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T> {
+function ocxPreserve<T extends ocxKey>(...obj: ocxObj<T>[]): ocxReturn<T> {
   const seen = new WeakMap<object, object>();
 
-  function merge<T extends ocxKey>(acc: ocxAcc<T>, input: ocxObj<T>): ocxAcc<T> {
+  function merge<T extends ocxKey>(acc: ocxAcc<T>, input: ocxObj<T>): ocxReturn<T> {
     if (!input) return acc;
 
     if (isPlainObject(input)) {
@@ -87,11 +88,11 @@ function preserveRoot<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T> {
       acc = newAcc;
     }
 
-    if (Array.isArray(input)) return { ...acc, ...preserveRoot(...input) };
+    if (Array.isArray(input)) return { ...acc, ...ocxPreserve(...input) };
 
     if (typeof input === 'function') {
       const result = input(acc);
-      return isPlainObject(result) ? merge(acc, result) : { ...acc, ...preserveRoot(result) };
+      return isPlainObject(result) ? merge(acc, result) : { ...acc, ...ocxPreserve(result) };
     }
 
     if (isPlainObject(input)) {
@@ -122,7 +123,7 @@ function preserveRoot<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T> {
  * @example
  * @see {@link https://ilkhoeri.github.io/xuxi/clean Docs}
  */
-export function clean<T extends ocxKey>(obj: T, exclude: unknown[] = [], seen: WeakSet<object> = new WeakSet<object>()): T {
+function ocxClean<T extends ocxKey>(obj: T, exclude: unknown[] = [], seen: WeakSet<object> = new WeakSet<object>()): T {
   const excludeSet = new Set(exclude);
 
   if (seen.has(obj)) return obj; // Avoid infinite loops
@@ -132,12 +133,12 @@ export function clean<T extends ocxKey>(obj: T, exclude: unknown[] = [], seen: W
     const value = (obj as any)[key];
 
     if (isPlainObject(value)) {
-      const cleanedObject = clean(value, exclude, seen); // Clean objects recursively
+      const cleanedObject = ocxClean(value, exclude, seen); // Clean objects recursively
       // Ensure the object is not empty before inserting
       if (Object.keys(cleanedObject).length > 0 || typeof key === 'symbol') (acc as any)[key] = cleanedObject;
     } else if (Array.isArray(value)) {
       // Clear every element in the array, remove empty objects
-      const cleanedArray = value.map(item => (isPlainObject(item) ? clean(item, exclude, seen) : item)).filter(item => (item && !(isPlainObject(item) && Object.keys(item).length === 0)) || excludeSet.has(item));
+      const cleanedArray = value.map(item => (isPlainObject(item) ? ocxClean(item, exclude, seen) : item)).filter(item => (item && !(isPlainObject(item) && Object.keys(item).length === 0)) || excludeSet.has(item));
 
       if (cleanedArray.length > 0) (acc as any)[key] = cleanedArray;
     } else if (value || excludeSet.has(value) || typeof key === 'symbol') {
@@ -149,37 +150,39 @@ export function clean<T extends ocxKey>(obj: T, exclude: unknown[] = [], seen: W
   }, {} as T);
 }
 
-interface ocxFunction {
+// /** Recursively merge objects with support for arrays, dynamic functions, and non falsy properties into a single object. */
+// function ocx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxReturn<T> {
+//   return ocxClean(ocxRaw(...obj), [0]);
+// }
+
+interface XuxiObject {
   /**
    * Merges multiple objects and removes falsy values by default.
    * @template T - The base object type.
    * @param obj - One or more objects to merge.
    * @returns The deeply merged object with falsy values removed.
    */
-  <T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T>;
+  <T extends ocxKey>(...obj: ocxObj<T>[]): ocxReturn<T>;
   /** A version of `object` that performs deep merging **without** removing falsy values. */
-  raw: typeof baseOcx;
+  raw: typeof ocxRaw;
   /** A version of `object` that performs a deep join **without overwriting** the value at the first key, only change the value if it does not exist. */
-  preserve: typeof preserveRoot;
+  preserve: typeof ocxPreserve;
+  /* A version of `object` that performs to the `clean` property of the `object` variable. */
+  clean: typeof ocxClean;
 }
 
 /**
  * Recursively merge objects with support for arrays, dynamic functions, and non falsy properties into a single object.
  *
  * Provides a chaining:
- * - {@link baseOcx raw} method to **get falsy values** from the result.
- * - {@link preserveRoot preserve} method to join **without overwriting** first value.
+ * - {@link ocxRaw raw} method to **get falsy values** from the result.
+ * - {@link ocxPreserve preserve} method to join **without overwriting** first value.
  * @example
  * @see {@link https://ilkhoeri.github.io/xuxi/?id=ocx Docs}
  */
-const object: ocxFunction = (...obj) => clean(baseOcx(...obj), [0]);
+const ocx: XuxiObject = (...obj) => ocxClean(ocxRaw(...obj), [0]);
+ocx.raw = ocxRaw as typeof ocxRaw;
+ocx.preserve = ocxPreserve as typeof ocxPreserve;
+ocx.clean = ocxClean as typeof ocxClean;
 
-object.raw = baseOcx as typeof baseOcx;
-object.preserve = preserveRoot as typeof preserveRoot;
-
-/** Recursively merge objects with support for arrays, dynamic functions, and non falsy properties into a single object. */
-function ocx<T extends ocxKey>(...obj: ocxObj<T>[]): ocxAcc<T> {
-  return clean(baseOcx(...obj), [0]);
-}
-
-export { ocx, object };
+export { ocx, ocxClean as clean };

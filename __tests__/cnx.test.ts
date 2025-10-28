@@ -5,7 +5,7 @@ import { cnx } from '../src'; // Named export
 import x from '../src/index'; // Default export alias
 import * as xuxi from '../src/index'; // Test for namespace imports
 
-describe('string function', () => {
+describe('cnx string function', () => {
   it('should return an empty string when inputs are null or undefined', () => {
     expect(cnx(null, NaN, undefined)).toBe('');
   });
@@ -86,6 +86,64 @@ describe('string function', () => {
   });
 });
 
+// describe('Cnx class function', () => {
+//   it('should return an empty string when inputs are null or undefined', () => {
+//     expect(new Cnx(null, NaN, undefined).toString()).toBe('');
+//   });
+
+//   it('should ignore boolean values', () => {
+//     expect(new Cnx(true, false).toString()).toBe('');
+//   });
+
+//   it('should handle unsupported types gracefully', () => {
+//     expect(new Cnx(() => Symbol('test')).toString()).toBe('');
+//   });
+
+//   it('should combine valid and invalid values correctly in serialize', () => {
+//     expect(new Cnx('valid', null, 42, false).serialize()).toBe('valid 42');
+//   });
+
+//   test('string handles falsy values correctly in serialize', () => {
+//     expect(new Cnx().serialize()).toEqual('');
+//   });
+
+//   test('string handles falsy values correctly in serialize with separator', () => {
+//     expect(new Cnx('1', '2').serialize({ separator: 'x' })).toEqual('1x2');
+//   });
+
+// test('should handle tagged template mode', () => {
+//   const item = 'apples';
+//   const quantity = 5;
+//   expect(Cnx.raw`We have ${quantity} ${item}.`).toBe('We have 5 apples.');
+// });
+// });
+
+// describe('trim function', () => {
+//   it('should return an empty string when inputs are null or undefined', () => {
+//     expect(trim(null)).toBe('');
+//   });
+
+//   it('should ignore boolean values', () => {
+//     expect(trim(true, false)).toBe('');
+//   });
+
+//   it('should handle unsupported types gracefully', () => {
+//     expect(trim(() => Symbol('test'))).toBe('');
+//   });
+
+//   it('should combine valid and invalid values correctly', () => {
+//     expect(trim(['valid', null, 42, false], '')).toBe('valid42');
+//   });
+
+//   test('trim handles falsy values correctly', () => {
+//     expect(trim(undefined)).toEqual('');
+//   });
+
+//   test('trim handles falsy values correctly', () => {
+//     expect(trim(['1', '2'], 'x')).toEqual('1x2');
+//   });
+// });
+
 describe('export validation', () => {
   test('should correctly export string as a named export', () => {
     expect(cnx).toBeDefined();
@@ -98,8 +156,8 @@ describe('export validation', () => {
     expect(x.cnx).toBe(cnx); // Ensure both exports point to the same function
   });
 
-  test('should include string in the namespace export', () => {
-    expect(xuxi).toHaveProperty('string');
+  test('should include cnxSerialize in the namespace export', () => {
+    expect(xuxi).toHaveProperty('cnxSerialize');
     expect(xuxi.cnx).toBe(cnx);
   });
 

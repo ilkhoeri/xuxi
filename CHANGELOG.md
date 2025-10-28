@@ -9,6 +9,14 @@ Be sure to always refer to the latest documentation for the most up-to-date usag
 
 ---
 
+## [1.0.3] - 2025-10-28
+
+### Refactor API: rename object to ocx, update cnx exports
+
+- Replaces all references to the 'object' API with 'ocx' for consistency, updates documentation and tests accordingly, and refactors cnx exports to provide named serialization utilities (cnxSerialize, cnxRecursive, cnxInstance). Also updates build scripts and version numbers to 1.0.3. This change improves clarity and aligns the API with current naming conventions.
+
+## [1.0.2] - -
+
 ## [1.0.1] - 2025-05-18
 
 ### Added

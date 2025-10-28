@@ -1,7 +1,7 @@
 // @ts-ignore TS6133
 import { describe, test, expect } from '@jest/globals';
 
-import { ocx, object, clean } from '../src'; // Named export
+import { ocx, clean } from '../src'; // Named export
 import x from '../src/index'; // Default export alias
 import * as xuxi from '../src/index'; // Test for namespace imports
 
@@ -34,7 +34,7 @@ describe('Example Usage', () => {
   });
 
   test('Example chaining raw', () => {
-    const result = object.raw({ enabled: false, features: { darkMode: true } }, { features: { darkMode: null, betaMode: true } });
+    const result = ocx.raw({ enabled: false, features: { darkMode: true } }, { features: { darkMode: null, betaMode: true } });
     expect(result).toEqual({ enabled: false, features: { darkMode: null, betaMode: true } });
   });
 
@@ -856,14 +856,14 @@ describe('raw Mixed inputs', () => {
     const obj = { key1: false };
     const arr = [{ key2: undefined }, { key3: null }];
     const fn = () => ({ key4: 'value4' });
-    expect(object.raw(obj, arr, fn)).toEqual({ key1: false, key2: undefined, key3: null, key4: 'value4' });
+    expect(ocx.raw(obj, arr, fn)).toEqual({ key1: false, key2: undefined, key3: null, key4: 'value4' });
   });
 
   test('should handle deeply nested mixed inputs', () => {
     const obj = { key1: !true && { nestedKey: 'value1' } };
     const arr = [[{ key2: 'value2' }], false && { key3: 'value3' }];
     const fn = () => ({ key4: { nestedKey: 'value4' } });
-    expect(object.raw(obj, arr, fn)).toEqual({ key1: false, key2: 'value2', key4: { nestedKey: 'value4' } });
+    expect(ocx.raw(obj, arr, fn)).toEqual({ key1: false, key2: 'value2', key4: { nestedKey: 'value4' } });
   });
 });
 
@@ -963,7 +963,7 @@ describe('Edge cases - Circular References', () => {
     const obj: any = {};
     obj.self = obj; // Circular reference
 
-    const result = x.object.raw(obj);
+    const result = x.ocx.raw(obj);
 
     expect(result).toEqual({ self: { self: obj } });
   });
@@ -981,7 +981,7 @@ describe('Edge cases - Circular References', () => {
     const obj: any = { key: 'value' };
     obj.loop = obj; // Circular reference
 
-    const result = x.object.raw(obj);
+    const result = x.ocx.raw(obj);
 
     expect(result).toEqual({ key: 'value', loop: { key: 'value', loop: obj } });
     expect(result.loop).toEqual({ key: 'value', loop: obj }); // Ensure reference is maintained
@@ -990,49 +990,49 @@ describe('Edge cases - Circular References', () => {
 
 describe('object preserve function', () => {
   test('should skip falsy values like null, undefined, or false', () => {
-    expect(object.preserve()).toEqual({});
+    expect(ocx.preserve()).toEqual({});
   });
 
   test('should return acc when input is null or undefined', () => {
     const acc = { key: 'value' };
-    expect(object.preserve(acc, null)).toEqual(acc);
-    expect(object.preserve(acc, undefined)).toEqual(acc);
+    expect(ocx.preserve(acc, null)).toEqual(acc);
+    expect(ocx.preserve(acc, undefined)).toEqual(acc);
   });
 
   test('should merge objects correctly', () => {
     const acc = { key1: 'value1' };
     const input = { key2: 'value2' };
-    expect(object.preserve(acc, input)).toEqual({ key1: 'value1', key2: 'value2' });
+    expect(ocx.preserve(acc, input)).toEqual({ key1: 'value1', key2: 'value2' });
   });
 
   test('should handle array inputs', () => {
     const acc = { key1: 'value1' };
     const input = [{ key2: 'value2' }, { key3: 'value3' }];
-    expect(object.preserve(acc, input)).toEqual({ key1: 'value1', key2: 'value2', key3: 'value3' });
+    expect(ocx.preserve(acc, input)).toEqual({ key1: 'value1', key2: 'value2', key3: 'value3' });
   });
 
   test('should call and merge function results', () => {
     const acc = { key1: 'value1' };
     const funcInput = () => ({ key2: 'value2' });
-    expect(object.preserve(acc, funcInput)).toEqual({ key1: 'value1', key2: 'value2' });
+    expect(ocx.preserve(acc, funcInput)).toEqual({ key1: 'value1', key2: 'value2' });
   });
 
   test('should handle function returning a non-object value', () => {
     const acc = { key1: 'value1' };
     const funcInput = () => 'someValue';
-    expect(object.preserve(acc, funcInput)).toEqual({ key1: 'value1', ...object.raw('someValue') });
+    expect(ocx.preserve(acc, funcInput)).toEqual({ key1: 'value1', ...ocx.raw('someValue') });
   });
 
   test('should return acc when input does not change it', () => {
     const acc = { key1: 'value1' };
-    expect(object.preserve(acc, {})).toEqual(acc);
+    expect(ocx.preserve(acc, {})).toEqual(acc);
   });
 
   test('should skip falsy values like null, undefined, or false', () => {
     const obj1 = { key1: { nestedKey1: { subKey: 'value1' } } };
     const objFn = () => ({ key1: { nestedKey1: { subKey2: 'value2' } } });
 
-    const result = object.preserve(obj1, objFn);
+    const result = ocx.preserve(obj1, objFn);
 
     expect(result).toEqual({
       key1: {
@@ -1048,7 +1048,7 @@ describe('object preserve function', () => {
     const obj: any = { key: 'value' };
     obj.loop = obj; // Circular reference
 
-    const result = object.preserve(obj);
+    const result = ocx.preserve(obj);
 
     expect(result).toEqual({ key: 'value', loop: { key: 'value', loop: obj } });
     expect(result.loop).toEqual({ key: 'value', loop: obj });
@@ -1059,31 +1059,31 @@ describe('object preserve function', () => {
     const objB: x.ocxKey = { name: 'B', ref: objA };
     objA.ref = objB; // Circular reference
 
-    const result = x.object.preserve(objA, objB);
+    const result = x.ocx.preserve(objA, objB);
     expect(result).toEqual({ name: 'A', ref: { name: 'A', ref: { name: 'B', ref: objA } } });
   });
 });
 
 describe('export validation ocx()', () => {
   test('should correctly export object as a named export', () => {
-    expect(object).toBeDefined();
-    expect(typeof object).toBe('function');
+    expect(ocx).toBeDefined();
+    expect(typeof ocx).toBe('function');
   });
 
   test('should correctly export object as the default export (alias x)', () => {
-    expect(x.object).toBeDefined();
-    expect(typeof x.object).toBe('function');
-    expect(x.object).toBe(object); // Ensure both exports point to the same function
+    expect(x.ocx).toBeDefined();
+    expect(typeof x.ocx).toBe('function');
+    expect(x.ocx).toBe(ocx); // Ensure both exports point to the same function
   });
 
-  test('should include object in the namespace export', () => {
-    expect(xuxi).toHaveProperty('object');
-    expect(xuxi.object).toBe(object);
+  test('should include clean in the namespace export', () => {
+    expect(xuxi).toHaveProperty('clean');
+    expect(xuxi.ocx).toBe(ocx);
   });
 
   test('should include the default export alias in the namespace export', () => {
     expect(xuxi).toHaveProperty('default');
-    expect(xuxi.object).toBe(object);
+    expect(xuxi.ocx).toBe(ocx);
   });
 });
 

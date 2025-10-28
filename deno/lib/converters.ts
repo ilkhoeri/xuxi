@@ -3,14 +3,14 @@
  * @param {unknown} value - The value to convert. Can be a number, string, or other types.
  * @returns {string} The converted value in `rem` units.
  */
-export const rem: (value: unknown) => string = createConverter('rem', { shouldScale: true });
+const rem: (value: unknown) => string = createConverter('rem', { shouldScale: true });
 
 /**
  * Converts a value to an `em` unit.
  * @param {unknown} value - The value to convert. Can be a number, string, or other types.
  * @returns {string} The converted value in `em` units.
  */
-export const em: (value: unknown) => string = createConverter('em');
+const em: (value: unknown) => string = createConverter('em');
 
 /**
  * Converts a value to a pixel (`px`) unit or returns the original value if it cannot be converted.
@@ -21,25 +21,25 @@ export const em: (value: unknown) => string = createConverter('em');
  * px('1rem'); // 16
  * px('calc(100% - 50px)'); // 'calc(100% - 50px)'
  */
-export function px(value: unknown): string | number {
-  const transformedValue = getTransformedScaledValue(value);
-  if (typeof transformedValue === 'number') {
-    return transformedValue;
+function px(value: unknown): string | number {
+  const tr = getTransformedScaledValue(value);
+  if (typeof tr === 'number') {
+    return tr;
   }
-  if (typeof transformedValue === 'string') {
-    if (transformedValue.includes('calc') || transformedValue.includes('var')) {
-      return transformedValue;
+  if (typeof tr === 'string') {
+    if (tr.includes('calc') || tr.includes('var')) {
+      return tr;
     }
 
-    const unitMap: Record<string, number> = { px: 1, rem: 16, em: 16 };
-    const matchedUnit = Object.keys(unitMap).find(unit => transformedValue.includes(unit));
+    const uMap: Record<string, number> = { px: 1, rem: 16, em: 16 };
+    const u = Object.keys(uMap).find(unit => tr.includes(unit));
 
-    if (matchedUnit) {
-      return parseFloat(transformedValue.replace(matchedUnit, '')) * unitMap[matchedUnit];
+    if (u) {
+      return parseFloat(tr.replace(u, '')) * uMap[u];
     }
 
-    const numericValue = Number(transformedValue);
-    return !isNaN(numericValue) ? numericValue : NaN;
+    const num = Number(tr);
+    return !isNaN(num) ? num : NaN;
   }
   return NaN;
 }
@@ -54,7 +54,7 @@ export function px(value: unknown): string | number {
  * const remConverter = createConverter('rem', { shouldScale: true });
  * remConverter(16); // '1rem'
  */
-export function createConverter(units: string, { shouldScale = false } = {}): (value: unknown) => string {
+function createConverter(units: string, { shouldScale = false } = {}): (value: unknown) => string {
   function converter(value: unknown): string {
     if (value === 0 || value === '0') return `0${units}`;
     if (typeof value === 'number') {
@@ -116,7 +116,9 @@ function getTransformedScaledValue(value: unknown): unknown {
   }
 
   return value
-    .match(/^calc\((.*?)\)$/)?.[1]
-    .split('*')[0]
-    .trim();
+    ?.match(/^calc\((.*?)\)$/)?.[1]
+    ?.split('*')[0]
+    ?.trim();
 }
+
+export { createConverter, px, rem, em };

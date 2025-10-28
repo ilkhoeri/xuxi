@@ -26,8 +26,6 @@ x.ocx(
 
 ---
 
-### **object**
-
 - `.raw()`
 
   A version of ocx that performs deep merging without removing falsy values.
@@ -35,7 +33,7 @@ x.ocx(
 ```ts
 import x from 'xuxi';
 
-const result = x.object.raw({ enabled: false, features: { darkMode: true } }, { features: { darkMode: null, betaMode: true } });
+const result = x.ocx.raw({ enabled: false, features: { darkMode: true } }, { features: { darkMode: null, betaMode: true } });
 
 console.log(result);
 // { enabled: false, features: { darkMode: null, betaMode: true } }
@@ -51,7 +49,7 @@ import x from 'xuxi';
 const obj1 = { key1: { nestedKey1: { subKey: 'value1', subKey3: false } } };
 const objFn = () => ({ key1: { nestedKey1: { subKey: 'newValue1', subKey2: 'value2', subKey3: 'value3' } } });
 
-const result = x.object.preserve(obj1, objFn);
+const result = x.ocx.preserve(obj1, objFn);
 console.log(result);
 // {
 //   key1: {
@@ -132,9 +130,11 @@ import x from 'xuxi';
 x.cnx(['', baz, (foo as string) !== 'foo' && bar], { '': !props }, '', () => ({ '' }), undefined, [{ '' }, () => ({ '' })]);
 ```
 
-### **string**
+### **new Cnx()**
 
 ```ts
+import { Cnx } from 'xuxi';
+
 // examples input
 const response = {
   status: 'success',
@@ -163,9 +163,7 @@ const input = [
   Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string.
 
 ```ts
-import x from 'xuxi';
-
-console.log(x.string(input).toString());
+console.log(new Cnx(input).toString());
 // "btn btn-primary shadow rounded status data"
 ```
 
@@ -174,24 +172,20 @@ console.log(x.string(input).toString());
   Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string.
 
 ```ts
-import x from 'xuxi';
-
-console.log(x.string(input).recursive());
+console.log(new Cnx(input).recursive());
 // "btn-primary: true status: success data.user: JohnDoe data.admin: true Symbol(meta): confidential"
-console.log(x.string(input).recursive({ separator: ', ' }));
+console.log(new Cnx(input).recursive({ separator: ', ' }));
 // "btn-primary: true, status: success, data.user: JohnDoe, data.admin: true, Symbol(meta): confidential"
 ```
 
-- `.instanceof()`
+- `.instance()`
 
   Detects specific object types like Date, Map, and Set, and converts them into human-readable strings.
 
 ```ts
-import x from 'xuxi';
-
-console.log(x.string(input).instanceof());
+console.log(new Cnx(input).instance());
 // "2025-02-05T00:00:00.000Z key1: value1 key2: value2 unique1 unique2"
-console.log(x.string(input).instanceof({ separator: ', ' }));
+console.log(new Cnx(input).instance({ separator: ', ' }));
 // "2025-02-05T00:00:00.000Z, key1: value1, key2: value2, unique1, unique2"
 ```
 

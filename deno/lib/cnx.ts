@@ -1,26 +1,64 @@
 /** Represents a mapping of string or symbol keys to any value. */
 export type keyMap = Record<string | symbol, any>;
-
 /** Defines the accepted value types for the utility functions. */
-export type cnxValues = keyMap | keyMap[] | cnxValues[] | string | number | boolean | null | undefined | BigInt | Date | Map<any, any> | Set<any> | ((v?: any) => cnxValues);
+export type cnxValues = keyMap | keyMap[] | Primitive | Primitive[] | BigInt | Date | Map<any, any> | Set<any> | cnxValues[];
+export type Primitive = string | number | boolean | symbol | bigint | null | undefined;
+export type cnxStateValues<T = any> = (v: T) => cnxValues;
+export type cnxStrings = cnxValues | TemplateStringsArray;
+export type cnxSeparator = string | number | boolean | null | undefined;
 
 /**
  * Serializes a given value into a space-separated string.
  * @param v - The value to be processed.
  * @returns A space-separated string representation of the value.
  */
-function sv(v: cnxValues): string {
-  let k = 0,
-    y,
+function sv(v: cnxValues, sp: string = ' '): string {
+  let y,
+    k = 0,
     s = '';
+
+  if (v === null) s += v;
+  switch (typeof v) {
+    case 'string':
+    case 'number':
+    case 'bigint':
+      s += v;
+      break;
+
+    case 'object':
+      if (Array.isArray(v)) {
+        for (; k < v.length; k++) {
+          if (v[k]) {
+            if ((y = sv(v[k], sp))) {
+              s && (s += sp);
+              s += y;
+            }
+          }
+        }
+      } else {
+        for (y in v) {
+          if ((v as keyMap)[y]) {
+            s && (s += sp);
+            s += y;
+          }
+        }
+      }
+      break;
+
+    case 'function':
+      s += sv((v as Function)(s), sp);
+      break;
+  }
+
+  /**
   if (typeof v === 'string' || typeof v === 'number' || typeof v === 'bigint' || v === null) {
     s += v;
   } else if (typeof v === 'object') {
     if (Array.isArray(v)) {
       for (; k < v.length; k++) {
         if (v[k]) {
-          if ((y = sv(v[k]))) {
-            s && (s += ' ');
+          if ((y = sv(v[k], sp))) {
+            s && (s += sp);
             s += y;
           }
         }
@@ -28,14 +66,15 @@ function sv(v: cnxValues): string {
     } else {
       for (y in v) {
         if ((v as keyMap)[y]) {
-          s && (s += ' ');
+          s && (s += sp);
           s += y;
         }
       }
     }
   } else if (typeof v === 'function') {
-    s += sv(v(s));
+    s += sv((v as Function)(s), sp);
   }
+    */
   return s;
 }
 
@@ -44,16 +83,16 @@ function sv(v: cnxValues): string {
  * @param v - The value to be processed.
  * @returns A string representation of the object.
  */
-function rv(v: cnxValues, spt: string = ' '): string {
-  let k = 0,
-    y,
+function rv(v: cnxValues, sp: string = ' '): string {
+  let y,
+    k = 0,
     s = '';
   if (typeof v === 'object' && v !== null) {
     if (Array.isArray(v)) {
       for (; k < v.length; k++) {
         if (v[k]) {
-          if ((y = rv(v[k], spt))) {
-            s && (s += spt);
+          if ((y = rv(v[k], sp))) {
+            s && (s += sp);
             s += y;
           }
         }
@@ -61,13 +100,13 @@ function rv(v: cnxValues, spt: string = ' '): string {
     } else {
       for (y in v) {
         if ((v as keyMap)[y]) {
-          s && (s += spt);
-          s += typeof (v as keyMap)[y] === 'object' ? `${y}.${rv((v as keyMap)[y], `${spt}${y}.`)}` : `${y}: ${(v as keyMap)[y]}`;
+          s && (s += sp);
+          s += typeof (v as keyMap)[y] === 'object' ? `${y}.${rv((v as keyMap)[y], `${sp}${y}.`)}` : `${y}: ${(v as keyMap)[y]}`;
         }
       }
       for (const sym of Object.getOwnPropertySymbols(v)) {
         if ((v as keyMap)[sym]) {
-          s && (s += spt);
+          s && (s += sp);
           s += `${String(sym)}: ${(v as keyMap)[sym]}`;
         }
       }
@@ -81,23 +120,23 @@ function rv(v: cnxValues, spt: string = ' '): string {
  * @param v - The value to be processed.
  * @returns A string representation of the instance.
  */
-function iv(v: cnxValues, spt: string = ' '): string {
-  let k = 0,
-    y,
+function iv(v: cnxValues, sp: string = ' '): string {
+  let y,
+    k = 0,
     s = '';
   if (v instanceof Date) {
     s += v.toISOString();
   } else if (v instanceof Map) {
     for (const [q, u] of v.entries()) {
       if (u) {
-        s && (s += spt);
+        s && (s += sp);
         s += `${q}: ${u}`;
       }
     }
   } else if (v instanceof Set) {
     v.forEach(e => {
       if (e) {
-        s && (s += spt);
+        s && (s += sp);
         s += e;
       }
     });
@@ -105,15 +144,15 @@ function iv(v: cnxValues, spt: string = ' '): string {
     if (Array.isArray(v)) {
       for (; k < v.length; k++) {
         if (v[k]) {
-          if ((y = iv(v[k], spt))) {
-            s && (s += spt);
+          if ((y = iv(v[k], sp))) {
+            s && (s += sp);
             s += y;
           }
         }
       }
     }
   } else if (typeof v === 'function') {
-    s += iv(v(s), spt);
+    s += iv((v as Function)(s), sp);
   }
   return s;
 }
@@ -136,53 +175,4 @@ function cnx(...args: cnxValues[]): string {
   return s;
 }
 
-type StringValues = cnxValues;
-interface ExtendsOpt {
-  separator?: string;
-}
-/**
- * Represents a string utility object returned by the `string()` function.
- *
- * Provides multiple methods for converting the original values
- * into different string formats.
- */
-interface StringFunction {
-  /** Converts input values into a space-separated string. Similar to how class names are joined in CSS-in-JS libraries. */
-  toString(): string;
-  /** Recursively serializes objects, arrays, and nested structures into a flattened `key=value` pair string. */
-  recursive(opts?: ExtendsOpt): string;
-  /** Detects specific object types like Date, Map, and Set, and converts them into human-readable strings. */
-  instanceof(opts?: ExtendsOpt): string;
-  /** Implicitly converts the object to a string when used in a primitive context (e.g., template literals). */
-  [Symbol.toPrimitive](): string;
-}
-/**
- * Creates a string utility object from the given input values.
- *
- * Accepts a list of values (strings, objects, arrays, or primitives) and provides
- * multiple methods to serialize or convert them into string representations
- * based on different strategies.
- *
- * This is especially useful for conditionally building class names, query strings,
- * or logging structured data.
- * @param args - One or more values to be stringified or serialized.
- * @returns An object with string conversion utilities.
- */
-function string(...args: StringValues[]): StringFunction {
-  return {
-    toString() {
-      return cnx(...args);
-    },
-    recursive(opts: ExtendsOpt = {}) {
-      return rv(args, opts.separator);
-    },
-    instanceof(opts: ExtendsOpt = {}) {
-      return iv(args, opts.separator);
-    },
-    [Symbol.toPrimitive]() {
-      return cnx(...args);
-    }
-  };
-}
-
-export { cnx, string };
+export { cnx, sv as cnxSerialize, rv as cnxRecursive, iv as cnxInstance };
