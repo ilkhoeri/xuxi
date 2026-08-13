@@ -14,17 +14,17 @@ export function generateStaticParams() {
   return [{ docs: [] }, ...docs];
 }
 
+export async function generateMetadata({ params }: SlugParams) {
+  const slug = (await params).docs;
+  const post = allDocs.find(doc => slug?.includes(doc._raw.flattenedPath));
+  return { title: post?.title };
+}
+
 async function getPathFromParams({ params }: SlugParams) {
   const slug = (await params).docs?.join("/") || "";
   const docs = allDocs.find(doc => doc.slug === slug);
   if (!docs) return null;
   return docs;
-}
-
-export async function generateMetadata({ params }: SlugParams) {
-  const slug = (await params).docs;
-  const post = allDocs.find(doc => slug?.includes(doc._raw.flattenedPath));
-  return { title: post?.title };
 }
 
 export default async function Home({ params }: SlugParams) {
