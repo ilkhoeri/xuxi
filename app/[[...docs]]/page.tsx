@@ -1,4 +1,4 @@
-import { allDocs, Docs } from "contentlayer/generated";
+import { allDocs } from "contentlayer/generated";
 import { notFound } from "next/navigation";
 import { DashboardTableOfContents } from "@/ui/toc/toc";
 import { getTableOfContents } from "@/ui/toc/config";
@@ -6,19 +6,18 @@ import { Mdx } from "@/ui/mdx-component";
 import { NavLeft } from "@/ui/navleft";
 
 interface SlugParams {
-  params: Promise<{ docs: string[] }>;
+  params: Promise<{ docs?: string[] | undefined }>;
 }
 
-export async function generateStaticParams() {
-  return allDocs.map(doc => ({ docs: [doc._raw.flattenedPath] }));
+export function generateStaticParams() {
+  const docs = allDocs.map(doc => ({ docs: doc._raw.flattenedPath.split("/") }));
+  return [{ docs: [] }, ...docs];
 }
 
 async function getPathFromParams({ params }: SlugParams) {
   const slug = (await params).docs?.join("/") || "";
   const docs = allDocs.find(doc => doc.slug === slug);
-
   if (!docs) return null;
-
   return docs;
 }
 
@@ -33,17 +32,15 @@ export default async function Home({ params }: SlugParams) {
 
   if (!docs) notFound();
 
-  const toc = await getTableOfContents(docs.body.raw);
+  const toc = await getTableOfContents(docs?.body.raw);
 
   return (
     <main className="w-full relative flex flex-col md:flex-row mx-auto min-h-screen pt-[--navbar] pb-20 md:max-lg:pr-8 rtl:md:max-lg:pr-0 rtl:md:max-lg:pl-8 max-w-var">
       <NavLeft />
-
       <article className="relative w-full max-w-full overflow-x-hidden max-md:px-6 pt-9 flex flex-col">
-        <Mdx code={docs.body.code} />
+        <Mdx code={docs?.body.code} />
       </article>
-
-      {docs.toc && <DashboardTableOfContents toc={toc} />}
+      {docs?.toc && <DashboardTableOfContents toc={toc} />}
     </main>
   );
 }
