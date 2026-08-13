@@ -1,8 +1,7 @@
-import * as React from "react";
-import { cvx, type cvxVariants } from "xuxi";
 import { cn } from "@/lib/utils";
+import { cnxValues, cvx, cvxVariants } from "xuxi";
 
-const classes = cvx({
+export const proseVariant = cvx({
   variants: {
     prose: {
       h1: "scroll-m-20 text-[clamp(2rem,1rem+4vw,2.75rem)] leading-[clamp(2rem,1rem+4vw,4.25rem)] font-extrabold tracking-tight",
@@ -30,20 +29,11 @@ const classes = cvx({
   }
 });
 
-export type TypographyProps<T extends React.ElementType = "div"> = React.PropsWithoutRef<React.ComponentProps<T>> & {
-  el?: T | React.ElementType;
-  unstyled?: boolean;
-  children?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties & Record<string, any>;
-  ref?: React.ComponentPropsWithRef<T>["ref"];
-} & cvxVariants<typeof classes>;
+type ProseVariant = NonNullable<cvxVariants<typeof proseVariant>["prose"]>;
+type ProseVariantOptions = {
+  className?: cnxValues;
+};
 
-type TypographyElement = <T extends React.ElementType = "div">(_props: TypographyProps<T>) => React.ReactElement;
-
-export const Typography = React.forwardRef(function Typography<T extends React.ElementType>(_props: Omit<TypographyProps<T>, "ref">, ref: React.ComponentPropsWithRef<T>["ref"]) {
-  const { el, unstyled, className, prose, ...props } = _props;
-  const proseElm = ["large", "lead", "muted"].includes(prose as string) ? "div" : prose;
-  const Component = (el || proseElm || "div") as React.ElementType;
-  return <Component {...{ ref, className: cn(!unstyled && classes({ prose }), className), ...props }} />;
-}) as TypographyElement;
+export function getProseStyles(prose: ProseVariant, opts: ProseVariantOptions = {}) {
+  return { className: cn(proseVariant({ prose }), opts.className) };
+}

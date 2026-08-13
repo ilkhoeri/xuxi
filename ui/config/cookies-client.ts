@@ -8,7 +8,7 @@ export function setCookies(name: CookiesName, value: string, days = 30) {
   document.cookie = `${name}=${encodeURIComponent(value)};expires=${date.toUTCString()};path=/`;
 }
 
-export function useCookies<T extends string>(name: CookiesName, initial: T) {
+export function useCookies<T>(name: CookiesName, initial: T) {
   const getCookie = React.useCallback(() => {
     const cookies = document.cookie
       .split("; ")

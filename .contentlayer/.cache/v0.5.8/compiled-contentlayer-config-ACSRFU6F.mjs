@@ -136,15 +136,15 @@ async function getHighlighter(options = {}) {
 }
 
 // ui/rehype/rehype-command.tsx
-import * as React33 from "react";
+import * as React32 from "react";
 
 // ui/tabs.tsx
-import * as React3 from "react";
+import * as React2 from "react";
 
 // hooks/use-id.ts
-import React2, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 var useIsomorphicEffect = typeof document !== "undefined" ? useLayoutEffect : useEffect;
-var __useId = React2["useId".toString()] || (() => void 0);
+var __useId = React["useId".toString()] || (() => void 0);
 function useReactId() {
   const id = __useId();
   return id ? `${id.replace(/:/g, "")}` : "";
@@ -193,6 +193,7 @@ function cn(...merge) {
 }
 
 // ui/tabs.tsx
+import { jsx, jsxs } from "react/jsx-runtime";
 var classes = cvx({
   variants: {
     selector: {
@@ -206,10 +207,10 @@ var classes = cvx({
     variant: { default: "default", outline: "outline", pills: "pills" }
   }
 });
-var ctx = React3.createContext(void 0);
-var useTabs = () => React3.useContext(ctx);
+var ctx = React2.createContext(void 0);
+var useTabs = () => React2.useContext(ctx);
 var VALUE_ERROR = "Tabs.Tab or Tabs.Panel component was rendered with invalid value or without value";
-var Tabs = React3.forwardRef((_props, ref) => {
+var Tabs = React2.forwardRef((_props, ref) => {
   const {
     defaultValue,
     value,
@@ -240,7 +241,7 @@ var Tabs = React3.forwardRef((_props, ref) => {
     onChange
   });
   const stylesApi = { dir, unstyled, classNames, styles };
-  return /* @__PURE__ */ React3.createElement(
+  return /* @__PURE__ */ jsx(
     ctx.Provider,
     {
       value: {
@@ -261,32 +262,32 @@ var Tabs = React3.forwardRef((_props, ref) => {
         getStyles,
         color,
         ...stylesApi
-      }
-    },
-    /* @__PURE__ */ React3.createElement(
-      Root,
-      {
-        ...{
-          ref,
-          id: uid,
-          color: typeof color === "object" ? void 0 : color,
-          ...stylesApi,
-          ...props
-        }
       },
-      children
-    )
+      children: /* @__PURE__ */ jsx(
+        Root,
+        {
+          ...{
+            ref,
+            id: uid,
+            color: typeof color === "object" ? void 0 : color,
+            ...stylesApi,
+            ...props
+          },
+          children
+        }
+      )
+    }
   );
 });
 Tabs.displayName = "Tabs";
-var Root = React3.forwardRef((_props, ref) => {
+var Root = React2.forwardRef((_props, ref) => {
   const { unstyled, className, classNames, style, styles, dir, ...props } = _props;
   const { unstyled: _unstyled, classNames: _classNames, styles: _styles, ...ctx3 } = useTabs();
   const stylesApi = { className, style, unstyled: unstyled || _unstyled, classNames: classNames || _classNames, styles: styles || _styles, ...ctx3 };
-  return /* @__PURE__ */ React3.createElement("div", { ...{ ref, dir: dir || ctx3?.dir, ...ctx3.getStyles("root", stylesApi), ...props } });
+  return /* @__PURE__ */ jsx("div", { ...{ ref, dir: dir || ctx3?.dir, ...ctx3.getStyles("root", stylesApi), ...props } });
 });
 Root.displayName = "Tabs/Root";
-var TabsList = React3.forwardRef((_props, ref) => {
+var TabsList = React2.forwardRef((_props, ref) => {
   const { role = "tablist", unstyled, className, classNames, style, styles, dir, grow, justify, ...props } = _props;
   const { unstyled: _unstyled, classNames: _classNames, styles: _styles, ...ctx3 } = useTabs();
   const stylesApi = {
@@ -297,7 +298,7 @@ var TabsList = React3.forwardRef((_props, ref) => {
     styles: styles || _styles,
     ...ctx3
   };
-  return /* @__PURE__ */ React3.createElement(
+  return /* @__PURE__ */ jsx(
     "div",
     {
       ...{
@@ -313,7 +314,7 @@ var TabsList = React3.forwardRef((_props, ref) => {
   );
 });
 TabsList.displayName = "Tabs/TabsList";
-var TabsTab = React3.forwardRef((_props, ref) => {
+var TabsTab = React2.forwardRef((_props, ref) => {
   const {
     role = "tab",
     type = "button",
@@ -413,7 +414,7 @@ var TabsTab = React3.forwardRef((_props, ref) => {
     styles: styles || _styles,
     ...ctx3
   };
-  return /* @__PURE__ */ React3.createElement(
+  return /* @__PURE__ */ jsxs(
     "button",
     {
       ...{
@@ -433,15 +434,17 @@ var TabsTab = React3.forwardRef((_props, ref) => {
         onKeyDown: handleKeyDown,
         ...ctx3.getStyles("tab", { className, style: { "--tabs-color": color, ...style }, ...stylesApi }),
         ...props
-      }
-    },
-    leftSection && /* @__PURE__ */ React3.createElement("span", { ...ctx3.getStyles("tabSection", stylesApi), "data-position": "left" }, leftSection),
-    children && /* @__PURE__ */ React3.createElement("span", { ...ctx3.getStyles("tabLabel", stylesApi) }, children),
-    rightSection && /* @__PURE__ */ React3.createElement("span", { ...ctx3.getStyles("tabSection", stylesApi), "data-position": "right" }, rightSection)
+      },
+      children: [
+        leftSection && /* @__PURE__ */ jsx("span", { ...ctx3.getStyles("tabSection", stylesApi), "data-position": "left", children: leftSection }),
+        children && /* @__PURE__ */ jsx("span", { ...ctx3.getStyles("tabLabel", stylesApi), children }),
+        rightSection && /* @__PURE__ */ jsx("span", { ...ctx3.getStyles("tabSection", stylesApi), "data-position": "right", children: rightSection })
+      ]
+    }
   );
 });
 TabsTab.displayName = "Tabs/TabsTab";
-var TabsPanel = React3.forwardRef((_props, ref) => {
+var TabsPanel = React2.forwardRef((_props, ref) => {
   const { role = "tabpanel", "aria-labelledby": arlab, unstyled, className, classNames, style, styles, dir, value, keepMounted, children, id, ...props } = _props;
   const { unstyled: _unstyled, classNames: _classNames, styles: _styles, ...ctx3 } = useTabs();
   const active = ctx3.value === value;
@@ -454,7 +457,7 @@ var TabsPanel = React3.forwardRef((_props, ref) => {
     styles: styles || _styles,
     ...ctx3
   };
-  return /* @__PURE__ */ React3.createElement(
+  return /* @__PURE__ */ jsx(
     "div",
     {
       ...{
@@ -466,9 +469,9 @@ var TabsPanel = React3.forwardRef((_props, ref) => {
         ...ctx3.getStyles("panel", stylesApi),
         ...props,
         hidden: !active
-      }
-    },
-    content
+      },
+      children: content
+    }
   );
 });
 TabsPanel.displayName = "Tabs/TabsPanel";
@@ -544,11 +547,12 @@ Tabs.Tab = TabsTab;
 Tabs.Panel = TabsPanel;
 
 // ui/button.tsx
-import * as React6 from "react";
+import * as React7 from "react";
 
 // ui/loader.tsx
-import * as React4 from "react";
+import * as React3 from "react";
 import { ocx as ocx2 } from "xuxi";
+import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
 function clamp(value, precision = 1) {
   const factor = Math.pow(10, precision);
   return Math.round(value * factor) / factor;
@@ -571,12 +575,11 @@ function getStyles2(loader, selector, options) {
     style: ocx2(dynamicStyles, options?.styles?.[selector], options?.style)
   };
 }
-var LoaderSpinner = React4.forwardRef(function LoaderSpinner2(_props, ref) {
+var LoaderSpinner = React3.forwardRef(function LoaderSpinner2(_props, ref) {
   const { size: size4 = "20px", color, duration = 1.2, unstyled, className, classNames, style, styles, ...props } = _props;
-  return /* @__PURE__ */ React4.createElement("div", { ...{ ref, ...getStyles2("spinner", "root", { size: size4, color, duration, unstyled, className, style, styles }), ...props } }, [...Array(12)].map((_, index2) => /* @__PURE__ */ React4.createElement(
+  return /* @__PURE__ */ jsx2("div", { ...{ ref, ...getStyles2("spinner", "root", { size: size4, color, duration, unstyled, className, style, styles }), ...props }, children: [...Array(12)].map((_, index2) => /* @__PURE__ */ jsx2(
     "div",
     {
-      key: index2,
       ...getStyles2("spinner", "bar", {
         unstyled,
         classNames,
@@ -586,51 +589,55 @@ var LoaderSpinner = React4.forwardRef(function LoaderSpinner2(_props, ref) {
         },
         styles
       })
-    }
-  )));
+    },
+    index2
+  )) });
 });
 LoaderSpinner.displayName = "LoaderSpinner";
-var LoaderOrbit = React4.forwardRef(function LoaderOrbit2(_props, ref) {
+var LoaderOrbit = React3.forwardRef(function LoaderOrbit2(_props, ref) {
   const { size: size4 = "3rem", color, duration = 1.2, unstyled, className, classNames, style, styles, children, ...props } = _props;
-  return /* @__PURE__ */ React4.createElement("div", { ...{ ref, ...getStyles2("orbit", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props } }, /* @__PURE__ */ React4.createElement("div", { ...getStyles2("orbit", "inner", { unstyled, classNames, styles }) }, [...Array(2)].map((_, index2) => /* @__PURE__ */ React4.createElement("div", { key: index2, ...getStyles2("orbit", "orbit", { unstyled, classNames, styles }) }))), children);
+  return /* @__PURE__ */ jsxs2("div", { ...{ ref, ...getStyles2("orbit", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props }, children: [
+    /* @__PURE__ */ jsx2("div", { ...getStyles2("orbit", "inner", { unstyled, classNames, styles }), children: [...Array(2)].map((_, index2) => /* @__PURE__ */ jsx2("div", { ...getStyles2("orbit", "orbit", { unstyled, classNames, styles }) }, index2)) }),
+    children
+  ] });
 });
-var LoaderClockWise = React4.forwardRef(function LoaderClockWise2(_props, ref) {
+var LoaderClockWise = React3.forwardRef(function LoaderClockWise2(_props, ref) {
   const { size: size4 = "3rem", color, duration = 1.2, unstyled, className, classNames, style, styles, ...props } = _props;
-  return /* @__PURE__ */ React4.createElement("div", { ...{ ref, ...getStyles2("clockwise", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props } }, [...Array(2)].map((_, index2) => /* @__PURE__ */ React4.createElement("div", { key: index2, ...getStyles2("clockwise", "clockwise", { unstyled, classNames, styles }) })));
+  return /* @__PURE__ */ jsx2("div", { ...{ ref, ...getStyles2("clockwise", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props }, children: [...Array(2)].map((_, index2) => /* @__PURE__ */ jsx2("div", { ...getStyles2("clockwise", "clockwise", { unstyled, classNames, styles }) }, index2)) });
 });
-var LoaderDots = React4.forwardRef(function LoaderDots2(_props, ref) {
+var LoaderDots = React3.forwardRef(function LoaderDots2(_props, ref) {
   const { size: size4 = "3rem", color, duration = 1.2, unstyled, className, classNames, style, styles, ...props } = _props;
-  return /* @__PURE__ */ React4.createElement("div", { ...{ ref, ...getStyles2("dots", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props } }, [...Array(4)].map((_, index2) => /* @__PURE__ */ React4.createElement(
+  return /* @__PURE__ */ jsx2("div", { ...{ ref, ...getStyles2("dots", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props }, children: [...Array(4)].map((_, index2) => /* @__PURE__ */ jsx2(
     "div",
     {
-      key: index2,
       ...getStyles2("dots", "dots", {
         unstyled,
         classNames,
         styles,
         style: { "--dots-delay": `${clamp(0.2 * index2)}s` }
       })
-    }
-  )));
+    },
+    index2
+  )) });
 });
-var LoaderBuffer = React4.forwardRef(function LoaderBuffer2(_props, ref) {
+var LoaderBuffer = React3.forwardRef(function LoaderBuffer2(_props, ref) {
   const { size: size4 = "3rem", color, duration = 1, unstyled, className, classNames, style, styles, ...props } = _props;
-  return /* @__PURE__ */ React4.createElement("div", { ...{ ref, ...getStyles2("buffer", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props } }, [...Array(5)].map((_, index2) => /* @__PURE__ */ React4.createElement(
+  return /* @__PURE__ */ jsx2("div", { ...{ ref, ...getStyles2("buffer", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props }, children: [...Array(5)].map((_, index2) => /* @__PURE__ */ jsx2(
     "div",
     {
-      key: index2,
       ...getStyles2("buffer", "buffer", {
         unstyled,
         classNames,
         styles,
         style: { "--buffer-delay": `${clamp((index2 + 1) / 5 * duration)}s` }
       })
-    }
-  )));
+    },
+    index2
+  )) });
 });
-var LoaderRises = React4.forwardRef(function LoaderRises2(_props, ref) {
+var LoaderRises = React3.forwardRef(function LoaderRises2(_props, ref) {
   const { size: size4 = "3rem", color, duration = 1, unstyled, className, classNames, style, styles, ...props } = _props;
-  return /* @__PURE__ */ React4.createElement("div", { ...{ ref, ...getStyles2("rises", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props } }, /* @__PURE__ */ React4.createElement("span", { className: "sr-only hidden" }));
+  return /* @__PURE__ */ jsx2("div", { ...{ ref, ...getStyles2("rises", "root", { size: size4, color, duration, unstyled, className, classNames, style, styles }), ...props }, children: /* @__PURE__ */ jsx2("span", { className: "sr-only hidden" }) });
 });
 var loaderMap = {
   spinner: LoaderSpinner,
@@ -640,10 +647,10 @@ var loaderMap = {
   buffer: LoaderBuffer,
   rises: LoaderRises
 };
-var Loader = React4.forwardRef((_props, ref) => {
+var Loader = React3.forwardRef((_props, ref) => {
   const { variant = "spinner", ...props } = _props;
   const Component = loaderMap[variant];
-  return /* @__PURE__ */ React4.createElement(Component, { ref, ...props });
+  return /* @__PURE__ */ jsx2(Component, { ref, ...props });
 });
 Loader.displayName = "Loader";
 Loader.Spinner = LoaderSpinner;
@@ -653,27 +660,11 @@ Loader.Dots = LoaderDots;
 Loader.Buffer = LoaderBuffer;
 Loader.Rises = LoaderRises;
 
-// ui/polymorphic-slot.tsx
+// node_modules/@radix-ui/react-slot/dist/index.mjs
 import * as React5 from "react";
-var PolymorphicSlot = React5.forwardRef((props, forwardedRef) => {
-  const { children, ...slotProps } = props;
-  const childrenArray = React5.Children.toArray(children);
-  const slottable = childrenArray.find(isSlottable);
-  if (slottable) {
-    const newElement = slottable.props.children;
-    const newChildren = childrenArray.map((child) => {
-      if (child === slottable) {
-        if (React5.Children.count(newElement) > 1) return React5.Children.only(null);
-        return React5.isValidElement(newElement) ? newElement.props.children : null;
-      } else {
-        return child;
-      }
-    });
-    return /* @__PURE__ */ React5.createElement(SlotClone, { ...slotProps, ref: forwardedRef }, React5.isValidElement(newElement) ? React5.cloneElement(newElement, void 0, newChildren) : null);
-  }
-  return /* @__PURE__ */ React5.createElement(SlotClone, { ...slotProps, ref: forwardedRef }, children);
-});
-PolymorphicSlot.displayName = "PolymorphicSlot";
+
+// node_modules/@radix-ui/react-compose-refs/dist/index.mjs
+import * as React4 from "react";
 function setRef(ref, value) {
   if (typeof ref === "function") {
     return ref(value);
@@ -705,28 +696,66 @@ function composeRefs(...refs) {
     }
   };
 }
-var SlotClone = React5.forwardRef((props, forwardedRef) => {
-  const { children, ...slotProps } = props;
-  if (React5.isValidElement(children)) {
-    const childrenRef = getElementRef(children);
-    return React5.cloneElement(children, {
-      ...mergeProps(slotProps, children.props),
-      // @ts-ignore
-      ref: forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef,
-      // @ts-ignore
-      style: { ...slotProps.style, ...children.props.style },
-      // @ts-ignore
-      className: cn(slotProps.className, children.props.className)
-    });
-  }
-  return React5.Children.count(children) > 1 ? React5.Children.only(null) : null;
-});
-SlotClone.displayName = "SlotClone";
-var Slottable = ({ children }) => {
-  return /* @__PURE__ */ React5.createElement(React5.Fragment, null, children);
-};
+function useComposedRefs(...refs) {
+  return React4.useCallback(composeRefs(...refs), refs);
+}
+
+// node_modules/@radix-ui/react-slot/dist/index.mjs
+import { Fragment as Fragment2, jsx as jsx3 } from "react/jsx-runtime";
+// @__NO_SIDE_EFFECTS__
+function createSlot(ownerName) {
+  const SlotClone = /* @__PURE__ */ createSlotClone(ownerName);
+  const Slot2 = React5.forwardRef((props, forwardedRef) => {
+    const { children, ...slotProps } = props;
+    const childrenArray = React5.Children.toArray(children);
+    const slottable = childrenArray.find(isSlottable);
+    if (slottable) {
+      const newElement = slottable.props.children;
+      const newChildren = childrenArray.map((child) => {
+        if (child === slottable) {
+          if (React5.Children.count(newElement) > 1) return React5.Children.only(null);
+          return React5.isValidElement(newElement) ? newElement.props.children : null;
+        } else {
+          return child;
+        }
+      });
+      return /* @__PURE__ */ jsx3(SlotClone, { ...slotProps, ref: forwardedRef, children: React5.isValidElement(newElement) ? React5.cloneElement(newElement, void 0, newChildren) : null });
+    }
+    return /* @__PURE__ */ jsx3(SlotClone, { ...slotProps, ref: forwardedRef, children });
+  });
+  Slot2.displayName = `${ownerName}.Slot`;
+  return Slot2;
+}
+var Slot = /* @__PURE__ */ createSlot("Slot");
+// @__NO_SIDE_EFFECTS__
+function createSlotClone(ownerName) {
+  const SlotClone = React5.forwardRef((props, forwardedRef) => {
+    const { children, ...slotProps } = props;
+    if (React5.isValidElement(children)) {
+      const childrenRef = getElementRef(children);
+      const props2 = mergeProps(slotProps, children.props);
+      if (children.type !== React5.Fragment) {
+        props2.ref = forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef;
+      }
+      return React5.cloneElement(children, props2);
+    }
+    return React5.Children.count(children) > 1 ? React5.Children.only(null) : null;
+  });
+  SlotClone.displayName = `${ownerName}.SlotClone`;
+  return SlotClone;
+}
+var SLOTTABLE_IDENTIFIER = Symbol("radix.slottable");
+// @__NO_SIDE_EFFECTS__
+function createSlottable(ownerName) {
+  const Slottable2 = ({ children }) => {
+    return /* @__PURE__ */ jsx3(Fragment2, { children });
+  };
+  Slottable2.displayName = `${ownerName}.Slottable`;
+  Slottable2.__radixId = SLOTTABLE_IDENTIFIER;
+  return Slottable2;
+}
 function isSlottable(child) {
-  return React5.isValidElement(child) && child.type === Slottable;
+  return React5.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
 }
 function mergeProps(slotProps, childProps) {
   const overrideProps = { ...childProps };
@@ -754,7 +783,9 @@ function mergeProps(slotProps, childProps) {
 function getElementRef(element) {
   let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
   let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
-  if (mayWarn) return element.ref;
+  if (mayWarn) {
+    return element.ref;
+  }
   getter = Object.getOwnPropertyDescriptor(element, "ref")?.get;
   mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
   if (mayWarn) {
@@ -762,39 +793,55 @@ function getElementRef(element) {
   }
   return element.props.ref || element.ref;
 }
-function injectComponentIntoFirstChild(children, component) {
-  if (React5.isValidElement(children)) {
-    return React5.cloneElement(children, {
-      children: /* @__PURE__ */ React5.createElement(React5.Fragment, null, component, children.props.children)
-    });
+
+// ui/button.tsx
+import { cvx as cvx2 } from "xuxi";
+
+// lib/inject-el.ts
+import React6 from "react";
+function injectElementIntoFirstChild(children, component) {
+  if (React6.isValidElement(children)) {
+    return React6.cloneElement(
+      children,
+      {
+        children: React6.createElement(React6.Fragment, {}, component, children.props.children)
+      }
+    );
   }
   if (Array.isArray(children)) {
     const [firstChild, ...rest] = children;
-    if (React5.isValidElement(firstChild)) {
+    if (React6.isValidElement(firstChild)) {
       return [
-        React5.cloneElement(firstChild, {
-          children: /* @__PURE__ */ React5.createElement(React5.Fragment, null, component, firstChild.props?.children, " ")
-        }),
+        React6.cloneElement(
+          firstChild,
+          {
+            children: React6.createElement(
+              React6.Fragment,
+              {},
+              component,
+              firstChild.props?.children
+              /* Access props safely */
+            )
+          }
+        ),
         ...rest
       ];
     }
   }
   return children;
 }
-var Polymorphic = React5.forwardRef(function Polymorphic2(_props, ref) {
-  const { asChild = false, el, ...props } = _props;
-  const Component = asChild ? PolymorphicSlot : el || "div";
-  return /* @__PURE__ */ React5.createElement(Component, { ...{ ref, ...props } });
-});
 
 // ui/button.tsx
-import { cvx as cvx2 } from "xuxi";
-var UnstyledButton = React6.forwardRef((_props, ref) => {
+import { Fragment as Fragment3, jsx as jsx4, jsxs as jsxs3 } from "react/jsx-runtime";
+var UnstyledButton = React7.forwardRef((_props, ref) => {
   const { asChild = false, type = "button", role = "button", children, loading, disabled, ...props } = _props;
-  const Btn = asChild ? PolymorphicSlot : "button";
-  const loadingComponent = loading && /* @__PURE__ */ React6.createElement(Loader, { size: 14 });
-  const enhancedChildren = injectComponentIntoFirstChild(children, loadingComponent);
-  return /* @__PURE__ */ React6.createElement(Btn, { ...{ ref, type, role, disabled: loading || disabled, ...props } }, asChild ? enhancedChildren : /* @__PURE__ */ React6.createElement(React6.Fragment, null, loadingComponent, children));
+  const Btn = asChild ? Slot : "button";
+  const loadingComponent = loading && /* @__PURE__ */ jsx4(Loader, { size: 14 });
+  const enhancedChildren = injectElementIntoFirstChild(children, loadingComponent);
+  return /* @__PURE__ */ jsx4(Btn, { ...{ ref, type, role, disabled: loading || disabled, ...props }, children: asChild ? enhancedChildren : /* @__PURE__ */ jsxs3(Fragment3, { children: [
+    loadingComponent,
+    children
+  ] }) });
 });
 UnstyledButton.displayName = "UnstyledButton";
 var buttonVariants = cvx2({
@@ -839,9 +886,9 @@ var buttonVariants = cvx2({
 function buttonStyle(variants, className) {
   return cn(!variants?.unstyled && buttonVariants({ ...variants }), className);
 }
-var Button = React6.forwardRef((_props, ref) => {
+var Button = React7.forwardRef((_props, ref) => {
   const { unstyled, className, variant = "default", color, size: size4, ...props } = _props;
-  return /* @__PURE__ */ React6.createElement(UnstyledButton, { ...{ ref, className: buttonStyle({ color, size: size4, unstyled, variant }, className), ...props } });
+  return /* @__PURE__ */ jsx4(UnstyledButton, { ...{ ref, className: buttonStyle({ color, size: size4, unstyled, variant }, className), ...props } });
 });
 Button.displayName = "Button";
 
@@ -903,10 +950,10 @@ function readValue(type) {
 }
 
 // ui/tooltip.tsx
-import * as React28 from "react";
+import * as React27 from "react";
 
 // node_modules/@radix-ui/react-tooltip/dist/index.mjs
-import * as React26 from "react";
+import * as React25 from "react";
 
 // node_modules/@radix-ui/primitive/dist/index.mjs
 function composeEventHandlers(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
@@ -918,46 +965,9 @@ function composeEventHandlers(originalEventHandler, ourEventHandler, { checkForD
   };
 }
 
-// node_modules/@radix-ui/react-compose-refs/dist/index.mjs
-import * as React7 from "react";
-function setRef2(ref, value) {
-  if (typeof ref === "function") {
-    return ref(value);
-  } else if (ref !== null && ref !== void 0) {
-    ref.current = value;
-  }
-}
-function composeRefs2(...refs) {
-  return (node) => {
-    let hasCleanup = false;
-    const cleanups = refs.map((ref) => {
-      const cleanup = setRef2(ref, node);
-      if (!hasCleanup && typeof cleanup == "function") {
-        hasCleanup = true;
-      }
-      return cleanup;
-    });
-    if (hasCleanup) {
-      return () => {
-        for (let i = 0; i < cleanups.length; i++) {
-          const cleanup = cleanups[i];
-          if (typeof cleanup == "function") {
-            cleanup();
-          } else {
-            setRef2(refs[i], null);
-          }
-        }
-      };
-    }
-  };
-}
-function useComposedRefs(...refs) {
-  return React7.useCallback(composeRefs2(...refs), refs);
-}
-
 // node_modules/@radix-ui/react-context/dist/index.mjs
 import * as React8 from "react";
-import { jsx } from "react/jsx-runtime";
+import { jsx as jsx5 } from "react/jsx-runtime";
 function createContextScope(scopeName, createContextScopeDeps = []) {
   let defaultContexts = [];
   function createContext32(rootComponentName, defaultContext) {
@@ -968,7 +978,7 @@ function createContextScope(scopeName, createContextScopeDeps = []) {
       const { scope, children, ...context } = props;
       const Context = scope?.[scopeName]?.[index2] || BaseContext;
       const value = React8.useMemo(() => context, Object.values(context));
-      return /* @__PURE__ */ jsx(Context.Provider, { value, children });
+      return /* @__PURE__ */ jsx5(Context.Provider, { value, children });
     };
     Provider2.displayName = rootComponentName + "Provider";
     function useContext22(consumerName, scope) {
@@ -1017,108 +1027,12 @@ function composeContextScopes(...scopes) {
 }
 
 // node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
-import * as React13 from "react";
+import * as React12 from "react";
 
 // node_modules/@radix-ui/react-primitive/dist/index.mjs
-import * as React10 from "react";
-import * as ReactDOM from "react-dom";
-
-// node_modules/@radix-ui/react-slot/dist/index.mjs
 import * as React9 from "react";
-import { Fragment as Fragment22, jsx as jsx2 } from "react/jsx-runtime";
-// @__NO_SIDE_EFFECTS__
-function createSlot(ownerName) {
-  const SlotClone2 = /* @__PURE__ */ createSlotClone(ownerName);
-  const Slot2 = React9.forwardRef((props, forwardedRef) => {
-    const { children, ...slotProps } = props;
-    const childrenArray = React9.Children.toArray(children);
-    const slottable = childrenArray.find(isSlottable2);
-    if (slottable) {
-      const newElement = slottable.props.children;
-      const newChildren = childrenArray.map((child) => {
-        if (child === slottable) {
-          if (React9.Children.count(newElement) > 1) return React9.Children.only(null);
-          return React9.isValidElement(newElement) ? newElement.props.children : null;
-        } else {
-          return child;
-        }
-      });
-      return /* @__PURE__ */ jsx2(SlotClone2, { ...slotProps, ref: forwardedRef, children: React9.isValidElement(newElement) ? React9.cloneElement(newElement, void 0, newChildren) : null });
-    }
-    return /* @__PURE__ */ jsx2(SlotClone2, { ...slotProps, ref: forwardedRef, children });
-  });
-  Slot2.displayName = `${ownerName}.Slot`;
-  return Slot2;
-}
-// @__NO_SIDE_EFFECTS__
-function createSlotClone(ownerName) {
-  const SlotClone2 = React9.forwardRef((props, forwardedRef) => {
-    const { children, ...slotProps } = props;
-    if (React9.isValidElement(children)) {
-      const childrenRef = getElementRef2(children);
-      const props2 = mergeProps2(slotProps, children.props);
-      if (children.type !== React9.Fragment) {
-        props2.ref = forwardedRef ? composeRefs2(forwardedRef, childrenRef) : childrenRef;
-      }
-      return React9.cloneElement(children, props2);
-    }
-    return React9.Children.count(children) > 1 ? React9.Children.only(null) : null;
-  });
-  SlotClone2.displayName = `${ownerName}.SlotClone`;
-  return SlotClone2;
-}
-var SLOTTABLE_IDENTIFIER = Symbol("radix.slottable");
-// @__NO_SIDE_EFFECTS__
-function createSlottable(ownerName) {
-  const Slottable22 = ({ children }) => {
-    return /* @__PURE__ */ jsx2(Fragment22, { children });
-  };
-  Slottable22.displayName = `${ownerName}.Slottable`;
-  Slottable22.__radixId = SLOTTABLE_IDENTIFIER;
-  return Slottable22;
-}
-function isSlottable2(child) {
-  return React9.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
-}
-function mergeProps2(slotProps, childProps) {
-  const overrideProps = { ...childProps };
-  for (const propName in childProps) {
-    const slotPropValue = slotProps[propName];
-    const childPropValue = childProps[propName];
-    const isHandler = /^on[A-Z]/.test(propName);
-    if (isHandler) {
-      if (slotPropValue && childPropValue) {
-        overrideProps[propName] = (...args) => {
-          childPropValue(...args);
-          slotPropValue(...args);
-        };
-      } else if (slotPropValue) {
-        overrideProps[propName] = slotPropValue;
-      }
-    } else if (propName === "style") {
-      overrideProps[propName] = { ...slotPropValue, ...childPropValue };
-    } else if (propName === "className") {
-      overrideProps[propName] = [slotPropValue, childPropValue].filter(Boolean).join(" ");
-    }
-  }
-  return { ...slotProps, ...overrideProps };
-}
-function getElementRef2(element) {
-  let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
-  let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
-  if (mayWarn) {
-    return element.ref;
-  }
-  getter = Object.getOwnPropertyDescriptor(element, "ref")?.get;
-  mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
-  if (mayWarn) {
-    return element.props.ref;
-  }
-  return element.props.ref || element.ref;
-}
-
-// node_modules/@radix-ui/react-primitive/dist/index.mjs
-import { jsx as jsx3 } from "react/jsx-runtime";
+import * as ReactDOM from "react-dom";
+import { jsx as jsx6 } from "react/jsx-runtime";
 var NODES = [
   "a",
   "button",
@@ -1139,14 +1053,14 @@ var NODES = [
   "ul"
 ];
 var Primitive = NODES.reduce((primitive, node) => {
-  const Slot = createSlot(`Primitive.${node}`);
-  const Node2 = React10.forwardRef((props, forwardedRef) => {
+  const Slot2 = createSlot(`Primitive.${node}`);
+  const Node2 = React9.forwardRef((props, forwardedRef) => {
     const { asChild, ...primitiveProps } = props;
-    const Comp = asChild ? Slot : node;
+    const Comp = asChild ? Slot2 : node;
     if (typeof window !== "undefined") {
       window[Symbol.for("radix-ui")] = true;
     }
-    return /* @__PURE__ */ jsx3(Comp, { ...primitiveProps, ref: forwardedRef });
+    return /* @__PURE__ */ jsx6(Comp, { ...primitiveProps, ref: forwardedRef });
   });
   Node2.displayName = `Primitive.${node}`;
   return { ...primitive, [node]: Node2 };
@@ -1156,20 +1070,20 @@ function dispatchDiscreteCustomEvent(target, event) {
 }
 
 // node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
-import * as React11 from "react";
+import * as React10 from "react";
 function useCallbackRef(callback) {
-  const callbackRef = React11.useRef(callback);
-  React11.useEffect(() => {
+  const callbackRef = React10.useRef(callback);
+  React10.useEffect(() => {
     callbackRef.current = callback;
   });
-  return React11.useMemo(() => (...args) => callbackRef.current?.(...args), []);
+  return React10.useMemo(() => (...args) => callbackRef.current?.(...args), []);
 }
 
 // node_modules/@radix-ui/react-use-escape-keydown/dist/index.mjs
-import * as React12 from "react";
+import * as React11 from "react";
 function useEscapeKeydown(onEscapeKeyDownProp, ownerDocument = globalThis?.document) {
   const onEscapeKeyDown = useCallbackRef(onEscapeKeyDownProp);
-  React12.useEffect(() => {
+  React11.useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         onEscapeKeyDown(event);
@@ -1181,18 +1095,18 @@ function useEscapeKeydown(onEscapeKeyDownProp, ownerDocument = globalThis?.docum
 }
 
 // node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
-import { jsx as jsx4 } from "react/jsx-runtime";
+import { jsx as jsx7 } from "react/jsx-runtime";
 var DISMISSABLE_LAYER_NAME = "DismissableLayer";
 var CONTEXT_UPDATE = "dismissableLayer.update";
 var POINTER_DOWN_OUTSIDE = "dismissableLayer.pointerDownOutside";
 var FOCUS_OUTSIDE = "dismissableLayer.focusOutside";
 var originalBodyPointerEvents;
-var DismissableLayerContext = React13.createContext({
+var DismissableLayerContext = React12.createContext({
   layers: /* @__PURE__ */ new Set(),
   layersWithOutsidePointerEventsDisabled: /* @__PURE__ */ new Set(),
   branches: /* @__PURE__ */ new Set()
 });
-var DismissableLayer = React13.forwardRef(
+var DismissableLayer = React12.forwardRef(
   (props, forwardedRef) => {
     const {
       disableOutsidePointerEvents = false,
@@ -1203,10 +1117,10 @@ var DismissableLayer = React13.forwardRef(
       onDismiss,
       ...layerProps
     } = props;
-    const context = React13.useContext(DismissableLayerContext);
-    const [node, setNode] = React13.useState(null);
+    const context = React12.useContext(DismissableLayerContext);
+    const [node, setNode] = React12.useState(null);
     const ownerDocument = node?.ownerDocument ?? globalThis?.document;
-    const [, force] = React13.useState({});
+    const [, force] = React12.useState({});
     const composedRefs = useComposedRefs(forwardedRef, (node2) => setNode(node2));
     const layers = Array.from(context.layers);
     const [highestLayerWithOutsidePointerEventsDisabled] = [...context.layersWithOutsidePointerEventsDisabled].slice(-1);
@@ -1239,7 +1153,7 @@ var DismissableLayer = React13.forwardRef(
         onDismiss();
       }
     }, ownerDocument);
-    React13.useEffect(() => {
+    React12.useEffect(() => {
       if (!node) return;
       if (disableOutsidePointerEvents) {
         if (context.layersWithOutsidePointerEventsDisabled.size === 0) {
@@ -1256,7 +1170,7 @@ var DismissableLayer = React13.forwardRef(
         }
       };
     }, [node, ownerDocument, disableOutsidePointerEvents, context]);
-    React13.useEffect(() => {
+    React12.useEffect(() => {
       return () => {
         if (!node) return;
         context.layers.delete(node);
@@ -1264,12 +1178,12 @@ var DismissableLayer = React13.forwardRef(
         dispatchUpdate();
       };
     }, [node, context]);
-    React13.useEffect(() => {
+    React12.useEffect(() => {
       const handleUpdate = () => force({});
       document.addEventListener(CONTEXT_UPDATE, handleUpdate);
       return () => document.removeEventListener(CONTEXT_UPDATE, handleUpdate);
     }, []);
-    return /* @__PURE__ */ jsx4(
+    return /* @__PURE__ */ jsx7(
       Primitive.div,
       {
         ...layerProps,
@@ -1290,11 +1204,11 @@ var DismissableLayer = React13.forwardRef(
 );
 DismissableLayer.displayName = DISMISSABLE_LAYER_NAME;
 var BRANCH_NAME = "DismissableLayerBranch";
-var DismissableLayerBranch = React13.forwardRef((props, forwardedRef) => {
-  const context = React13.useContext(DismissableLayerContext);
-  const ref = React13.useRef(null);
+var DismissableLayerBranch = React12.forwardRef((props, forwardedRef) => {
+  const context = React12.useContext(DismissableLayerContext);
+  const ref = React12.useRef(null);
   const composedRefs = useComposedRefs(forwardedRef, ref);
-  React13.useEffect(() => {
+  React12.useEffect(() => {
     const node = ref.current;
     if (node) {
       context.branches.add(node);
@@ -1303,15 +1217,15 @@ var DismissableLayerBranch = React13.forwardRef((props, forwardedRef) => {
       };
     }
   }, [context.branches]);
-  return /* @__PURE__ */ jsx4(Primitive.div, { ...props, ref: composedRefs });
+  return /* @__PURE__ */ jsx7(Primitive.div, { ...props, ref: composedRefs });
 });
 DismissableLayerBranch.displayName = BRANCH_NAME;
 function usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis?.document) {
   const handlePointerDownOutside = useCallbackRef(onPointerDownOutside);
-  const isPointerInsideReactTreeRef = React13.useRef(false);
-  const handleClickRef = React13.useRef(() => {
+  const isPointerInsideReactTreeRef = React12.useRef(false);
+  const handleClickRef = React12.useRef(() => {
   });
-  React13.useEffect(() => {
+  React12.useEffect(() => {
     const handlePointerDown = (event) => {
       if (event.target && !isPointerInsideReactTreeRef.current) {
         let handleAndDispatchPointerDownOutsideEvent2 = function() {
@@ -1352,8 +1266,8 @@ function usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis?
 }
 function useFocusOutside(onFocusOutside, ownerDocument = globalThis?.document) {
   const handleFocusOutside = useCallbackRef(onFocusOutside);
-  const isFocusInsideReactTreeRef = React13.useRef(false);
-  React13.useEffect(() => {
+  const isFocusInsideReactTreeRef = React12.useRef(false);
+  React12.useEffect(() => {
     const handleFocus = (event) => {
       if (event.target && !isFocusInsideReactTreeRef.current) {
         const eventDetail = { originalEvent: event };
@@ -1386,18 +1300,18 @@ function handleAndDispatchCustomEvent(name, handler, detail, { discrete }) {
 }
 
 // node_modules/@radix-ui/react-id/dist/index.mjs
-import * as React15 from "react";
+import * as React14 from "react";
 
 // node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
-import * as React14 from "react";
-var useLayoutEffect22 = globalThis?.document ? React14.useLayoutEffect : () => {
+import * as React13 from "react";
+var useLayoutEffect22 = globalThis?.document ? React13.useLayoutEffect : () => {
 };
 
 // node_modules/@radix-ui/react-id/dist/index.mjs
-var useReactId2 = React15[" useId ".trim().toString()] || (() => void 0);
+var useReactId2 = React14[" useId ".trim().toString()] || (() => void 0);
 var count = 0;
 function useId2(deterministicId) {
-  const [id, setId] = React15.useState(useReactId2());
+  const [id, setId] = React14.useState(useReactId2());
   useLayoutEffect22(() => {
     if (!deterministicId) setId((reactId) => reactId ?? String(count++));
   }, [deterministicId]);
@@ -1405,7 +1319,7 @@ function useId2(deterministicId) {
 }
 
 // node_modules/@radix-ui/react-popper/dist/index.mjs
-import * as React19 from "react";
+import * as React18 from "react";
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
 var sides = ["top", "right", "bottom", "left"];
@@ -2996,7 +2910,7 @@ var computePosition2 = (reference, floating, options) => {
 };
 
 // node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
-import * as React16 from "react";
+import * as React15 from "react";
 import { useLayoutEffect as useLayoutEffect3, useEffect as useEffect7 } from "react";
 import * as ReactDOM2 from "react-dom";
 var index = typeof document !== "undefined" ? useLayoutEffect3 : useEffect7;
@@ -3059,7 +2973,7 @@ function roundByDPR(element, value) {
   return Math.round(value * dpr) / dpr;
 }
 function useLatestRef(value) {
-  const ref = React16.useRef(value);
+  const ref = React15.useRef(value);
   index(() => {
     ref.current = value;
   });
@@ -3082,7 +2996,7 @@ function useFloating(options) {
     whileElementsMounted,
     open
   } = options;
-  const [data, setData] = React16.useState({
+  const [data, setData] = React15.useState({
     x: 0,
     y: 0,
     strategy,
@@ -3090,19 +3004,19 @@ function useFloating(options) {
     middlewareData: {},
     isPositioned: false
   });
-  const [latestMiddleware, setLatestMiddleware] = React16.useState(middleware);
+  const [latestMiddleware, setLatestMiddleware] = React15.useState(middleware);
   if (!deepEqual(latestMiddleware, middleware)) {
     setLatestMiddleware(middleware);
   }
-  const [_reference, _setReference] = React16.useState(null);
-  const [_floating, _setFloating] = React16.useState(null);
-  const setReference = React16.useCallback((node) => {
+  const [_reference, _setReference] = React15.useState(null);
+  const [_floating, _setFloating] = React15.useState(null);
+  const setReference = React15.useCallback((node) => {
     if (node !== referenceRef.current) {
       referenceRef.current = node;
       _setReference(node);
     }
   }, []);
-  const setFloating = React16.useCallback((node) => {
+  const setFloating = React15.useCallback((node) => {
     if (node !== floatingRef.current) {
       floatingRef.current = node;
       _setFloating(node);
@@ -3110,14 +3024,14 @@ function useFloating(options) {
   }, []);
   const referenceEl = externalReference || _reference;
   const floatingEl = externalFloating || _floating;
-  const referenceRef = React16.useRef(null);
-  const floatingRef = React16.useRef(null);
-  const dataRef = React16.useRef(data);
+  const referenceRef = React15.useRef(null);
+  const floatingRef = React15.useRef(null);
+  const dataRef = React15.useRef(data);
   const hasWhileElementsMounted = whileElementsMounted != null;
   const whileElementsMountedRef = useLatestRef(whileElementsMounted);
   const platformRef = useLatestRef(platform2);
   const openRef = useLatestRef(open);
-  const update = React16.useCallback(() => {
+  const update = React15.useCallback(() => {
     if (!referenceRef.current || !floatingRef.current) {
       return;
     }
@@ -3155,7 +3069,7 @@ function useFloating(options) {
       }));
     }
   }, [open]);
-  const isMountedRef = React16.useRef(false);
+  const isMountedRef = React15.useRef(false);
   index(() => {
     isMountedRef.current = true;
     return () => {
@@ -3172,17 +3086,17 @@ function useFloating(options) {
       update();
     }
   }, [referenceEl, floatingEl, update, whileElementsMountedRef, hasWhileElementsMounted]);
-  const refs = React16.useMemo(() => ({
+  const refs = React15.useMemo(() => ({
     reference: referenceRef,
     floating: floatingRef,
     setReference,
     setFloating
   }), [setReference, setFloating]);
-  const elements = React16.useMemo(() => ({
+  const elements = React15.useMemo(() => ({
     reference: referenceEl,
     floating: floatingEl
   }), [referenceEl, floatingEl]);
-  const floatingStyles = React16.useMemo(() => {
+  const floatingStyles = React15.useMemo(() => {
     const initialStyles = {
       position: strategy,
       left: 0,
@@ -3208,7 +3122,7 @@ function useFloating(options) {
       top: y
     };
   }, [strategy, transform, elements.floating, data.x, data.y]);
-  return React16.useMemo(() => ({
+  return React15.useMemo(() => ({
     ...data,
     update,
     refs,
@@ -3277,12 +3191,12 @@ var arrow3 = (options, deps) => ({
 });
 
 // node_modules/@radix-ui/react-arrow/dist/index.mjs
-import * as React17 from "react";
-import { jsx as jsx5 } from "react/jsx-runtime";
+import * as React16 from "react";
+import { jsx as jsx8 } from "react/jsx-runtime";
 var NAME = "Arrow";
-var Arrow = React17.forwardRef((props, forwardedRef) => {
+var Arrow = React16.forwardRef((props, forwardedRef) => {
   const { children, width = 10, height = 5, ...arrowProps } = props;
-  return /* @__PURE__ */ jsx5(
+  return /* @__PURE__ */ jsx8(
     Primitive.svg,
     {
       ...arrowProps,
@@ -3291,7 +3205,7 @@ var Arrow = React17.forwardRef((props, forwardedRef) => {
       height,
       viewBox: "0 0 30 10",
       preserveAspectRatio: "none",
-      children: props.asChild ? children : /* @__PURE__ */ jsx5("polygon", { points: "0,0 30,0 15,10" })
+      children: props.asChild ? children : /* @__PURE__ */ jsx8("polygon", { points: "0,0 30,0 15,10" })
     }
   );
 });
@@ -3299,9 +3213,9 @@ Arrow.displayName = NAME;
 var Root2 = Arrow;
 
 // node_modules/@radix-ui/react-use-size/dist/index.mjs
-import * as React18 from "react";
+import * as React17 from "react";
 function useSize(element) {
-  const [size4, setSize] = React18.useState(void 0);
+  const [size4, setSize] = React17.useState(void 0);
   useLayoutEffect22(() => {
     if (element) {
       setSize({ width: element.offsetWidth, height: element.offsetHeight });
@@ -3336,33 +3250,33 @@ function useSize(element) {
 }
 
 // node_modules/@radix-ui/react-popper/dist/index.mjs
-import { jsx as jsx6 } from "react/jsx-runtime";
+import { jsx as jsx9 } from "react/jsx-runtime";
 var POPPER_NAME = "Popper";
 var [createPopperContext, createPopperScope] = createContextScope(POPPER_NAME);
 var [PopperProvider, usePopperContext] = createPopperContext(POPPER_NAME);
 var Popper = (props) => {
   const { __scopePopper, children } = props;
-  const [anchor, setAnchor] = React19.useState(null);
-  return /* @__PURE__ */ jsx6(PopperProvider, { scope: __scopePopper, anchor, onAnchorChange: setAnchor, children });
+  const [anchor, setAnchor] = React18.useState(null);
+  return /* @__PURE__ */ jsx9(PopperProvider, { scope: __scopePopper, anchor, onAnchorChange: setAnchor, children });
 };
 Popper.displayName = POPPER_NAME;
 var ANCHOR_NAME = "PopperAnchor";
-var PopperAnchor = React19.forwardRef(
+var PopperAnchor = React18.forwardRef(
   (props, forwardedRef) => {
     const { __scopePopper, virtualRef, ...anchorProps } = props;
     const context = usePopperContext(ANCHOR_NAME, __scopePopper);
-    const ref = React19.useRef(null);
+    const ref = React18.useRef(null);
     const composedRefs = useComposedRefs(forwardedRef, ref);
-    React19.useEffect(() => {
+    React18.useEffect(() => {
       context.onAnchorChange(virtualRef?.current || ref.current);
     });
-    return virtualRef ? null : /* @__PURE__ */ jsx6(Primitive.div, { ...anchorProps, ref: composedRefs });
+    return virtualRef ? null : /* @__PURE__ */ jsx9(Primitive.div, { ...anchorProps, ref: composedRefs });
   }
 );
 PopperAnchor.displayName = ANCHOR_NAME;
 var CONTENT_NAME = "PopperContent";
 var [PopperContentProvider, useContentContext] = createPopperContext(CONTENT_NAME);
-var PopperContent = React19.forwardRef(
+var PopperContent = React18.forwardRef(
   (props, forwardedRef) => {
     const {
       __scopePopper,
@@ -3381,9 +3295,9 @@ var PopperContent = React19.forwardRef(
       ...contentProps
     } = props;
     const context = usePopperContext(CONTENT_NAME, __scopePopper);
-    const [content, setContent] = React19.useState(null);
+    const [content, setContent] = React18.useState(null);
     const composedRefs = useComposedRefs(forwardedRef, (node) => setContent(node));
-    const [arrow5, setArrow] = React19.useState(null);
+    const [arrow5, setArrow] = React18.useState(null);
     const arrowSize = useSize(arrow5);
     const arrowWidth = arrowSize?.width ?? 0;
     const arrowHeight = arrowSize?.height ?? 0;
@@ -3445,11 +3359,11 @@ var PopperContent = React19.forwardRef(
     const arrowX = middlewareData.arrow?.x;
     const arrowY = middlewareData.arrow?.y;
     const cannotCenterArrow = middlewareData.arrow?.centerOffset !== 0;
-    const [contentZIndex, setContentZIndex] = React19.useState();
+    const [contentZIndex, setContentZIndex] = React18.useState();
     useLayoutEffect22(() => {
       if (content) setContentZIndex(window.getComputedStyle(content).zIndex);
     }, [content]);
-    return /* @__PURE__ */ jsx6(
+    return /* @__PURE__ */ jsx9(
       "div",
       {
         ref: refs.setFloating,
@@ -3473,7 +3387,7 @@ var PopperContent = React19.forwardRef(
           }
         },
         dir: props.dir,
-        children: /* @__PURE__ */ jsx6(
+        children: /* @__PURE__ */ jsx9(
           PopperContentProvider,
           {
             scope: __scopePopper,
@@ -3482,7 +3396,7 @@ var PopperContent = React19.forwardRef(
             arrowX,
             arrowY,
             shouldHideArrow: cannotCenterArrow,
-            children: /* @__PURE__ */ jsx6(
+            children: /* @__PURE__ */ jsx9(
               Primitive.div,
               {
                 "data-side": placedSide,
@@ -3511,7 +3425,7 @@ var OPPOSITE_SIDE = {
   bottom: "top",
   left: "right"
 };
-var PopperArrow = React19.forwardRef(function PopperArrow2(props, forwardedRef) {
+var PopperArrow = React18.forwardRef(function PopperArrow2(props, forwardedRef) {
   const { __scopePopper, ...arrowProps } = props;
   const contentContext = useContentContext(ARROW_NAME, __scopePopper);
   const baseSide = OPPOSITE_SIDE[contentContext.placedSide];
@@ -3519,7 +3433,7 @@ var PopperArrow = React19.forwardRef(function PopperArrow2(props, forwardedRef) 
     // we have to use an extra wrapper because `ResizeObserver` (used by `useSize`)
     // doesn't report size as we'd expect on SVG elements.
     // it reports their bounding box which is effectively the largest path inside the SVG.
-    /* @__PURE__ */ jsx6(
+    /* @__PURE__ */ jsx9(
       "span",
       {
         ref: contentContext.onArrowChange,
@@ -3542,7 +3456,7 @@ var PopperArrow = React19.forwardRef(function PopperArrow2(props, forwardedRef) 
           }[contentContext.placedSide],
           visibility: contentContext.shouldHideArrow ? "hidden" : void 0
         },
-        children: /* @__PURE__ */ jsx6(
+        children: /* @__PURE__ */ jsx9(
           Root2,
           {
             ...arrowProps,
@@ -3603,24 +3517,24 @@ var Content = PopperContent;
 var Arrow2 = PopperArrow;
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
-import * as React20 from "react";
+import * as React19 from "react";
 import ReactDOM3 from "react-dom";
-import { jsx as jsx7 } from "react/jsx-runtime";
+import { jsx as jsx10 } from "react/jsx-runtime";
 var PORTAL_NAME = "Portal";
-var Portal = React20.forwardRef((props, forwardedRef) => {
+var Portal = React19.forwardRef((props, forwardedRef) => {
   const { container: containerProp, ...portalProps } = props;
-  const [mounted, setMounted] = React20.useState(false);
+  const [mounted, setMounted] = React19.useState(false);
   useLayoutEffect22(() => setMounted(true), []);
   const container = containerProp || mounted && globalThis?.document?.body;
-  return container ? ReactDOM3.createPortal(/* @__PURE__ */ jsx7(Primitive.div, { ...portalProps, ref: forwardedRef }), container) : null;
+  return container ? ReactDOM3.createPortal(/* @__PURE__ */ jsx10(Primitive.div, { ...portalProps, ref: forwardedRef }), container) : null;
 });
 Portal.displayName = PORTAL_NAME;
 
 // node_modules/@radix-ui/react-presence/dist/index.mjs
 import * as React22 from "react";
-import * as React21 from "react";
+import * as React20 from "react";
 function useStateMachine(initialState, machine) {
-  return React21.useReducer((state, event) => {
+  return React20.useReducer((state, event) => {
     const nextState = machine[state][event];
     return nextState ?? state;
   }, initialState);
@@ -3629,7 +3543,7 @@ var Presence = (props) => {
   const { present, children } = props;
   const presence = usePresence(present);
   const child = typeof children === "function" ? children({ present: presence.isPresent }) : React22.Children.only(children);
-  const ref = useComposedRefs(presence.ref, getElementRef3(child));
+  const ref = useComposedRefs(presence.ref, getElementRef2(child));
   const forceMount = typeof children === "function";
   return forceMount || presence.isPresent ? React22.cloneElement(child, { ref }) : null;
 };
@@ -3728,7 +3642,7 @@ function usePresence(present) {
 function getAnimationName(styles) {
   return styles?.animationName || "none";
 }
-function getElementRef3(element) {
+function getElementRef2(element) {
   let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
   let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
   if (mayWarn) {
@@ -3743,9 +3657,9 @@ function getElementRef3(element) {
 }
 
 // node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs
+import * as React21 from "react";
 import * as React23 from "react";
-import * as React24 from "react";
-var useInsertionEffect = React23[" useInsertionEffect ".trim().toString()] || useLayoutEffect22;
+var useInsertionEffect = React21[" useInsertionEffect ".trim().toString()] || useLayoutEffect22;
 function useControllableState({
   prop,
   defaultProp,
@@ -3760,8 +3674,8 @@ function useControllableState({
   const isControlled = prop !== void 0;
   const value = isControlled ? prop : uncontrolledProp;
   if (true) {
-    const isControlledRef = React23.useRef(prop !== void 0);
-    React23.useEffect(() => {
+    const isControlledRef = React21.useRef(prop !== void 0);
+    React21.useEffect(() => {
       const wasControlled = isControlledRef.current;
       if (wasControlled !== isControlled) {
         const from = wasControlled ? "controlled" : "uncontrolled";
@@ -3773,7 +3687,7 @@ function useControllableState({
       isControlledRef.current = isControlled;
     }, [isControlled, caller]);
   }
-  const setValue = React23.useCallback(
+  const setValue = React21.useCallback(
     (nextValue) => {
       if (isControlled) {
         const value2 = isFunction(nextValue) ? nextValue(prop) : nextValue;
@@ -3792,13 +3706,13 @@ function useUncontrolledState({
   defaultProp,
   onChange
 }) {
-  const [value, setValue] = React23.useState(defaultProp);
-  const prevValueRef = React23.useRef(value);
-  const onChangeRef = React23.useRef(onChange);
+  const [value, setValue] = React21.useState(defaultProp);
+  const prevValueRef = React21.useRef(value);
+  const onChangeRef = React21.useRef(onChange);
   useInsertionEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
-  React23.useEffect(() => {
+  React21.useEffect(() => {
     if (prevValueRef.current !== value) {
       onChangeRef.current?.(value);
       prevValueRef.current = value;
@@ -3812,8 +3726,8 @@ function isFunction(value) {
 var SYNC_STATE = Symbol("RADIX:SYNC_STATE");
 
 // node_modules/@radix-ui/react-visually-hidden/dist/index.mjs
-import * as React25 from "react";
-import { jsx as jsx8 } from "react/jsx-runtime";
+import * as React24 from "react";
+import { jsx as jsx11 } from "react/jsx-runtime";
 var VISUALLY_HIDDEN_STYLES = Object.freeze({
   // See: https://github.com/twbs/bootstrap/blob/main/scss/mixins/_visually-hidden.scss
   position: "absolute",
@@ -3828,9 +3742,9 @@ var VISUALLY_HIDDEN_STYLES = Object.freeze({
   wordWrap: "normal"
 });
 var NAME2 = "VisuallyHidden";
-var VisuallyHidden = React25.forwardRef(
+var VisuallyHidden = React24.forwardRef(
   (props, forwardedRef) => {
-    return /* @__PURE__ */ jsx8(
+    return /* @__PURE__ */ jsx11(
       Primitive.span,
       {
         ...props,
@@ -3844,7 +3758,7 @@ VisuallyHidden.displayName = NAME2;
 var Root3 = VisuallyHidden;
 
 // node_modules/@radix-ui/react-tooltip/dist/index.mjs
-import { jsx as jsx9, jsxs } from "react/jsx-runtime";
+import { jsx as jsx12, jsxs as jsxs4 } from "react/jsx-runtime";
 var [createTooltipContext, createTooltipScope] = createContextScope("Tooltip", [
   createPopperScope
 ]);
@@ -3861,24 +3775,24 @@ var TooltipProvider = (props) => {
     disableHoverableContent = false,
     children
   } = props;
-  const isOpenDelayedRef = React26.useRef(true);
-  const isPointerInTransitRef = React26.useRef(false);
-  const skipDelayTimerRef = React26.useRef(0);
-  React26.useEffect(() => {
+  const isOpenDelayedRef = React25.useRef(true);
+  const isPointerInTransitRef = React25.useRef(false);
+  const skipDelayTimerRef = React25.useRef(0);
+  React25.useEffect(() => {
     const skipDelayTimer = skipDelayTimerRef.current;
     return () => window.clearTimeout(skipDelayTimer);
   }, []);
-  return /* @__PURE__ */ jsx9(
+  return /* @__PURE__ */ jsx12(
     TooltipProviderContextProvider,
     {
       scope: __scopeTooltip,
       isOpenDelayedRef,
       delayDuration,
-      onOpen: React26.useCallback(() => {
+      onOpen: React25.useCallback(() => {
         window.clearTimeout(skipDelayTimerRef.current);
         isOpenDelayedRef.current = false;
       }, []),
-      onClose: React26.useCallback(() => {
+      onClose: React25.useCallback(() => {
         window.clearTimeout(skipDelayTimerRef.current);
         skipDelayTimerRef.current = window.setTimeout(
           () => isOpenDelayedRef.current = true,
@@ -3886,7 +3800,7 @@ var TooltipProvider = (props) => {
         );
       }, [skipDelayDuration]),
       isPointerInTransitRef,
-      onPointerInTransitChange: React26.useCallback((inTransit) => {
+      onPointerInTransitChange: React25.useCallback((inTransit) => {
         isPointerInTransitRef.current = inTransit;
       }, []),
       disableHoverableContent,
@@ -3909,12 +3823,12 @@ var Tooltip = (props) => {
   } = props;
   const providerContext = useTooltipProviderContext(TOOLTIP_NAME, props.__scopeTooltip);
   const popperScope = usePopperScope(__scopeTooltip);
-  const [trigger, setTrigger] = React26.useState(null);
+  const [trigger, setTrigger] = React25.useState(null);
   const contentId = useId2();
-  const openTimerRef = React26.useRef(0);
+  const openTimerRef = React25.useRef(0);
   const disableHoverableContent = disableHoverableContentProp ?? providerContext.disableHoverableContent;
   const delayDuration = delayDurationProp ?? providerContext.delayDuration;
-  const wasOpenDelayedRef = React26.useRef(false);
+  const wasOpenDelayedRef = React25.useRef(false);
   const [open, setOpen] = useControllableState({
     prop: openProp,
     defaultProp: defaultOpen ?? false,
@@ -3929,21 +3843,21 @@ var Tooltip = (props) => {
     },
     caller: TOOLTIP_NAME
   });
-  const stateAttribute = React26.useMemo(() => {
+  const stateAttribute = React25.useMemo(() => {
     return open ? wasOpenDelayedRef.current ? "delayed-open" : "instant-open" : "closed";
   }, [open]);
-  const handleOpen = React26.useCallback(() => {
+  const handleOpen = React25.useCallback(() => {
     window.clearTimeout(openTimerRef.current);
     openTimerRef.current = 0;
     wasOpenDelayedRef.current = false;
     setOpen(true);
   }, [setOpen]);
-  const handleClose = React26.useCallback(() => {
+  const handleClose = React25.useCallback(() => {
     window.clearTimeout(openTimerRef.current);
     openTimerRef.current = 0;
     setOpen(false);
   }, [setOpen]);
-  const handleDelayedOpen = React26.useCallback(() => {
+  const handleDelayedOpen = React25.useCallback(() => {
     window.clearTimeout(openTimerRef.current);
     openTimerRef.current = window.setTimeout(() => {
       wasOpenDelayedRef.current = true;
@@ -3951,7 +3865,7 @@ var Tooltip = (props) => {
       openTimerRef.current = 0;
     }, delayDuration);
   }, [delayDuration, setOpen]);
-  React26.useEffect(() => {
+  React25.useEffect(() => {
     return () => {
       if (openTimerRef.current) {
         window.clearTimeout(openTimerRef.current);
@@ -3959,7 +3873,7 @@ var Tooltip = (props) => {
       }
     };
   }, []);
-  return /* @__PURE__ */ jsx9(Root22, { ...popperScope, children: /* @__PURE__ */ jsx9(
+  return /* @__PURE__ */ jsx12(Root22, { ...popperScope, children: /* @__PURE__ */ jsx12(
     TooltipContextProvider,
     {
       scope: __scopeTooltip,
@@ -3968,11 +3882,11 @@ var Tooltip = (props) => {
       stateAttribute,
       trigger,
       onTriggerChange: setTrigger,
-      onTriggerEnter: React26.useCallback(() => {
+      onTriggerEnter: React25.useCallback(() => {
         if (providerContext.isOpenDelayedRef.current) handleDelayedOpen();
         else handleOpen();
       }, [providerContext.isOpenDelayedRef, handleDelayedOpen, handleOpen]),
-      onTriggerLeave: React26.useCallback(() => {
+      onTriggerLeave: React25.useCallback(() => {
         if (disableHoverableContent) {
           handleClose();
         } else {
@@ -3989,21 +3903,21 @@ var Tooltip = (props) => {
 };
 Tooltip.displayName = TOOLTIP_NAME;
 var TRIGGER_NAME = "TooltipTrigger";
-var TooltipTrigger = React26.forwardRef(
+var TooltipTrigger = React25.forwardRef(
   (props, forwardedRef) => {
     const { __scopeTooltip, ...triggerProps } = props;
     const context = useTooltipContext(TRIGGER_NAME, __scopeTooltip);
     const providerContext = useTooltipProviderContext(TRIGGER_NAME, __scopeTooltip);
     const popperScope = usePopperScope(__scopeTooltip);
-    const ref = React26.useRef(null);
+    const ref = React25.useRef(null);
     const composedRefs = useComposedRefs(forwardedRef, ref, context.onTriggerChange);
-    const isPointerDownRef = React26.useRef(false);
-    const hasPointerMoveOpenedRef = React26.useRef(false);
-    const handlePointerUp = React26.useCallback(() => isPointerDownRef.current = false, []);
-    React26.useEffect(() => {
+    const isPointerDownRef = React25.useRef(false);
+    const hasPointerMoveOpenedRef = React25.useRef(false);
+    const handlePointerUp = React25.useCallback(() => isPointerDownRef.current = false, []);
+    React25.useEffect(() => {
       return () => document.removeEventListener("pointerup", handlePointerUp);
     }, [handlePointerUp]);
-    return /* @__PURE__ */ jsx9(Anchor, { asChild: true, ...popperScope, children: /* @__PURE__ */ jsx9(
+    return /* @__PURE__ */ jsx12(Anchor, { asChild: true, ...popperScope, children: /* @__PURE__ */ jsx12(
       Primitive.button,
       {
         "aria-describedby": context.open ? context.contentId : void 0,
@@ -4045,32 +3959,32 @@ var [PortalProvider, usePortalContext] = createTooltipContext(PORTAL_NAME2, {
 var TooltipPortal = (props) => {
   const { __scopeTooltip, forceMount, children, container } = props;
   const context = useTooltipContext(PORTAL_NAME2, __scopeTooltip);
-  return /* @__PURE__ */ jsx9(PortalProvider, { scope: __scopeTooltip, forceMount, children: /* @__PURE__ */ jsx9(Presence, { present: forceMount || context.open, children: /* @__PURE__ */ jsx9(Portal, { asChild: true, container, children }) }) });
+  return /* @__PURE__ */ jsx12(PortalProvider, { scope: __scopeTooltip, forceMount, children: /* @__PURE__ */ jsx12(Presence, { present: forceMount || context.open, children: /* @__PURE__ */ jsx12(Portal, { asChild: true, container, children }) }) });
 };
 TooltipPortal.displayName = PORTAL_NAME2;
 var CONTENT_NAME2 = "TooltipContent";
-var TooltipContent = React26.forwardRef(
+var TooltipContent = React25.forwardRef(
   (props, forwardedRef) => {
     const portalContext = usePortalContext(CONTENT_NAME2, props.__scopeTooltip);
     const { forceMount = portalContext.forceMount, side = "top", ...contentProps } = props;
     const context = useTooltipContext(CONTENT_NAME2, props.__scopeTooltip);
-    return /* @__PURE__ */ jsx9(Presence, { present: forceMount || context.open, children: context.disableHoverableContent ? /* @__PURE__ */ jsx9(TooltipContentImpl, { side, ...contentProps, ref: forwardedRef }) : /* @__PURE__ */ jsx9(TooltipContentHoverable, { side, ...contentProps, ref: forwardedRef }) });
+    return /* @__PURE__ */ jsx12(Presence, { present: forceMount || context.open, children: context.disableHoverableContent ? /* @__PURE__ */ jsx12(TooltipContentImpl, { side, ...contentProps, ref: forwardedRef }) : /* @__PURE__ */ jsx12(TooltipContentHoverable, { side, ...contentProps, ref: forwardedRef }) });
   }
 );
-var TooltipContentHoverable = React26.forwardRef((props, forwardedRef) => {
+var TooltipContentHoverable = React25.forwardRef((props, forwardedRef) => {
   const context = useTooltipContext(CONTENT_NAME2, props.__scopeTooltip);
   const providerContext = useTooltipProviderContext(CONTENT_NAME2, props.__scopeTooltip);
-  const ref = React26.useRef(null);
+  const ref = React25.useRef(null);
   const composedRefs = useComposedRefs(forwardedRef, ref);
-  const [pointerGraceArea, setPointerGraceArea] = React26.useState(null);
+  const [pointerGraceArea, setPointerGraceArea] = React25.useState(null);
   const { trigger, onClose } = context;
   const content = ref.current;
   const { onPointerInTransitChange } = providerContext;
-  const handleRemoveGraceArea = React26.useCallback(() => {
+  const handleRemoveGraceArea = React25.useCallback(() => {
     setPointerGraceArea(null);
     onPointerInTransitChange(false);
   }, [onPointerInTransitChange]);
-  const handleCreateGraceArea = React26.useCallback(
+  const handleCreateGraceArea = React25.useCallback(
     (event, hoverTarget) => {
       const currentTarget = event.currentTarget;
       const exitPoint = { x: event.clientX, y: event.clientY };
@@ -4083,10 +3997,10 @@ var TooltipContentHoverable = React26.forwardRef((props, forwardedRef) => {
     },
     [onPointerInTransitChange]
   );
-  React26.useEffect(() => {
+  React25.useEffect(() => {
     return () => handleRemoveGraceArea();
   }, [handleRemoveGraceArea]);
-  React26.useEffect(() => {
+  React25.useEffect(() => {
     if (trigger && content) {
       const handleTriggerLeave = (event) => handleCreateGraceArea(event, content);
       const handleContentLeave = (event) => handleCreateGraceArea(event, trigger);
@@ -4098,7 +4012,7 @@ var TooltipContentHoverable = React26.forwardRef((props, forwardedRef) => {
       };
     }
   }, [trigger, content, handleCreateGraceArea, handleRemoveGraceArea]);
-  React26.useEffect(() => {
+  React25.useEffect(() => {
     if (pointerGraceArea) {
       const handleTrackPointerGrace = (event) => {
         const target = event.target;
@@ -4116,11 +4030,11 @@ var TooltipContentHoverable = React26.forwardRef((props, forwardedRef) => {
       return () => document.removeEventListener("pointermove", handleTrackPointerGrace);
     }
   }, [trigger, content, pointerGraceArea, onClose, handleRemoveGraceArea]);
-  return /* @__PURE__ */ jsx9(TooltipContentImpl, { ...props, ref: composedRefs });
+  return /* @__PURE__ */ jsx12(TooltipContentImpl, { ...props, ref: composedRefs });
 });
 var [VisuallyHiddenContentContextProvider, useVisuallyHiddenContentContext] = createTooltipContext(TOOLTIP_NAME, { isInside: false });
-var Slottable2 = createSlottable("TooltipContent");
-var TooltipContentImpl = React26.forwardRef(
+var Slottable = createSlottable("TooltipContent");
+var TooltipContentImpl = React25.forwardRef(
   (props, forwardedRef) => {
     const {
       __scopeTooltip,
@@ -4133,11 +4047,11 @@ var TooltipContentImpl = React26.forwardRef(
     const context = useTooltipContext(CONTENT_NAME2, __scopeTooltip);
     const popperScope = usePopperScope(__scopeTooltip);
     const { onClose } = context;
-    React26.useEffect(() => {
+    React25.useEffect(() => {
       document.addEventListener(TOOLTIP_OPEN, onClose);
       return () => document.removeEventListener(TOOLTIP_OPEN, onClose);
     }, [onClose]);
-    React26.useEffect(() => {
+    React25.useEffect(() => {
       if (context.trigger) {
         const handleScroll = (event) => {
           const target = event.target;
@@ -4147,7 +4061,7 @@ var TooltipContentImpl = React26.forwardRef(
         return () => window.removeEventListener("scroll", handleScroll, { capture: true });
       }
     }, [context.trigger, onClose]);
-    return /* @__PURE__ */ jsx9(
+    return /* @__PURE__ */ jsx12(
       DismissableLayer,
       {
         asChild: true,
@@ -4156,7 +4070,7 @@ var TooltipContentImpl = React26.forwardRef(
         onPointerDownOutside,
         onFocusOutside: (event) => event.preventDefault(),
         onDismiss: onClose,
-        children: /* @__PURE__ */ jsxs(
+        children: /* @__PURE__ */ jsxs4(
           Content,
           {
             "data-state": context.stateAttribute,
@@ -4175,8 +4089,8 @@ var TooltipContentImpl = React26.forwardRef(
               }
             },
             children: [
-              /* @__PURE__ */ jsx9(Slottable2, { children }),
-              /* @__PURE__ */ jsx9(VisuallyHiddenContentContextProvider, { scope: __scopeTooltip, isInside: true, children: /* @__PURE__ */ jsx9(Root3, { id: context.contentId, role: "tooltip", children: ariaLabel || children }) })
+              /* @__PURE__ */ jsx12(Slottable, { children }),
+              /* @__PURE__ */ jsx12(VisuallyHiddenContentContextProvider, { scope: __scopeTooltip, isInside: true, children: /* @__PURE__ */ jsx12(Root3, { id: context.contentId, role: "tooltip", children: ariaLabel || children }) })
             ]
           }
         )
@@ -4186,7 +4100,7 @@ var TooltipContentImpl = React26.forwardRef(
 );
 TooltipContent.displayName = CONTENT_NAME2;
 var ARROW_NAME2 = "TooltipArrow";
-var TooltipArrow = React26.forwardRef(
+var TooltipArrow = React25.forwardRef(
   (props, forwardedRef) => {
     const { __scopeTooltip, ...arrowProps } = props;
     const popperScope = usePopperScope(__scopeTooltip);
@@ -4194,7 +4108,7 @@ var TooltipArrow = React26.forwardRef(
       ARROW_NAME2,
       __scopeTooltip
     );
-    return visuallyHiddenContentContext.isInside ? null : /* @__PURE__ */ jsx9(Arrow2, { ...popperScope, ...arrowProps, ref: forwardedRef });
+    return visuallyHiddenContentContext.isInside ? null : /* @__PURE__ */ jsx12(Arrow2, { ...popperScope, ...arrowProps, ref: forwardedRef });
   }
 );
 TooltipArrow.displayName = ARROW_NAME2;
@@ -4322,7 +4236,7 @@ var Content2 = TooltipContent;
 import { createPortal } from "react-dom";
 
 // hooks/use-merged-ref.ts
-import { useCallback as useCallback8, useRef as useRef9 } from "react";
+import { useCallback as useCallback7, useRef as useRef9 } from "react";
 function assignRef(ref, value) {
   if (typeof ref === "function") {
     ref(value);
@@ -4337,15 +4251,15 @@ function mergeRefs(...refs) {
 }
 
 // hooks/use-touch.ts
-import React27 from "react";
+import React26 from "react";
 function useTouch(_touch) {
   const { touch = true, defaultOpen = false, onOpenChange, open: openChange } = _touch;
-  const [isOpen, setIsOpen] = React27.useState(defaultOpen);
-  const triggerRef = React27.useRef(null);
+  const [isOpen, setIsOpen] = React26.useState(defaultOpen);
+  const triggerRef = React26.useRef(null);
   const open = openChange !== void 0 ? openChange : isOpen;
   const setOpen = onOpenChange !== void 0 ? onOpenChange : setIsOpen;
-  const [isTouchDevice, setIsTouchDevice] = React27.useState(false);
-  React27.useEffect(() => {
+  const [isTouchDevice, setIsTouchDevice] = React26.useState(false);
+  React26.useEffect(() => {
     const el = triggerRef.current;
     const onMouseEnter = () => {
       if (!isTouchDevice) setOpen(true);
@@ -4395,8 +4309,9 @@ function useTouch(_touch) {
 }
 
 // ui/tooltip.tsx
-var ctx2 = React28.createContext(void 0);
-var useTooltipCtx = () => React28.useContext(ctx2);
+import { jsx as jsx13, jsxs as jsxs5 } from "react/jsx-runtime";
+var ctx2 = React27.createContext(void 0);
+var useTooltipCtx = () => React27.useContext(ctx2);
 function TooltipProvider2(_props) {
   const { children, open: openChange, defaultOpen, onOpenChange, touch, skipDelayDuration, ...rest } = _props;
   const { open, triggerRef } = useTouch({
@@ -4406,17 +4321,17 @@ function TooltipProvider2(_props) {
     touch
   });
   const value = { open, triggerRef, defaultOpen, onOpenChange, touch, skipDelayDuration, ...rest };
-  return /* @__PURE__ */ React28.createElement(ctx2.Provider, { value }, /* @__PURE__ */ React28.createElement(Provider, { ...{ skipDelayDuration } }, /* @__PURE__ */ React28.createElement(Root32, { ...value }, children)));
+  return /* @__PURE__ */ jsx13(ctx2.Provider, { value, children: /* @__PURE__ */ jsx13(Provider, { ...{ skipDelayDuration }, children: /* @__PURE__ */ jsx13(Root32, { ...value, children }) }) });
 }
-var TooltipTrigger2 = React28.forwardRef((_props, ref) => {
+var TooltipTrigger2 = React27.forwardRef((_props, ref) => {
   const { touch, triggerRef } = useTooltipCtx();
-  return /* @__PURE__ */ React28.createElement(Trigger, { ...{ ref: mergeRefs(triggerRef, ref), "data-touch": `${touch}`, ..._props } });
+  return /* @__PURE__ */ jsx13(Trigger, { ...{ ref: mergeRefs(triggerRef, ref), "data-touch": `${touch}`, ..._props } });
 });
 TooltipTrigger2.displayName = TooltipTrigger.displayName;
-var TooltipContent2 = React28.forwardRef(function TooltipContent3({ className, sideOffset = 4, children, withArrow, align, side, ...props }, ref) {
+var TooltipContent2 = React27.forwardRef(function TooltipContent3({ className, sideOffset = 4, children, withArrow, align, side, ...props }, ref) {
   if (typeof document === "undefined") return null;
   return createPortal(
-    /* @__PURE__ */ React28.createElement(
+    /* @__PURE__ */ jsxs5(
       Content2,
       {
         ...{
@@ -4429,22 +4344,27 @@ var TooltipContent2 = React28.forwardRef(function TooltipContent3({ className, s
             className
           ),
           ...props
-        }
-      },
-      children,
-      withArrow && /* @__PURE__ */ React28.createElement("svg", { fill: "currentColor", viewBox: "0 0 15 6", strokeWidth: "0", "data-side": side, "data-align": align, "data-tooltip": "arrow", className: arrow4 }, /* @__PURE__ */ React28.createElement("path", { d: "m.7.4c.4,0,.8.2,1.1.5l4,4.1c.5.5,1.1.7,1.7.7s1.2-.2,1.7-.7L13.2.9c.3-.3.7-.5,1.1-.5s.4-.2.4-.4H.3c0,.2.2.4.4.4Z" }), /* @__PURE__ */ React28.createElement(
-        "path",
-        {
-          "data-arrow": "border",
-          d: "m12.9.6l-4,4.1c-.8.8-2,.8-2.8,0L2.1.6c-.4-.4-.9-.6-1.4-.6h-.7c0,.4.3.7.7.7s.7.1.9.4l4,4.1c.5.5,1.2.8,1.9.8s1.4-.3,1.9-.8L13.4,1.1c.2-.2.6-.4.9-.4S15,.4,15,0h-.7C13.8,0,13.3.2,12.9.6Z"
-        }
-      ))
+        },
+        children: [
+          children,
+          withArrow && /* @__PURE__ */ jsxs5("svg", { fill: "currentColor", viewBox: "0 0 15 6", strokeWidth: "0", "data-side": side, "data-align": align, "data-tooltip": "arrow", className: arrow4, children: [
+            /* @__PURE__ */ jsx13("path", { d: "m.7.4c.4,0,.8.2,1.1.5l4,4.1c.5.5,1.1.7,1.7.7s1.2-.2,1.7-.7L13.2.9c.3-.3.7-.5,1.1-.5s.4-.2.4-.4H.3c0,.2.2.4.4.4Z" }),
+            /* @__PURE__ */ jsx13(
+              "path",
+              {
+                "data-arrow": "border",
+                d: "m12.9.6l-4,4.1c-.8.8-2,.8-2.8,0L2.1.6c-.4-.4-.9-.6-1.4-.6h-.7c0,.4.3.7.7.7s.7.1.9.4l4,4.1c.5.5,1.2.8,1.9.8s1.4-.3,1.9-.8L13.4,1.1c.2-.2.6-.4.9-.4S15,.4,15,0h-.7C13.8,0,13.3.2,12.9.6Z"
+              }
+            )
+          ] })
+        ]
+      }
     ),
     document.body
   );
 });
 TooltipContent2.displayName = Content2.displayName;
-var Tooltip2 = React28.forwardRef((_props, ref) => {
+var Tooltip2 = React27.forwardRef((_props, ref) => {
   const {
     open,
     onOpenChange,
@@ -4465,21 +4385,24 @@ var Tooltip2 = React28.forwardRef((_props, ref) => {
     side = "bottom",
     ...props
   } = _props;
-  return /* @__PURE__ */ React28.createElement(TooltipProvider2, { ...{ skipDelayDuration, open, touch, onOpenChange, defaultOpen, delayDuration, disableHoverableContent } }, /* @__PURE__ */ React28.createElement(TooltipTrigger2, { ...{ ref, className: cn(className, classNames?.trigger), style: { ...style, ...styles?.trigger }, ...props } }), content && /* @__PURE__ */ React28.createElement(
-    TooltipContent2,
-    {
-      ...{
-        side,
-        align,
-        sideOffset,
-        withArrow,
-        className: cn(classNames?.content, contentProps?.className),
-        style: { ...styles?.content, ...contentProps?.style },
-        ...contentProps
+  return /* @__PURE__ */ jsxs5(TooltipProvider2, { ...{ skipDelayDuration, open, touch, onOpenChange, defaultOpen, delayDuration, disableHoverableContent }, children: [
+    /* @__PURE__ */ jsx13(TooltipTrigger2, { ...{ ref, className: cn(className, classNames?.trigger), style: { ...style, ...styles?.trigger }, ...props } }),
+    content && /* @__PURE__ */ jsx13(
+      TooltipContent2,
+      {
+        ...{
+          side,
+          align,
+          sideOffset,
+          withArrow,
+          className: cn(classNames?.content, contentProps?.className),
+          style: { ...styles?.content, ...contentProps?.style },
+          ...contentProps
+        },
+        children: content
       }
-    },
-    content
-  ));
+    )
+  ] });
 });
 Tooltip2.displayName = "Tooltip";
 var arrow4 = cn(
@@ -4487,7 +4410,8 @@ var arrow4 = cn(
 );
 
 // ui/icons/ctx.tsx
-import * as React29 from "react";
+import * as React28 from "react";
+import { jsx as jsx14 } from "react/jsx-runtime";
 var InitialSize = /* @__PURE__ */ ((InitialSize2) => {
   InitialSize2["unset"] = "unset";
   InitialSize2["xxs"] = "xxs";
@@ -4603,45 +4527,27 @@ function getSvg(Svg2) {
   }
   return { props: _props_, ...sz };
 }
-var Svg = React29.forwardRef((props, ref) => /* @__PURE__ */ React29.createElement("svg", { ...{ ref, ...getSvg({ ...props }).props } }));
+var Svg = React28.forwardRef((props, ref) => /* @__PURE__ */ jsx14("svg", { ...{ ref, ...getSvg({ ...props }).props } }));
 Svg.displayName = "Svg";
+
+// ui/icons/index.tsx
+import { jsx as jsx15, jsxs as jsxs6 } from "react/jsx-runtime";
 
 // ui/rehype/rehype-command.tsx
 import { visit } from "unist-util-visit";
 
-// ui/rehype/event.ts
-import { z } from "zod";
-var eventSchema = z.object({
-  name: z.enum([
-    "copy_npm_command",
-    "copy_usage_import_code",
-    "copy_usage_code",
-    "copy_primitive_code",
-    "copy_theme_code",
-    "copy_block_code",
-    "copy_chunk_code",
-    "enable_lift_mode",
-    "copy_chart_code",
-    "copy_chart_theme",
-    "copy_chart_data",
-    "copy_color"
-  ]),
-  // declare type AllowedPropertyValues = string | number | boolean | null
-  properties: z.record(z.union([z.string(), z.number(), z.boolean(), z.null()])).optional()
-});
-
 // ui/scroll-area.tsx
-import * as React32 from "react";
+import * as React31 from "react";
 
 // node_modules/@radix-ui/react-scroll-area/dist/index.mjs
 import * as React210 from "react";
 
 // node_modules/@radix-ui/react-direction/dist/index.mjs
-import * as React30 from "react";
-import { jsx as jsx10 } from "react/jsx-runtime";
-var DirectionContext = React30.createContext(void 0);
+import * as React29 from "react";
+import { jsx as jsx16 } from "react/jsx-runtime";
+var DirectionContext = React29.createContext(void 0);
 function useDirection(localDir) {
-  const globalDir = React30.useContext(DirectionContext);
+  const globalDir = React29.useContext(DirectionContext);
   return localDir || globalDir || "ltr";
 }
 
@@ -4651,10 +4557,10 @@ function clamp3(value, [min2, max2]) {
 }
 
 // node_modules/@radix-ui/react-scroll-area/dist/index.mjs
-import * as React31 from "react";
-import { Fragment as Fragment4, jsx as jsx11, jsxs as jsxs2 } from "react/jsx-runtime";
+import * as React30 from "react";
+import { Fragment as Fragment4, jsx as jsx17, jsxs as jsxs7 } from "react/jsx-runtime";
 function useStateMachine2(initialState, machine) {
-  return React31.useReducer((state, event) => {
+  return React30.useReducer((state, event) => {
     const nextState = machine[state][event];
     return nextState ?? state;
   }, initialState);
@@ -4682,7 +4588,7 @@ var ScrollArea = React210.forwardRef(
     const [scrollbarYEnabled, setScrollbarYEnabled] = React210.useState(false);
     const composedRefs = useComposedRefs(forwardedRef, (node) => setScrollArea(node));
     const direction = useDirection(dir);
-    return /* @__PURE__ */ jsx11(
+    return /* @__PURE__ */ jsx17(
       ScrollAreaProvider,
       {
         scope: __scopeScrollArea,
@@ -4704,7 +4610,7 @@ var ScrollArea = React210.forwardRef(
         onScrollbarYEnabledChange: setScrollbarYEnabled,
         onCornerWidthChange: setCornerWidth,
         onCornerHeightChange: setCornerHeight,
-        children: /* @__PURE__ */ jsx11(
+        children: /* @__PURE__ */ jsx17(
           Primitive.div,
           {
             dir: direction,
@@ -4731,8 +4637,8 @@ var ScrollAreaViewport = React210.forwardRef(
     const context = useScrollAreaContext(VIEWPORT_NAME, __scopeScrollArea);
     const ref = React210.useRef(null);
     const composedRefs = useComposedRefs(forwardedRef, ref, context.onViewportChange);
-    return /* @__PURE__ */ jsxs2(Fragment4, { children: [
-      /* @__PURE__ */ jsx11(
+    return /* @__PURE__ */ jsxs7(Fragment4, { children: [
+      /* @__PURE__ */ jsx17(
         "style",
         {
           dangerouslySetInnerHTML: {
@@ -4741,7 +4647,7 @@ var ScrollAreaViewport = React210.forwardRef(
           nonce
         }
       ),
-      /* @__PURE__ */ jsx11(
+      /* @__PURE__ */ jsx17(
         Primitive.div,
         {
           "data-radix-scroll-area-viewport": "",
@@ -4763,7 +4669,7 @@ var ScrollAreaViewport = React210.forwardRef(
             overflowY: context.scrollbarYEnabled ? "scroll" : "hidden",
             ...props.style
           },
-          children: /* @__PURE__ */ jsx11("div", { ref: context.onContentChange, style: { minWidth: "100%", display: "table" }, children })
+          children: /* @__PURE__ */ jsx17("div", { ref: context.onContentChange, style: { minWidth: "100%", display: "table" }, children })
         }
       )
     ] });
@@ -4783,7 +4689,7 @@ var ScrollAreaScrollbar = React210.forwardRef(
         isHorizontal ? onScrollbarXEnabledChange(false) : onScrollbarYEnabledChange(false);
       };
     }, [isHorizontal, onScrollbarXEnabledChange, onScrollbarYEnabledChange]);
-    return context.type === "hover" ? /* @__PURE__ */ jsx11(ScrollAreaScrollbarHover, { ...scrollbarProps, ref: forwardedRef, forceMount }) : context.type === "scroll" ? /* @__PURE__ */ jsx11(ScrollAreaScrollbarScroll, { ...scrollbarProps, ref: forwardedRef, forceMount }) : context.type === "auto" ? /* @__PURE__ */ jsx11(ScrollAreaScrollbarAuto, { ...scrollbarProps, ref: forwardedRef, forceMount }) : context.type === "always" ? /* @__PURE__ */ jsx11(ScrollAreaScrollbarVisible, { ...scrollbarProps, ref: forwardedRef }) : null;
+    return context.type === "hover" ? /* @__PURE__ */ jsx17(ScrollAreaScrollbarHover, { ...scrollbarProps, ref: forwardedRef, forceMount }) : context.type === "scroll" ? /* @__PURE__ */ jsx17(ScrollAreaScrollbarScroll, { ...scrollbarProps, ref: forwardedRef, forceMount }) : context.type === "auto" ? /* @__PURE__ */ jsx17(ScrollAreaScrollbarAuto, { ...scrollbarProps, ref: forwardedRef, forceMount }) : context.type === "always" ? /* @__PURE__ */ jsx17(ScrollAreaScrollbarVisible, { ...scrollbarProps, ref: forwardedRef }) : null;
   }
 );
 ScrollAreaScrollbar.displayName = SCROLLBAR_NAME;
@@ -4811,7 +4717,7 @@ var ScrollAreaScrollbarHover = React210.forwardRef((props, forwardedRef) => {
       };
     }
   }, [context.scrollArea, context.scrollHideDelay]);
-  return /* @__PURE__ */ jsx11(Presence, { present: forceMount || visible, children: /* @__PURE__ */ jsx11(
+  return /* @__PURE__ */ jsx17(Presence, { present: forceMount || visible, children: /* @__PURE__ */ jsx17(
     ScrollAreaScrollbarAuto,
     {
       "data-state": visible ? "visible" : "hidden",
@@ -4867,7 +4773,7 @@ var ScrollAreaScrollbarScroll = React210.forwardRef((props, forwardedRef) => {
       return () => viewport.removeEventListener("scroll", handleScroll);
     }
   }, [context.viewport, isHorizontal, send, debounceScrollEnd]);
-  return /* @__PURE__ */ jsx11(Presence, { present: forceMount || state !== "hidden", children: /* @__PURE__ */ jsx11(
+  return /* @__PURE__ */ jsx17(Presence, { present: forceMount || state !== "hidden", children: /* @__PURE__ */ jsx17(
     ScrollAreaScrollbarVisible,
     {
       "data-state": state === "hidden" ? "hidden" : "visible",
@@ -4892,7 +4798,7 @@ var ScrollAreaScrollbarAuto = React210.forwardRef((props, forwardedRef) => {
   }, 10);
   useResizeObserver(context.viewport, handleResize);
   useResizeObserver(context.content, handleResize);
-  return /* @__PURE__ */ jsx11(Presence, { present: forceMount || visible, children: /* @__PURE__ */ jsx11(
+  return /* @__PURE__ */ jsx17(Presence, { present: forceMount || visible, children: /* @__PURE__ */ jsx17(
     ScrollAreaScrollbarVisible,
     {
       "data-state": visible ? "visible" : "hidden",
@@ -4925,7 +4831,7 @@ var ScrollAreaScrollbarVisible = React210.forwardRef((props, forwardedRef) => {
     return getScrollPositionFromPointer(pointerPos, pointerOffsetRef.current, sizes, dir);
   }
   if (orientation === "horizontal") {
-    return /* @__PURE__ */ jsx11(
+    return /* @__PURE__ */ jsx17(
       ScrollAreaScrollbarX,
       {
         ...commonProps,
@@ -4949,7 +4855,7 @@ var ScrollAreaScrollbarVisible = React210.forwardRef((props, forwardedRef) => {
     );
   }
   if (orientation === "vertical") {
-    return /* @__PURE__ */ jsx11(
+    return /* @__PURE__ */ jsx17(
       ScrollAreaScrollbarY,
       {
         ...commonProps,
@@ -4977,16 +4883,16 @@ var ScrollAreaScrollbarX = React210.forwardRef((props, forwardedRef) => {
   const context = useScrollAreaContext(SCROLLBAR_NAME, props.__scopeScrollArea);
   const [computedStyle, setComputedStyle] = React210.useState();
   const ref = React210.useRef(null);
-  const composeRefs3 = useComposedRefs(forwardedRef, ref, context.onScrollbarXChange);
+  const composeRefs2 = useComposedRefs(forwardedRef, ref, context.onScrollbarXChange);
   React210.useEffect(() => {
     if (ref.current) setComputedStyle(getComputedStyle(ref.current));
   }, [ref]);
-  return /* @__PURE__ */ jsx11(
+  return /* @__PURE__ */ jsx17(
     ScrollAreaScrollbarImpl,
     {
       "data-orientation": "horizontal",
       ...scrollbarProps,
-      ref: composeRefs3,
+      ref: composeRefs2,
       sizes,
       style: {
         bottom: 0,
@@ -5027,16 +4933,16 @@ var ScrollAreaScrollbarY = React210.forwardRef((props, forwardedRef) => {
   const context = useScrollAreaContext(SCROLLBAR_NAME, props.__scopeScrollArea);
   const [computedStyle, setComputedStyle] = React210.useState();
   const ref = React210.useRef(null);
-  const composeRefs3 = useComposedRefs(forwardedRef, ref, context.onScrollbarYChange);
+  const composeRefs2 = useComposedRefs(forwardedRef, ref, context.onScrollbarYChange);
   React210.useEffect(() => {
     if (ref.current) setComputedStyle(getComputedStyle(ref.current));
   }, [ref]);
-  return /* @__PURE__ */ jsx11(
+  return /* @__PURE__ */ jsx17(
     ScrollAreaScrollbarImpl,
     {
       "data-orientation": "vertical",
       ...scrollbarProps,
-      ref: composeRefs3,
+      ref: composeRefs2,
       sizes,
       style: {
         top: 0,
@@ -5090,7 +4996,7 @@ var ScrollAreaScrollbarImpl = React210.forwardRef((props, forwardedRef) => {
   } = props;
   const context = useScrollAreaContext(SCROLLBAR_NAME, __scopeScrollArea);
   const [scrollbar, setScrollbar] = React210.useState(null);
-  const composeRefs3 = useComposedRefs(forwardedRef, (node) => setScrollbar(node));
+  const composeRefs2 = useComposedRefs(forwardedRef, (node) => setScrollbar(node));
   const rectRef = React210.useRef(null);
   const prevWebkitUserSelectRef = React210.useRef("");
   const viewport = context.viewport;
@@ -5117,7 +5023,7 @@ var ScrollAreaScrollbarImpl = React210.forwardRef((props, forwardedRef) => {
   React210.useEffect(handleThumbPositionChange, [sizes, handleThumbPositionChange]);
   useResizeObserver(scrollbar, handleResize);
   useResizeObserver(context.content, handleResize);
-  return /* @__PURE__ */ jsx11(
+  return /* @__PURE__ */ jsx17(
     ScrollbarProvider,
     {
       scope: __scopeScrollArea,
@@ -5127,11 +5033,11 @@ var ScrollAreaScrollbarImpl = React210.forwardRef((props, forwardedRef) => {
       onThumbPointerUp: useCallbackRef(onThumbPointerUp),
       onThumbPositionChange: handleThumbPositionChange,
       onThumbPointerDown: useCallbackRef(onThumbPointerDown),
-      children: /* @__PURE__ */ jsx11(
+      children: /* @__PURE__ */ jsx17(
         Primitive.div,
         {
           ...scrollbarProps,
-          ref: composeRefs3,
+          ref: composeRefs2,
           style: { position: "absolute", ...scrollbarProps.style },
           onPointerDown: composeEventHandlers(props.onPointerDown, (event) => {
             const mainPointer = 0;
@@ -5165,7 +5071,7 @@ var ScrollAreaThumb = React210.forwardRef(
   (props, forwardedRef) => {
     const { forceMount, ...thumbProps } = props;
     const scrollbarContext = useScrollbarContext(THUMB_NAME, props.__scopeScrollArea);
-    return /* @__PURE__ */ jsx11(Presence, { present: forceMount || scrollbarContext.hasThumb, children: /* @__PURE__ */ jsx11(ScrollAreaThumbImpl, { ref: forwardedRef, ...thumbProps }) });
+    return /* @__PURE__ */ jsx17(Presence, { present: forceMount || scrollbarContext.hasThumb, children: /* @__PURE__ */ jsx17(ScrollAreaThumbImpl, { ref: forwardedRef, ...thumbProps }) });
   }
 );
 var ScrollAreaThumbImpl = React210.forwardRef(
@@ -5201,7 +5107,7 @@ var ScrollAreaThumbImpl = React210.forwardRef(
         return () => viewport.removeEventListener("scroll", handleScroll);
       }
     }, [scrollAreaContext.viewport, debounceScrollEnd, onThumbPositionChange]);
-    return /* @__PURE__ */ jsx11(
+    return /* @__PURE__ */ jsx17(
       Primitive.div,
       {
         "data-state": scrollbarContext.hasThumb ? "visible" : "hidden",
@@ -5231,7 +5137,7 @@ var ScrollAreaCorner = React210.forwardRef(
     const context = useScrollAreaContext(CORNER_NAME, props.__scopeScrollArea);
     const hasBothScrollbarsVisible = Boolean(context.scrollbarX && context.scrollbarY);
     const hasCorner = context.type !== "scroll" && hasBothScrollbarsVisible;
-    return hasCorner ? /* @__PURE__ */ jsx11(ScrollAreaCornerImpl, { ...props, ref: forwardedRef }) : null;
+    return hasCorner ? /* @__PURE__ */ jsx17(ScrollAreaCornerImpl, { ...props, ref: forwardedRef }) : null;
   }
 );
 ScrollAreaCorner.displayName = CORNER_NAME;
@@ -5251,7 +5157,7 @@ var ScrollAreaCornerImpl = React210.forwardRef((props, forwardedRef) => {
     context.onCornerWidthChange(width2);
     setWidth(width2);
   });
-  return hasSize ? /* @__PURE__ */ jsx11(
+  return hasSize ? /* @__PURE__ */ jsx17(
     Primitive.div,
     {
       ...cornerProps,
@@ -5362,6 +5268,7 @@ var Corner = ScrollAreaCorner;
 
 // ui/scroll-area.tsx
 import { cvx as cvx3, ocx as ocx3, rem as rem2 } from "xuxi";
+import { jsx as jsx18, jsxs as jsxs8 } from "react/jsx-runtime";
 var classes2 = cvx3({
   variants: {
     selector: {
@@ -5408,7 +5315,7 @@ function getStyles3(selector, options = {}) {
     )
   };
 }
-var ScrollArea2 = React32.forwardRef((_props, ref) => {
+var ScrollArea2 = React31.forwardRef((_props, ref) => {
   const {
     orientation = "vertical",
     className,
@@ -5427,11 +5334,17 @@ var ScrollArea2 = React32.forwardRef((_props, ref) => {
   } = _props;
   const stylesApi = { classNames, styles, unstyled };
   const stylesRest = { orientation, ...stylesApi };
-  return /* @__PURE__ */ React32.createElement(Root4, { ...{ ref, type: type === "never" ? void 0 : type, ...getStyles3("root", { className, style, color, size: size4, ...stylesRest }), ...props } }, /* @__PURE__ */ React32.createElement(Viewport, { ...{ asChild, dangerouslySetInnerHTML, ...getStyles3("viewport", stylesRest), ...viewportProps } }, children), /* @__PURE__ */ React32.createElement(Scrollbar, { ...{ orientation: "vertical", ...getStyles3("scrollbar", { orientation: "vertical", ...stylesApi }) } }, /* @__PURE__ */ React32.createElement(Thumb, { ...getStyles3("thumb", stylesRest) })), /* @__PURE__ */ React32.createElement(Scrollbar, { ...{ orientation: "horizontal", ...getStyles3("scrollbar", { orientation: "horizontal", ...stylesApi }) } }, /* @__PURE__ */ React32.createElement(Thumb, { ...getStyles3("thumb", stylesRest) })), /* @__PURE__ */ React32.createElement(Corner, { ...getStyles3("corner", stylesApi) }));
+  return /* @__PURE__ */ jsxs8(Root4, { ...{ ref, type: type === "never" ? void 0 : type, ...getStyles3("root", { className, style, color, size: size4, ...stylesRest }), ...props }, children: [
+    /* @__PURE__ */ jsx18(Viewport, { ...{ asChild, dangerouslySetInnerHTML, ...getStyles3("viewport", stylesRest), ...viewportProps }, children }),
+    /* @__PURE__ */ jsx18(Scrollbar, { ...{ orientation: "vertical", ...getStyles3("scrollbar", { orientation: "vertical", ...stylesApi }) }, children: /* @__PURE__ */ jsx18(Thumb, { ...getStyles3("thumb", stylesRest) }) }),
+    /* @__PURE__ */ jsx18(Scrollbar, { ...{ orientation: "horizontal", ...getStyles3("scrollbar", { orientation: "horizontal", ...stylesApi }) }, children: /* @__PURE__ */ jsx18(Thumb, { ...getStyles3("thumb", stylesRest) }) }),
+    /* @__PURE__ */ jsx18(Corner, { ...getStyles3("corner", stylesApi) })
+  ] });
 });
 ScrollArea2.displayName = "ScrollArea";
 
 // ui/rehype/rehype-command.tsx
+import { jsx as jsx19, jsxs as jsxs9 } from "react/jsx-runtime";
 function rehypeCommand() {
   return (tree) => {
     visit(tree, (node) => {
@@ -6614,4 +6527,4 @@ export {
   computedFields,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-FTRZEIRT.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-ACSRFU6F.mjs.map

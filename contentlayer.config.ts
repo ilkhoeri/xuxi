@@ -9,7 +9,7 @@ import { codeImport } from "remark-code-import";
 import { getHighlighter } from "@shikijs/compat";
 import { rehypeCommand } from "@/ui/rehype/rehype-command";
 
-import moonlightTheme from "@/app/styles/moonlight.json" with { type: "json" };
+import moonlightTheme from "./app/styles/moonlight.json";
 
 export const computedFields: ComputedFields = {
   slug: {

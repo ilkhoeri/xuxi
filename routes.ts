@@ -17,9 +17,7 @@ export const ROUTES = {
         { title: "cnx", href: "/cnx" },
         { title: "cvx", href: "/cvx" },
         { title: "ocx", href: "/ocx" },
-        { title: "converter", href: "/converter" },
-        { title: "clean", href: "/clean" },
-        { title: "types", href: "/types" }
+        { title: "clean", href: "/clean" }
       ]
     },
     {

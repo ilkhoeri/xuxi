@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Loader } from "./loader";
-import { injectComponentIntoFirstChild, PolymorphicSlot } from "./polymorphic-slot";
-import { cvx, type cvxVariants } from "xuxi";
 import { cn } from "@/lib/utils";
+import { Slot } from "@radix-ui/react-slot";
+import { cvx, type cvxVariants } from "xuxi";
+import { injectElementIntoFirstChild } from "@/lib/inject-el";
 
 export type MouseEventButtonType = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
@@ -20,9 +21,9 @@ export type UnstyledButtonProps<Exclude extends string = never> = React.PropsWit
 export const UnstyledButton = React.forwardRef<HTMLButtonElement, UnstyledButtonProps>((_props, ref) => {
   const { asChild = false, type = "button", role = "button", children, loading, disabled, ...props } = _props;
 
-  const Btn = asChild ? PolymorphicSlot : "button";
+  const Btn = asChild ? Slot : "button";
   const loadingComponent = loading && <Loader size={14} />;
-  const enhancedChildren = injectComponentIntoFirstChild(children, loadingComponent);
+  const enhancedChildren = injectElementIntoFirstChild(children, loadingComponent);
 
   return (
     <Btn {...{ ref, type, role, disabled: loading || disabled, ...props }}>

@@ -1,6 +1,6 @@
 ---
 title: Xuxi - The Ultimate Utility for Dynamic Data Management
-date: 2025-05-05
+date: 2026-08-13
 ---
 
 <div align="center">
@@ -56,12 +56,12 @@ A simplified and powerful alternative to `clsx` that supports all argument types
 function cnx(...inputs: cnxValues[]): string;
 ```
 
-### **cvx - Variance Handling Management**
+### **cvx - Dynamic Variant Values**
 
-A flexible variant handling utility similar to `cva`, but with a more intuitive syntax.
+A flexible variant utility similar to `cva`. It composes string-only class variants and can also return native objects or string arrays with inferred return types.
 
 ```ts
-function cvx<T extends cvxKeys>(keys: cvxRecord<T>): (result?: cvxResult<T>) => string;
+function cvx<T extends cvxKeys>(keys: cvxRecord<T>): (variants?: cvxResult<T>) => cvxReturn<T>;
 ```
 
 ---

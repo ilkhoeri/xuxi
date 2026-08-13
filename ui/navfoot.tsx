@@ -3,7 +3,6 @@ import { ThemeToggle } from "./config/themes";
 import { NavLinkItem } from "./navlink";
 import { ROUTES } from "@/routes";
 import { BrandOeriIcon, LogoIcon } from "@/ui/icons";
-import { Polymorphic } from "@/ui/polymorphic-slot";
 import { cvx, cvxVariants } from "xuxi";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +35,7 @@ export async function NavFoot() {
 
   return (
     <footer {...getStyles("footer")}>
-      <Polymorphic el="section" {...getStyles("section", { section: "top" })}>
+      <section {...getStyles("section", { section: "top" })}>
         <div className="col-span-1 w-max lg:col-span-2">
           <Link href="/" className="flex flex-initial items-center rounded-lg font-semibold text-muted-foreground hover:text-color" aria-label="HOME">
             <LogoIcon className="mr-2 flex h-[72px] w-[72px] flex-none items-center justify-center rounded-xl bg-background-theme p-1" />
@@ -44,7 +43,7 @@ export async function NavFoot() {
         </div>
 
         {ROUTES["footRoutes"] && ROUTES["footRoutes"]?.length > 0 && (
-          <Polymorphic el="nav" className="col-span-1 lg:col-span-10">
+          <nav className="col-span-1 lg:col-span-10">
             <ul role="list" {...getStyles("list")}>
               {ROUTES["footRoutes"].map((i, index) => (
                 <li key={index} role="listitem" {...getStyles("listitem")}>
@@ -52,11 +51,11 @@ export async function NavFoot() {
                 </li>
               ))}
             </ul>
-          </Polymorphic>
+          </nav>
         )}
-      </Polymorphic>
+      </section>
 
-      <Polymorphic el="section" className="relative flex w-full flex-row flex-nowrap justify-end gap-px border-b border-b-muted px-4 pb-4 pt-2 text-muted-foreground">
+      <section className="relative flex w-full flex-row flex-nowrap justify-end gap-px border-b border-b-muted px-4 pb-4 pt-2 text-muted-foreground">
         <ThemeToggle
           unstyled={{ wrapper: true, buttons: true }}
           classNames={{
@@ -66,9 +65,9 @@ export async function NavFoot() {
             )
           }}
         />
-      </Polymorphic>
+      </section>
 
-      <Polymorphic el="section" {...getStyles("section", { section: "bottom" })}>
+      <section {...getStyles("section", { section: "bottom" })}>
         <div className="flex flex-col items-center gap-x-4 sm:flex-row">
           <p>&copy; {currentYear} oeri rights MIT</p>
           <hr className="hidden h-4 w-[1px] border-l border-l-neutral-400 sm:inline-block" />
@@ -88,7 +87,7 @@ export async function NavFoot() {
             <BrandOeriIcon size={22} aria-label="oeri Logo" className="duration-200 ease-linear group-hover:scale-110" /> oeri
           </a>
         </div>
-      </Polymorphic>
+      </section>
     </footer>
   );
 }

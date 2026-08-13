@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useApp } from "./config/app-context";
 import { cn } from "@/lib/utils";
 import { LogoIcon, TextDirectionIcon } from "./icons";
-import { Polymorphic } from "./polymorphic-slot";
 import { Button } from "./button";
 import { ROUTES } from "@/routes";
 import { NavLinkItem } from "./navlink";
@@ -22,7 +21,7 @@ export function NavHead() {
         "max-w-var border-b-muted/75 bg-background-theme/95 supports-[backdrop-filter]:bg-background-theme/60 fixed inset-x-0 top-0 z-[--z,88] mr-[--has-scrollbar] flex h-[--navbar] w-[calc(100%-var(--has-scrollbar,0px))] items-center justify-between border-0 border-b-[0.04rem] py-4 backdrop-blur md:px-5 xl:px-6"
       )}
     >
-      <Polymorphic dir={dir} className="max-w-screen-3xl 3xl:px-12 relative mx-auto flex w-full items-center">
+      <div dir={dir} className="max-w-screen-3xl 3xl:px-12 relative mx-auto flex w-full items-center">
         <LinkHome className="[transition:all_0.5s_ease] max-md:data-[state=open]:translate-x-[-32px] max-md:data-[state=open]:opacity-0" />
 
         {minQuery && ROUTES?.["services"] && ROUTES?.["services"]?.length > 0 && (
@@ -54,7 +53,7 @@ export function NavHead() {
           hidden={minQuery}
           className="max-md:mx-2 max-md:data-[state=open]:translate-x-[212px] max-md:data-[state=open]:opacity-0 ltr:[--x:calc(212px)] rtl:[--x:calc(212px*-1)]"
         />
-      </Polymorphic>
+      </div>
     </header>
   );
 }

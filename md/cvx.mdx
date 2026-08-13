@@ -1,17 +1,16 @@
 ---
 title: cvx
-date: 2025-05-05
+date: 2026-08-13
 ---
 
 # **cvx**
 
-The `cvx` function is a utility for managing string class variants in a structured manner.
-It allows combining classes based on a predefined variant configuration, with the option to include default values ​​(`defaultVariants`) and customization based on user input.
+The `cvx` function resolves values from a structured variant configuration. It can compose class-name strings, merge native style objects, or return arrays of strings. Variant selections can use `defaultVariants` and be overridden by user input.
 
 ## Syntax
 
 ```ts
-function cvx<T extends cvxKeys>(keys: cvxRecord<T>): (result?: cvxResult<T>) => string;
+function cvx<T extends cvxKeys>(keys: cvxRecord<T>): (variants?: cvxResult<T>) => cvxReturn<T>;
 ```
 
 ```ts
@@ -22,22 +21,21 @@ cvx({
 });
 ```
 
-## How cvx works:
+## How cvx works
 
-1. **Merge Variants:** <br />
-   The variants provided by the user via `variant` are merged with the default variants (`defaultVariants`), if any.
+1. **Merge selections:** <br />
+   Values passed through `variants` are merged with `defaultVariants`, when present.
 
-2. **Determine Class:** <br />
-   For each key in `variants`, the function maps the corresponding value from the merged `variant`.
+2. **Resolve configured values:** <br />
+   For each variant key, `cvx` finds the value configured for the merged selection. Variant keys such as `true`, `false`, numeric strings, `null`, and `undefined` continue to accept their corresponding primitive inputs.
 
-3. **Generate String:** <br />
-   The class values ​​are merged into a single space-separated string.
-   If `assign` is given, this string is prefixed with the value of `assign`.
+3. **Return native values:** <br />
+   When every resolved value is a string, they are combined into one space-separated string and `assign` is prepended. When every value is an object, they are merged into one object. When every value is a string array, they are flattened into a `string[]`. A configuration that mixes these value kinds returns their inferred union; at runtime, `cvx` returns the first resolved value for a mixed selection.
 
 ## Example Usage
 
 ```tsx
-import { cvx, type cvxVariants } from "xuxi";
+import { cvx, type cvxVariant, type cvxVariants } from "xuxi";
 
 const classes = cvx({
   // assign values that is definitely returned
@@ -76,18 +74,135 @@ const classes = cvx({
 ```tsx
 type VariantsType = cvxVariants<typeof classes>;
 // Output:
-// type VariantsType = {
-//     variant?: "bold" | "light" | "semibold" | undefined;
-//     effect?: "italic" | undefined;
-//     color?: "blue" | "green" | "red" | "purple" | undefined;
-//     size?: "sm" | "md" | "lg" | "xl" | undefined;
-// };
+type VariantsType = {
+  variant?: "bold" | "light" | "semibold" | undefined;
+  effect?: "italic" | undefined;
+  color?: "blue" | "green" | "red" | "purple" | undefined;
+  size?: "sm" | "md" | "lg" | "xl" | undefined;
+};
 ```
 
 ```tsx
-type Color = NonNullable<cvxVariants<typeof classes>["color"]>;
+type Color = cvxVariant<typeof classes, "color">;
 // Output:
-// type Color = "blue" | "green" | "red" | "purple";
+type Color = "blue" | "green" | "red" | "purple";
+```
+
+### Dynamic values
+
+Variant values may be strings, objects, or arrays of strings. TypeScript infers the return type from every configured value.
+
+```ts
+const stylesFont = cvx({
+  variants: {
+    size: {
+      small: { fontSize: 14, lineHeight: 20, fontWeight: 500 },
+      smallBold: { fontSize: 14, lineHeight: 20, fontWeight: 700 },
+      default: { fontSize: 16, lineHeight: 24, fontWeight: 500 }
+    }
+  },
+  defaultVariants: { size: "default" }
+});
+
+stylesFont();
+// { fontSize: number, lineHeight: number, fontWeight: number }
+
+const buttonType = cvx({
+  variants: {
+    type: {
+      button: "type=button",
+      submit: "type=submit",
+      reset: "type=reset"
+    }
+  },
+  defaultVariants: {
+    type: "button"
+  }
+});
+
+type ButtonTypeVariant = cvxVariants<typeof buttonType>;
+// result
+type ButtonTypeVariant = {
+  type?: "button" | "submit" | "reset" | undefined;
+};
+
+const fontSizeVariant = cvx({
+  variants: {
+    size: {
+      small: { fontSize: 14, lineHeight: 20, fontWeight: 500 },
+      smallBold: { fontSize: 14, lineHeight: 20, fontWeight: 700 },
+      default: { fontSize: 16, lineHeight: 24, fontWeight: 500 }
+    }
+  }
+});
+
+type fontSizeVariant = cvxVariants<typeof fontSizeVariant>;
+type SizeVariant = cvxVariant<typeof fontSizeVariant, "size">;
+type SizeVariant = "small" | "smallBold" | "default";
+
+const dinamycVariant = cvx({
+  variants: {
+    size: {
+      var: ["200"],
+      small: "small",
+      practice: "practice",
+      default: [1, 7, 9]
+    },
+    fontSize: {
+      all: ["300", "400", "500", "600", "700"],
+      thin: "300",
+      normal: "400",
+      medium: "600",
+      semibold: "700"
+    }
+  },
+  defaultVariants: {
+    size: "small",
+    fontSize: "medium"
+  }
+});
+
+console.log(dinamycVariant());
+// 'small 600'
+
+console.log(dinamycVariant({ fontSize: "all", size: "small" }));
+// 'small'
+console.log(dinamycVariant({ fontSize: "all", size: "var" }));
+// [ '200', '300', '400', '500', '600', '700' ] (array value)
+```
+
+When object shapes differ, the return type preserves that difference:
+
+```ts
+const stylesNative = cvx({
+  variants: {
+    variant: {
+      "text-small": { fontSize: 14, lineHeight: 20, fontWeight: 500 },
+      "with-transform": { fontSize: 14, lineHeight: 20, fontWeight: 700, transform: "", transformOrigin: "" }
+    }
+  }
+});
+
+type NativeStyle = ReturnType<typeof stylesNative>;
+// { fontSize: number; lineHeight: number; fontWeight: number }
+// | { fontSize: number; lineHeight: number; fontWeight: number; transform: string; transformOrigin: string }
+```
+
+Mixed configured values produce a union. Array entries must all be strings.
+
+```ts
+const variantDinamis = cvx({
+  variants: {
+    size: {
+      small: "small",
+      smallBold: { fontSize: 14, lineHeight: 20, fontWeight: 700 },
+      default: ["1", "2", "3"]
+    }
+  }
+});
+
+type DynamicValue = ReturnType<typeof variantDinamis>;
+// string | { fontSize: number; lineHeight: number; fontWeight: number } | string[]
 ```
 
 ### Cvx Types
@@ -159,9 +274,9 @@ type getVariantsKeys = keyof x.cvxResult<typeof getVariants>;
 ## Advantages
 
 - **Flexibility:** <br />
-  Supports a wide range of variant combinations.
+  Supports class names, native objects, and string arrays.
 - **Consistency:** <br />
-  Simplifies class management with a clearly defined structure.
+  Keeps variant selection and inferred return values in one clearly defined structure.
 - **Efficiency:** <br />
   Minimizes duplication of class logic in code.
 

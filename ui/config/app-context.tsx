@@ -2,6 +2,7 @@
 import * as React from "react";
 import { useDirection, type Direction } from "@/hooks/use-direction";
 import { Cookies } from "./types";
+import { useCookies } from "./cookies-client";
 
 export enum Booleanish {
   true = "true",
@@ -38,22 +39,23 @@ export const useApp = () => {
   return _ctx;
 };
 
-function useAppFuntions(_app: useAppProps) {
-  const { isOpenAside = "true", theme = "system", dir = "ltr", ...others } = _app;
-  const [openAside, setOpenAside] = React.useState<`${Booleanish}`>(isOpenAside as `${Booleanish}`);
-  const { dir: _dir, ..._direction } = useDirection({ initialDirection: dir as Direction });
-  return { theme, dir: _dir, openAside, setOpenAside, ..._direction, ...others };
+function useCookieValues() {
+  const [dir] = useCookies<Direction>("__dir", "ltr");
+  const [theme] = useCookies<Theme>("__theme", "system");
+  const [isOpenAside] = useCookies<boolean>("__is_open_aside", true);
+  return { theme, dir, isOpenAside };
 }
 
-export function AppProvider({ children, ...props }: AppProviderProps) {
-  const { theme, ...app } = useAppFuntions({ ...props });
+function useAppFuntions() {
+  const { theme, dir: defaultDirection, isOpenAside } = useCookieValues();
+  const [openAside, setOpenAside] = React.useState<`${Booleanish}`>(isOpenAside as `${Booleanish}`);
+  const { dir, ..._direction } = useDirection({ defaultDirection: defaultDirection as Direction, detectDirection: false });
+  return { theme, dir, openAside, setOpenAside, ..._direction };
+}
+
+export function AppProvider({ children }: { children: React.ReactNode }) {
+  const { theme, ...app } = useAppFuntions();
 
   const value = { theme: theme as Theme, ...app };
-  return (
-    <ctx.Provider {...{ value }}>
-      <html lang="en" dir={app.dir} suppressHydrationWarning>
-        {children}
-      </html>
-    </ctx.Provider>
-  );
+  return <ctx.Provider {...{ value }}>{children}</ctx.Provider>;
 }

@@ -4,28 +4,27 @@ import * as React from "react";
 import Image from "next/image";
 import Link, { LinkProps } from "next/link";
 import { useMDXComponent } from "next-contentlayer2/hooks";
-import { Typography } from "./typography";
 import { cn } from "@/lib/utils";
 import { NpmCommands } from "./rehype/types";
 import { Event } from "./rehype/event";
 import { CopyButton } from "./toggle";
 import { CodeBlockCommand } from "./rehype/rehype-command";
+import { getProseStyles } from "./styles";
 
 const components = {
   Image,
-  Typography,
   _A_: ({ href = "", ...props }: Omit<LinkProps, "href"> & { href?: string }) => <Link href={href} {...props} target="_blank" rel="noopener noreferrer nofollow" />,
   a: ({ href = "", ...props }: Omit<LinkProps, "href"> & { href?: string }) => <Link href={href} {...props} />,
-  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => <Typography prose="h1" role="presentation" {...props} />,
-  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => <Typography prose="h2" {...props} />,
-  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => <Typography prose="h3" {...props} />,
-  h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => <Typography prose="h4" {...props} />,
-  h5: (props: React.HTMLAttributes<HTMLHeadingElement>) => <Typography prose="h5" {...props} />,
-  h6: (props: React.HTMLAttributes<HTMLHeadingElement>) => <Typography prose="h6" {...props} />,
-  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => <Typography prose="p" {...props} />,
-  ul: (props: React.HTMLAttributes<HTMLUListElement>) => <Typography el="ul" prose="ul" {...props} />,
-  ol: (props: React.HTMLAttributes<HTMLOListElement>) => <Typography el="ol" prose="ol" {...props} />,
-  li: (props: React.HTMLAttributes<HTMLElement>) => <Typography el="li" prose="li" {...props} />,
+  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h1 role="presentation" {...props} {...getProseStyles("h1", props)} />,
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h2 {...props} {...getProseStyles("h2", props)} />,
+  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h3 {...props} {...getProseStyles("h3", props)} />,
+  h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h4 {...props} {...getProseStyles("h4", props)} />,
+  h5: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h5 {...props} {...getProseStyles("h5", props)} />,
+  h6: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h6 {...props} {...getProseStyles("h6", props)} />,
+  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => <p {...props} {...getProseStyles("p", props)} />,
+  ul: (props: React.HTMLAttributes<HTMLUListElement>) => <ul {...props} {...getProseStyles("ul", props)} />,
+  ol: (props: React.HTMLAttributes<HTMLOListElement>) => <ol {...props} {...getProseStyles("ol", props)} />,
+  li: (props: React.HTMLAttributes<HTMLElement>) => <li {...props} {...getProseStyles("li", props)} />,
   hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => <hr className="my-4 md:my-8" {...props} />,
   // eslint-disable-next-line @next/next/no-img-element
   img: ({ alt = "", ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => <img alt={alt} {...props} />,
