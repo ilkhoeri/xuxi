@@ -36,7 +36,7 @@ export const useApp = () => {
 
 function useCookieValues() {
   const [dir] = useCookie<Direction>("__dir", "ltr");
-  const [theme] = useCookie<Theme>("__theme", "system");
+  const [theme] = useCookie<Theme>("__theme", "dark");
   const [isOpenAside] = useCookie<boolean>("__is_open_aside", true);
   return { theme, dir, isOpenAside };
 }

@@ -11,39 +11,36 @@ import { Burger } from "./burger";
 import { useNavContext } from "./nav-ctx";
 
 export function NavHead() {
-  const { toggleDirection, dir } = useApp();
+  const { toggleDirection } = useApp();
   const { minQuery, toggle, open, setOpen } = useNavContext();
 
   return (
     <header
-      dir={dir}
       className={cn(
         "max-w-var border-b-muted/75 bg-background-theme/95 supports-[backdrop-filter]:bg-background-theme/60 fixed inset-x-0 top-0 z-[--z,88] mr-[--has-scrollbar] flex h-[--navbar] w-[calc(100%-var(--has-scrollbar,0px))] items-center justify-between border-0 border-b-[0.04rem] py-4 backdrop-blur md:px-5 xl:px-6"
-      )}
-    >
-      <div dir={dir} className="max-w-screen-3xl 3xl:px-12 relative mx-auto flex w-full items-center">
+      )}>
+      <div className="max-w-screen-3xl 3xl:px-12 relative mx-auto flex w-full items-center">
         <LinkHome className="[transition:all_0.5s_ease] max-md:data-[state=open]:translate-x-[-32px] max-md:data-[state=open]:opacity-0" />
 
         {minQuery && ROUTES?.["services"] && ROUTES?.["services"]?.length > 0 && (
-          <div dir={dir} className="relative hidden h-full items-center justify-between rounded-sm text-sm font-medium md:flex ltr:ml-10 ltr:mr-auto rtl:ml-auto rtl:mr-10">
+          <div className="relative hidden h-full items-center justify-between rounded-sm text-sm font-medium md:flex ltr:ml-10 ltr:mr-auto rtl:ml-auto rtl:mr-10">
             {ROUTES["services"].map(i => (
               <Link
                 key={i.href}
                 href={i.href}
                 role="button"
-                className="text-muted-foreground centered hover:text-color data-[active]:text-color h-6 cursor-pointer select-none rounded-sm transition-colors"
-              >
+                className="text-muted-foreground centered hover:text-color data-[active]:text-color h-6 cursor-pointer select-none rounded-sm transition-colors">
                 <span className="z-1 relative px-2 py-1">{i.title}</span>
               </Link>
             ))}
           </div>
         )}
 
-        <div dir={dir} className="flex items-center ltr:ml-auto rtl:mr-auto [&_svg]:size-[1.375rem] gap-1.5">
+        <div className="flex items-center ltr:ml-auto rtl:mr-auto [&_svg]:size-[1.375rem] gap-1.5">
           <div className="grid grid-flow-col gap-0.5">
             <LinksSection />
             <Button size="icon" variant="outline" onClick={toggleDirection} className="max-md:hidden">
-              <TextDirectionIcon dir={dir} stroke={1.5} />
+              <TextDirectionIcon stroke={1.5} />
             </Button>
           </div>
         </div>
@@ -64,8 +61,7 @@ export function LinkHome({ open, className }: { open?: boolean; className?: stri
       href="/"
       aria-label="oeri"
       data-state={open ? (open ? "open" : "closed") : undefined}
-      className={cn("font-geist-mono gap-2 rounded-lg px-2 py-1 text-lg font-medium leading-none", className)}
-    >
+      className={cn("font-geist-mono gap-2 rounded-lg px-2 py-1 text-lg font-medium leading-none", className)}>
       <LogoIcon size={30} />
       <span>Xuxi</span>
     </Link>

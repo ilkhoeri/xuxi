@@ -25,7 +25,6 @@ interface NavLeftProps {
 export function NavLeft(_props: NavLeftProps) {
   const { classNames, routes = ROUTES["docs"] } = _props;
   const { rootSegment, minQuery, maxQuery: query, open, setOpen, toggle } = useNavContext();
-  const { dir } = useApp();
 
   // if (rootSegment) return null;
 
@@ -47,7 +46,7 @@ export function NavLeft(_props: NavLeftProps) {
           </hgroup>
         )}
 
-        <ScrollArea dir={dir} classNames={{ viewport: classes({ selector: "nav" }), thumb: "max-md:sr-only" }}>
+        <ScrollArea classNames={{ viewport: classes({ selector: "nav" }), thumb: "max-md:sr-only" }}>
           <NavRoutes {...{ routes, setOpen, query }} />
         </ScrollArea>
       </aside>
