@@ -2,21 +2,16 @@
 import * as React from "react";
 import { useDirection, type Direction } from "@/hooks/use-direction";
 import { Cookies } from "./types";
-import { useCookies } from "./cookies-client";
+import { useCookie } from "./cookies-client";
 
 export enum Booleanish {
   true = "true",
   false = "false"
 }
 
-export type CookiesName = `${Cookies}` | (string & {});
+type CookiesName = `${Cookies}` | (string & {});
 type Theme = "dark" | "light" | "system";
-type __T_ = "dir" | "theme" | "isOpenAside"; // cookies value
-type IntrinsicAppProvider = Partial<Record<__T_, string | undefined>>;
-type useAppProps = IntrinsicAppProvider & {};
-interface AppProviderProps extends IntrinsicAppProvider {
-  children: React.ReactNode;
-}
+
 interface CtxProps {
   openAside: `${Booleanish}`;
   setOpenAside: (v: `${Booleanish}`) => void;
@@ -40,15 +35,15 @@ export const useApp = () => {
 };
 
 function useCookieValues() {
-  const [dir] = useCookies<Direction>("__dir", "ltr");
-  const [theme] = useCookies<Theme>("__theme", "system");
-  const [isOpenAside] = useCookies<boolean>("__is_open_aside", true);
+  const [dir] = useCookie<Direction>("__dir", "ltr");
+  const [theme] = useCookie<Theme>("__theme", "system");
+  const [isOpenAside] = useCookie<boolean>("__is_open_aside", true);
   return { theme, dir, isOpenAside };
 }
 
 function useAppFuntions() {
   const { theme, dir: defaultDirection, isOpenAside } = useCookieValues();
-  const [openAside, setOpenAside] = React.useState<`${Booleanish}`>(isOpenAside as `${Booleanish}`);
+  const [openAside, setOpenAside] = React.useState<`${Booleanish}`>(isOpenAside as any);
   const { dir, ..._direction } = useDirection({ defaultDirection: defaultDirection as Direction, detectDirection: false });
   return { theme, dir, openAside, setOpenAside, ..._direction };
 }
