@@ -116,3 +116,5 @@ bun.lockb
 .log
 
 coverage
+
+.mdx

@@ -5,7 +5,7 @@ import { ck } from './log';
 import ora from 'ora';
 
 const libFolder = resolve('lib');
-const files = readdirSync(libFolder).filter(file => /.*?js/.test(file));
+const files = readdirSync(libFolder).filter(file => /.*?(js)/.test(file));
 
 async function minifyFiles() {
   for (const file of files) {

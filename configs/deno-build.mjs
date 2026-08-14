@@ -21,11 +21,7 @@ const packageJsonPath = join(projectRoot, 'package.json');
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
 const packageVersion = packageJson.version || '0.0.1';
 
-const skipList = [
-  join(projectRoot, '__tests__', 'object-in-es5-env.test.ts'),
-  join(projectRoot, '__tests__', 'language-server.test.ts'),
-  join(projectRoot, '__tests__', 'language-server.source.ts')
-];
+const skipList = [join(projectRoot, '__tests__', 'object-in-es5-env.test.ts'), join(projectRoot, '__tests__', 'language-server.test.ts'), join(projectRoot, '__tests__', 'language-server.source.ts')];
 
 const walkAndBuild = (/** @type string */ dir) => {
   for (const entry of readdirSync(join(nodeSrcRoot, dir), {

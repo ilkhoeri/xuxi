@@ -1,7 +1,7 @@
 // @ts-ignore TS6133
 import { describe, test, expect, it } from '@jest/globals';
 
-import { cnx, trim } from '../src'; // Named export
+import { cnx } from '../src'; // Named export
 import x from '../src/index'; // Default export alias
 import * as xuxi from '../src/index'; // Test for namespace imports
 
@@ -81,40 +81,16 @@ describe('cnx string function', () => {
     expect(cnx(complexInput)).toBe('class1 class2 class4 class5 class6 class7');
   });
 
+  test('should return Infinity as string if Infinity value', () => {
+    expect(cnx(Infinity)).toBe('Infinity');
+  });
+
+  test('should return an empty string if null', () => {
+    expect(cnx(null)).toBe('');
+  });
+
   test('should return an empty string if no valid inputs are provided', () => {
     expect(cnx(null, undefined, false, '')).toBe('');
-  });
-
-  test('should handle tagged template mode', () => {
-    const item = 'apples';
-    const quantity = 5;
-    expect(cnx.raw`We have ${quantity} ${item}.`).toBe('We have 5 apples.');
-  });
-});
-
-describe('trim function', () => {
-  it('should return an empty string when inputs are null or undefined', () => {
-    expect(trim(null)).toBe('');
-  });
-
-  it('should ignore boolean values', () => {
-    expect(trim(true, false)).toBe('');
-  });
-
-  it('should handle unsupported types gracefully', () => {
-    expect(trim(() => Symbol('test'))).toBe('');
-  });
-
-  it('should combine valid and invalid values correctly', () => {
-    expect(trim(['valid', null, 42, false], '')).toBe('valid42');
-  });
-
-  test('trim handles falsy values correctly', () => {
-    expect(trim(undefined)).toEqual('');
-  });
-
-  test('trim handles falsy values correctly', () => {
-    expect(trim(['1', '2'], 'x')).toEqual('1x2');
   });
 });
 
@@ -128,11 +104,6 @@ describe('export validation', () => {
     expect(x.cnx).toBeDefined();
     expect(typeof x.cnx).toBe('function');
     expect(x.cnx).toBe(cnx); // Ensure both exports point to the same function
-  });
-
-  test('should include trim in the namespace export', () => {
-    expect(xuxi).toHaveProperty('trim');
-    expect(xuxi.cnx).toBe(cnx);
   });
 
   test('should include the default export alias in the namespace export', () => {

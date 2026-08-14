@@ -99,6 +99,25 @@ const classes = x.cvx({
 });
 ```
 
+`cvx` is not limited to class names. A variant value may be a `string`, an object, or an array of strings. String-only variants are combined into one class-name string. Object-only variants are merged into one object, and array-only variants return a flattened `string[]`.
+
+```ts
+const styles = x.cvx({
+  variants: {
+    size: {
+      small: { fontSize: 14, lineHeight: 20, fontWeight: 500 },
+      large: { fontSize: 16, lineHeight: 24, fontWeight: 700 }
+    }
+  },
+  defaultVariants: { size: 'small' }
+});
+
+styles(); // { fontSize: 14, lineHeight: 20, fontWeight: 500 }
+styles({ size: 'large' }); // { fontSize: 16, lineHeight: 24, fontWeight: 700 }
+```
+
+The result type is inferred from the configured values. For mixed variant values, it is a union; for example, `string | { fontSize: number } | string[]`. Array variant values must contain strings only.
+
 #### **Cvx Types**
 
 ```ts

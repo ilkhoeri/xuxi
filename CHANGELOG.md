@@ -9,6 +9,17 @@ Be sure to always refer to the latest documentation for the most up-to-date usag
 
 ---
 
+## [1.1.0] - 2026-08-14
+
+### Added
+
+- Extended `cvx` so variant values and `assign` can return strings, arrays, or objects. Compatible values are combined: strings are joined, arrays with the same item type are flattened, and objects are merged with variant values taking precedence.
+- Added `cvxValue` and `cvxReturn<T>` types. `cvxReturn<T>` infers the union of configured variant values, widens string literals to `string` and string tuples to `string[]`, and retains the shape of object values.
+
+### Removed
+
+- Removed the legacy converter API: `px()`, `rem()`, and `em()`. These functions are no longer exported, and the `converter` module has been removed.
+
 ## [1.0.4] - 2025-10-28
 
 ### Refactor cnx and ocx APIs, add trim utility

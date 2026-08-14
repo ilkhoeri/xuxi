@@ -1,8 +1,8 @@
 /** A type alias representing an object with string keys and values of any type. */
-export type ocxKey = { [key: string]: any };
+type ocxKey = { [key: string]: any };
 
 /** A generic type that extends `T` with `ocxKey`, allowing `T` to have arbitrary key-value pairs. */
-export type ocxReturn<T> = T & ocxKey;
+type ocxReturn<T> = T & ocxKey;
 type ocxAcc<T> = T & ocxKey;
 /**
  * A flexible mapping type that can be an:
@@ -11,17 +11,17 @@ type ocxAcc<T> = T & ocxKey;
  * - recursive mapping (`ocxMap[]`)
  * - primitive value (`string`, `number`, `null`, `boolean`, `undefined`)
  * - function that takes an optional object (`ocxKey`) and returns an `ocxMap`. */
-export type ocxMap = ocxKey | ocxKey[] | ocxMap[] | string | number | null | boolean | undefined | ((key?: ocxKey) => ocxMap);
+type ocxMap = ocxKey | ocxKey[] | ocxMap[] | string | number | null | boolean | undefined | ((key?: ocxKey) => ocxMap);
 
 /** An object that can be processed by `ocx`. */
-export type ocxObj<T> = T | ocxMap | ocxAcc<T>;
+type ocxObj<T> = T | ocxMap | ocxAcc<T>;
 
 /**
  * Checks if a given value is a plain object (i.e., not an array or null).
  * @param value - The value to check.
  * @returns True if the value is a plain object, otherwise false.
  */
-export function isPlainObject(value: unknown): value is ocxKey {
+function isPlainObject(value: unknown): value is ocxKey {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
@@ -170,4 +170,5 @@ ocx.preserve = ocxPreserve as typeof ocxPreserve;
 /* A version of `object` that performs to the `clean` property of the `object` variable. */
 ocx.clean = ocxClean as typeof ocxClean;
 
-export { ocx, ocxClean as clean };
+export { ocxClean as clean, isPlainObject, ocx };
+export type { ocxKey, ocxMap, ocxObj, ocxReturn };
